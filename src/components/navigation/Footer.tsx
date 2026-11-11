@@ -80,32 +80,32 @@ export const Footer: React.FC = () => {
             </h5>
             <ul className="space-y-2 text-ios-lightMuted dark:text-ios-darkMuted">
               <li>
-                <button onClick={() => navigate('/trabaho')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/trabaho')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Trabaho (Employment)
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/serbisyo')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/serbisyo')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Serbisyo (Government Services)
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/pera')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/pera')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Pera (Financial Assistance)
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/bayanihan')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/bayanihan')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Bayanihan (Community Programs)
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/aral')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/aral')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Aral (Education & TVET)
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/kaligtasan')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/kaligtasan')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Kaligtasan (Safety & Hotlines)
                 </button>
               </li>
@@ -153,27 +153,27 @@ export const Footer: React.FC = () => {
             </h5>
             <ul className="space-y-2 text-ios-lightMuted dark:text-ios-darkMuted">
               <li>
-                <button onClick={() => navigate('/announcements')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/announcements')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Official Public Advisories
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/saved')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/saved')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Saved Bookmarks
                 </button>
               </li>
               <li>
-                <button onClick={() => navigate('/notifications')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={() => navigate('/notifications')} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Notification Center
                 </button>
               </li>
               <li>
-                <button onClick={openSuggestModal} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={openSuggestModal} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Submit Service Suggestion
                 </button>
               </li>
               <li>
-                <button onClick={openContactModal} className="hover:text-ios-navy dark:hover:text-white transition-colors">
+                <button onClick={openContactModal} className="text-left w-full hover:text-ios-navy dark:hover:text-white transition-colors">
                   Help & Feedback Inquiries
                 </button>
               </li>
