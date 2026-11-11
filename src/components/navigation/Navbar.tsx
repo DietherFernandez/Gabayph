@@ -186,7 +186,8 @@ export const Navbar: React.FC = () => {
           <button
             onClick={openSearchModal}
             className="flex items-center gap-2 bg-ios-lightSecondary dark:bg-ios-darkSecondary hover:bg-slate-200 dark:hover:bg-slate-700/60 text-ios-lightMuted dark:text-ios-darkMuted px-2.5 sm:px-3 py-1.5 rounded-ios-lg text-xs border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 transition-colors"
-            title="Search GabayPH (Press to search)"
+            title="Search GabayPH (Press / to search)"
+            aria-label="Open universal search directory"
           >
             <Search className="w-3.5 h-3.5 text-ios-lightMuted dark:text-ios-darkMuted" />
             <span className="hidden sm:inline">Search directory...</span>
@@ -198,7 +199,7 @@ export const Navbar: React.FC = () => {
           {/* Saved Items */}
           <button
             onClick={() => navigate('/saved')}
-            className="relative p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="relative p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label={`Saved items (${savedIds.length})`}
             title="Saved Items"
           >
@@ -213,7 +214,7 @@ export const Navbar: React.FC = () => {
           {/* Notifications */}
           <button
             onClick={() => navigate('/notifications')}
-            className="relative p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="relative p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label={`Notifications (${unreadNotifsCount} unread)`}
             title="Notifications"
           >
@@ -226,7 +227,7 @@ export const Navbar: React.FC = () => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >

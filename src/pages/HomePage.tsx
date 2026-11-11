@@ -170,18 +170,18 @@ export const HomePage: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => navigate(cat.path)}
-              className="flex flex-col items-start p-3.5 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm hover:shadow-ios hover:-translate-y-0.5 transition-all text-left group ios-active"
+              className="flex flex-col items-start p-3 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.98] transition-all text-left group ios-active"
             >
-              <div className={`w-9 h-9 rounded-ios-lg ${cat.color} flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform`}>
+              <div className={`w-8 h-8 rounded-ios-lg ${cat.color} flex items-center justify-center mb-2 group-hover:scale-105 transition-transform`}>
                 {cat.icon}
               </div>
-              <h3 className="text-sm font-bold text-ios-lightText dark:text-ios-darkText leading-tight">
+              <h3 className="text-xs sm:text-sm font-bold text-ios-lightText dark:text-ios-darkText leading-tight">
                 {cat.name}
               </h3>
               <p className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 line-clamp-1">
                 {cat.subtitle}
               </p>
-              <span className="text-[10px] font-medium text-ios-navy dark:text-blue-400 mt-2">
+              <span className="text-[10px] font-medium text-ios-navy dark:text-blue-400 mt-1.5">
                 {cat.count}
               </span>
             </button>
@@ -190,7 +190,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Emergency Hotlines Strip (Kaligtasan Focus) */}
-      <section className="bg-red-50/70 dark:bg-red-950/20 border border-red-200/60 dark:border-red-900/40 rounded-ios-xl p-4">
+      <section className="bg-red-50/70 dark:bg-red-950/20 border border-red-200/60 dark:border-red-900/40 rounded-ios-xl p-3.5 sm:p-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
             <span className="p-1.5 rounded-full bg-red-500 text-white">
@@ -213,26 +213,27 @@ export const HomePage: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        {/* Cohesive List Container with Hairline Separators instead of Nested Cards */}
+        <div className="divide-y divide-red-100 dark:divide-red-900/30 bg-white/90 dark:bg-slate-900/90 rounded-ios-lg border border-red-100 dark:border-red-900/30 overflow-hidden">
           {emergencyHotlines.map(hotline => (
             <div
               key={hotline.id}
-              className="bg-white dark:bg-ios-darkSurface p-3 rounded-ios-lg border border-red-100 dark:border-red-900/30 flex items-center justify-between"
+              className="p-3 flex items-center justify-between gap-3 hover:bg-red-50/40 dark:hover:bg-red-950/20 transition-colors"
             >
-              <div>
-                <span className="text-xs font-bold text-ios-lightText dark:text-ios-darkText block">
+              <div className="min-w-0 flex-1">
+                <span className="text-xs font-bold text-ios-lightText dark:text-ios-darkText block truncate">
                   {hotline.title}
                 </span>
-                <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted truncate block max-w-[170px]">
+                <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted truncate block">
                   {hotline.agencyAcronym || hotline.agency}
                 </span>
               </div>
               <a
                 href={`tel:${hotline.hotlineNumber?.replace(/[^0-9]/g, '')}`}
-                className="px-3 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center gap-1 shadow-sm ios-active"
+                className="px-3 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm ios-active shrink-0"
               >
                 <PhoneCall className="w-3 h-3" />
-                {hotline.hotlineNumber}
+                <span>{hotline.hotlineNumber}</span>
               </a>
             </div>
           ))}

@@ -61,8 +61,8 @@ export const UniversalSearchPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Search Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
+      {/* Editorial Search Header */}
+      <div className="px-1 pt-1">
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight mb-3">
           Search Across GabayPH
         </h1>
@@ -88,7 +88,7 @@ export const UniversalSearchPage: React.FC = () => {
         </div>
 
         {/* Category Pills */}
-        <div className="mt-4 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="mt-3.5 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
           {categories.map(cat => (
             <button
               key={cat.id}
@@ -96,7 +96,7 @@ export const UniversalSearchPage: React.FC = () => {
               className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
                 activeCategory === cat.id
                   ? 'bg-ios-navy text-white font-semibold shadow-sm'
-                  : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted hover:text-ios-lightText'
+                  : 'bg-white dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText'
               }`}
             >
               {cat.label}
@@ -157,8 +157,12 @@ export const UniversalSearchPage: React.FC = () => {
           <EmptyState
             icon={<Search className="w-8 h-8" />}
             title="No Matching Results Found"
-            description={`No services, jobs, or assistance matched "${query}". Try searching with alternative keywords.`}
-            actionLabel="Clear Search"
+            description={
+              query
+                ? `No services, jobs, or assistance matched "${query}". Try searching with alternative keywords or selecting another category.`
+                : 'No records found in this category. Try switching categories or resetting filters.'
+            }
+            actionLabel="Reset Search & Filters"
             onAction={() => {
               setQuery('');
               setActiveCategory('all');

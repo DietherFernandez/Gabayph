@@ -51,8 +51,8 @@ export const SerbisyoPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Category Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
+      {/* Editorial Category Header */}
+      <div className="px-1 pt-1">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
           <FileText className="w-4 h-4" />
           <span>Government Services Directory</span>
@@ -60,12 +60,12 @@ export const SerbisyoPage: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
           SERBISYO: Government IDs, Documents & Clearances
         </h1>
-        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
+        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl leading-relaxed">
           Comprehensive guides to required documents, application steps, fee schedules, and official portals for the Philippine National ID, Passport, NBI, SSS, LTO, and civil registry.
         </p>
 
         {/* Search & Filters */}
-        <div className="mt-4 pt-4 border-t border-ios-lightBorder/80 dark:border-ios-darkBorder/80 grid grid-cols-1 sm:grid-cols-12 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-3">
           <div className="sm:col-span-8">
             <SearchField
               value={searchQuery}
@@ -95,7 +95,7 @@ export const SerbisyoPage: React.FC = () => {
               className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
                 activeType === opt.value
                   ? 'bg-ios-navy text-white font-semibold shadow-sm'
-                  : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted hover:text-ios-lightText'
+                  : 'bg-white dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText'
               }`}
             >
               {opt.label}

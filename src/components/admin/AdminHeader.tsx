@@ -110,6 +110,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
               }}
               className="p-2 sm:px-3 sm:py-1.5 rounded-ios-lg text-ios-lightMuted dark:text-ios-darkMuted hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent sm:border-ios-lightBorder sm:dark:border-ios-darkBorder flex items-center gap-2 text-xs transition-colors"
               title="Search records"
+              aria-label="Quick search admin records"
             >
               <Search className="w-4 h-4 text-ios-lightMuted" />
               <span className="hidden xl:inline text-xs font-medium">Quick search...</span>
