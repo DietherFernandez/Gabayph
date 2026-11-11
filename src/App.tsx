@@ -39,13 +39,13 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     let title = 'GabayPH — Philippine Public Services & Information Directory';
     if (currentPath === '/') {
-      title = 'GabayPH — Gabay sa Serbisyong Publiko ng Pilipinas';
+      title = 'GabayPH — Philippine Public Services & Information Directory';
     } else if (currentPath.startsWith('/trabaho')) {
       title = 'Trabaho (Employment & Careers) — GabayPH';
     } else if (currentPath.startsWith('/serbisyo')) {
-      title = 'Serbisyo (Government IDs & Services) — GabayPH';
+      title = 'Serbisyo (Government Services & IDs) — GabayPH';
     } else if (currentPath.startsWith('/pera')) {
-      title = 'Pera (Financial Aid & Ayuda) — GabayPH';
+      title = 'Pera (Financial Assistance & Subsidies) — GabayPH';
     } else if (currentPath.startsWith('/bayanihan')) {
       title = 'Bayanihan (Community & Volunteer Drives) — GabayPH';
     } else if (currentPath.startsWith('/aral')) {
@@ -53,17 +53,17 @@ const AppContent: React.FC = () => {
     } else if (currentPath.startsWith('/kaligtasan')) {
       title = 'Kaligtasan (Emergency Hotlines & Safety) — GabayPH';
     } else if (currentPath.startsWith('/item/')) {
-      title = 'Detalye ng Serbisyo — GabayPH';
+      title = 'Service Details — GabayPH';
     } else if (currentPath.startsWith('/search')) {
-      title = 'Paghahanap sa Direktoryo — GabayPH';
+      title = 'Universal Directory Search — GabayPH';
     } else if (currentPath.startsWith('/saved')) {
-      title = 'Nai-save na Tala — GabayPH';
+      title = 'Saved Bookmarks — GabayPH';
     } else if (currentPath.startsWith('/notifications')) {
-      title = 'Sentro ng mga Abiso — GabayPH';
+      title = 'Notification Center — GabayPH';
     } else if (currentPath.startsWith('/profile')) {
       title = 'Citizen Profile & Settings — GabayPH';
     } else if (currentPath.startsWith('/announcements')) {
-      title = 'Mga Opisyal na Abiso — GabayPH';
+      title = 'Official Public Advisories — GabayPH';
     } else if (currentPath.startsWith('/admin')) {
       title = 'Admin Operations Dashboard — GabayPH';
     }

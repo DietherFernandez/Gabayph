@@ -37,13 +37,13 @@ export const PeraPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">
           <DollarSign className="w-4 h-4" />
-          <span>Direktoryo ng Ayuda at Tulong Pinansyal</span>
+          <span>Financial Assistance & Subsidies Directory</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          PERA: Tulong Pinansyal, Subsidyo, at Ayuda ng Pamahalaan
+          PERA: Government Financial Aid, Subsidies & Grants
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Alamin ang mga lehitimong programa ng DSWD, DOLE, SSS, at NCSC tulad ng AICS medikal na tulong, TUPAD cash-for-work, 4Ps, at senior citizen social pension.
+          Access verified assistance programs from DSWD, DOLE, SSS, and NCSC including AICS medical crisis assistance, TUPAD cash-for-work, 4Ps, and senior citizen social pensions.
         </p>
 
         {/* Search & Filter */}
@@ -52,7 +52,7 @@ export const PeraPage: React.FC = () => {
             <SearchField
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Maghanap ng programa (hal. AICS, TUPAD, Calamity Loan, 4Ps)..."
+              placeholder="Search programs (e.g. AICS, TUPAD, Calamity Loan, 4Ps)..."
             />
           </div>
           <div className="sm:col-span-4">
@@ -60,11 +60,11 @@ export const PeraPage: React.FC = () => {
               value={assistanceType}
               onChange={e => setAssistanceType(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Uri ng Ayuda' },
-                { value: 'emergency_aid', label: 'Emergency Aid (Krisis/Medikal)' },
+                { value: 'all', label: 'All Assistance Types' },
+                { value: 'emergency_aid', label: 'Emergency Aid (Crisis / Medical)' },
                 { value: 'cash_grant', label: 'Cash Grants (4Ps, TUPAD)' },
-                { value: 'loan', label: 'Mababang Interes na Pautang' },
-                { value: 'pension', label: 'Sosyal na Pensyon' }
+                { value: 'loan', label: 'Low-Interest Government Loans' },
+                { value: 'pension', label: 'Social Pension' }
               ]}
             />
           </div>
@@ -75,8 +75,8 @@ export const PeraPage: React.FC = () => {
       <div>
         {filteredAssistance.length > 0 ? (
           <GroupedList
-            title={`Mga Programa ng Ayuda (${filteredAssistance.length})`}
-            subtitle="Pindutin ang programa para masuri ang pamantayan sa kwalipikasyon at kinakailangang papeles"
+            title={`Assistance Programs (${filteredAssistance.length})`}
+            subtitle="Click a program to review eligibility criteria, guidelines, and required documentary checklist"
           >
             {filteredAssistance.map(ast => {
               const saved = isSaved(ast.id);
@@ -97,7 +97,7 @@ export const PeraPage: React.FC = () => {
                   metadata={
                     <>
                       <span className="font-semibold text-emerald-700 dark:text-emerald-400">
-                        Saklaw: {ast.amountOrCoverage}
+                        Coverage: {ast.amountOrCoverage}
                       </span>
                     </>
                   }
@@ -107,7 +107,7 @@ export const PeraPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(ast.id);
-                        showToast(state ? 'Nai-save ang programa sa iyong talaan!' : 'Inalis ang programa.', 'info');
+                        showToast(state ? 'Saved program to bookmarks!' : 'Removed program from bookmarks.', 'info');
                       }}
                       className={`p-2 rounded-full transition-colors ${
                         saved
@@ -126,9 +126,9 @@ export const PeraPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<DollarSign className="w-8 h-8" />}
-            title="Walang Nahanap na Programa"
-            description={`Walang tumugmang tulong pinansyal para sa iyong paghahanap na "${searchQuery}".`}
-            actionLabel="I-reset ang Paghahanap"
+            title="No Assistance Programs Found"
+            description={`No financial assistance programs matched your search query "${searchQuery}".`}
+            actionLabel="Reset Search"
             onAction={() => {
               setSearchQuery('');
               setAssistanceType('all');

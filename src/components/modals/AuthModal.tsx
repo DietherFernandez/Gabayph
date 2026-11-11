@@ -32,14 +32,14 @@ export const AuthModal: React.FC = () => {
   const validateLogin = () => {
     const errors: { email?: string; password?: string } = {};
     if (!loginEmail.trim()) {
-      errors.email = 'Kailangang ilagay ang iyong email address.';
+      errors.email = 'Please enter your email address.';
     } else if (!/\S+@\S+\.\S+/.test(loginEmail)) {
-      errors.email = 'Hindi wasto ang format ng email address.';
+      errors.email = 'Please enter a valid email address.';
     }
     if (!loginPassword) {
-      errors.password = 'Kailangang ilagay ang iyong password.';
+      errors.password = 'Please enter your password.';
     } else if (loginPassword.length < 6) {
-      errors.password = 'Ang password ay dapat hindi bababa sa 6 na karakter.';
+      errors.password = 'Password must be at least 6 characters.';
     }
     setLoginErrors(errors);
     return Object.keys(errors).length === 0;
@@ -53,7 +53,7 @@ export const AuthModal: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       login(loginEmail, loginEmail.split('@')[0]);
-      showToast('Maligayang pagbabalik! Matagumpay kang nakapag-login.', 'success');
+      showToast('Welcome back! Successfully signed in.', 'success');
       closeAuthModal();
     }, 600);
   };
@@ -63,7 +63,7 @@ export const AuthModal: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       login('juan.delacruz@citizen.gov.ph', 'Juan Dela Cruz');
-      showToast('Naka-login gamit ang Demo Citizen Account!', 'success');
+      showToast('Signed in with Demo Citizen Account!', 'success');
       closeAuthModal();
     }, 400);
   };
@@ -71,23 +71,23 @@ export const AuthModal: React.FC = () => {
   const validateRegister = () => {
     const errors: { [key: string]: string } = {};
     if (!regName.trim()) {
-      errors.name = 'Kailangang ilagay ang buong pangalan.';
+      errors.name = 'Please enter your full name.';
     }
     if (!regEmail.trim()) {
-      errors.email = 'Kailangang ilagay ang email address.';
+      errors.email = 'Please enter your email address.';
     } else if (!/\S+@\S+\.\S+/.test(regEmail)) {
-      errors.email = 'Hindi wasto ang format ng email.';
+      errors.email = 'Please enter a valid email address.';
     }
     if (!regPassword) {
-      errors.password = 'Kailangang ilagay ang password.';
+      errors.password = 'Please enter a password.';
     } else if (regPassword.length < 6) {
-      errors.password = 'Ang password ay dapat hindi bababa sa 6 na karakter.';
+      errors.password = 'Password must be at least 6 characters.';
     }
     if (regPassword !== regConfirmPassword) {
-      errors.confirmPassword = 'Hindi magkatugma ang dalawang password.';
+      errors.confirmPassword = 'Passwords do not match.';
     }
     if (!termsAgreed) {
-      errors.terms = 'Kailangan mong tanggapin ang Mga Tuntunin at Patakaran.';
+      errors.terms = 'You must agree to the Terms of Service and Privacy Policy.';
     }
     setRegErrors(errors);
     return Object.keys(errors).length === 0;
@@ -101,7 +101,7 @@ export const AuthModal: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       login(regEmail, regName);
-      showToast('Matagumpay ang pagpaparehistro! Maligayang pagdating sa GabayPH.', 'success');
+      showToast('Registration successful! Welcome to GabayPH.', 'success');
       closeAuthModal();
     }, 700);
   };
@@ -112,15 +112,15 @@ export const AuthModal: React.FC = () => {
       onClose={closeAuthModal}
       maxWidth="md"
       title="GabayPH Citizen Account"
-      subtitle="I-access ang iyong naka-save na serbisyo at mga abiso"
+      subtitle="Access your bookmarked services and official notifications"
     >
       <div className="space-y-4 pt-1">
         {/* Tab Switcher */}
         <div className="flex justify-center">
           <SegmentedControl
             options={[
-              { value: 'login', label: 'Mag-login' },
-              { value: 'register', label: 'Magparehistro' }
+              { value: 'login', label: 'Sign In' },
+              { value: 'register', label: 'Create Account' }
             ]}
             value={activeTab}
             onChange={setActiveTab}
@@ -133,9 +133,9 @@ export const AuthModal: React.FC = () => {
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-ios-navy dark:text-blue-400 shrink-0" />
             <div className="text-xs">
-              <span className="font-semibold text-ios-navy dark:text-blue-300">Subukan Agad:</span>{' '}
+              <span className="font-semibold text-ios-navy dark:text-blue-300">Quick Preview:</span>{' '}
               <span className="text-ios-lightMuted dark:text-ios-darkMuted">
-                Gamitin ang verified citizen preview profile.
+                Use the verified citizen sample profile.
               </span>
             </div>
           </div>
@@ -159,7 +159,7 @@ export const AuthModal: React.FC = () => {
               required
               value={loginEmail}
               onChange={e => setLoginEmail(e.target.value)}
-              placeholder="halimbawa: maria@citizen.gov.ph"
+              placeholder="e.g. maria@citizen.gov.ph"
               leadingIcon={<Mail className="w-4 h-4" />}
               error={loginErrors.email}
             />
@@ -171,7 +171,7 @@ export const AuthModal: React.FC = () => {
                 required
                 value={loginPassword}
                 onChange={e => setLoginPassword(e.target.value)}
-                placeholder="Ilagay ang iyong password"
+                placeholder="Enter your password"
                 leadingIcon={<Lock className="w-4 h-4" />}
                 trailingIcon={
                   <button
@@ -192,14 +192,14 @@ export const AuthModal: React.FC = () => {
                     onChange={e => setRememberMe(e.target.checked)}
                     className="rounded text-ios-navy focus:ring-ios-navy"
                   />
-                  <span>Tandaan ako</span>
+                  <span>Remember me</span>
                 </label>
                 <button
                   type="button"
-                  onClick={() => showToast('Ang simulated password reset link ay ipinadala sa iyong email.', 'info')}
+                  onClick={() => showToast('Simulated password reset instructions sent to your email.', 'info')}
                   className="text-ios-navy dark:text-blue-400 hover:underline font-medium"
                 >
-                  Nakalimutan ang password?
+                  Forgot password?
                 </button>
               </div>
             </div>
@@ -210,14 +210,14 @@ export const AuthModal: React.FC = () => {
               className="w-full mt-2"
               loading={isLoading}
             >
-              Mag-login sa GabayPH
+              Sign In to GabayPH
             </Button>
           </form>
         ) : (
           /* REGISTRATION FORM */
           <form onSubmit={handleRegisterSubmit} className="space-y-3">
             <TextInput
-              label="Buong Pangalan"
+              label="Full Name"
               required
               value={regName}
               onChange={e => setRegName(e.target.value)}
@@ -232,29 +232,29 @@ export const AuthModal: React.FC = () => {
               required
               value={regEmail}
               onChange={e => setRegEmail(e.target.value)}
-              placeholder="juan@halimbawa.com"
+              placeholder="juan@example.com"
               leadingIcon={<Mail className="w-4 h-4" />}
               error={regErrors.email}
             />
 
             <TextInput
-              label="Password (Minimum 6 na karakter)"
+              label="Password (Minimum 6 characters)"
               type={showPassword ? 'text' : 'password'}
               required
               value={regPassword}
               onChange={e => setRegPassword(e.target.value)}
-              placeholder="Lumikha ng matibay na password"
+              placeholder="Create a secure password"
               leadingIcon={<Lock className="w-4 h-4" />}
               error={regErrors.password}
             />
 
             <TextInput
-              label="Kumpirmahin ang Password"
+              label="Confirm Password"
               type={showPassword ? 'text' : 'password'}
               required
               value={regConfirmPassword}
               onChange={e => setRegConfirmPassword(e.target.value)}
-              placeholder="Ulitin ang password"
+              placeholder="Re-enter your password"
               leadingIcon={<Lock className="w-4 h-4" />}
               error={regErrors.confirmPassword}
             />
@@ -268,7 +268,7 @@ export const AuthModal: React.FC = () => {
                   className="rounded text-ios-navy focus:ring-ios-navy mt-0.5"
                 />
                 <span>
-                  Sumasang-ayon ako sa mga <span className="text-ios-navy dark:text-blue-400 font-medium">Tuntunin ng Paggamit</span> at <span className="text-ios-navy dark:text-blue-400 font-medium">Patakaran sa Pagkapribado</span> alinsunod sa Data Privacy Act ng 2012 (RA 10173).
+                  I agree to the <span className="text-ios-navy dark:text-blue-400 font-medium">Terms of Use</span> and <span className="text-ios-navy dark:text-blue-400 font-medium">Privacy Policy</span> in accordance with the Data Privacy Act of 2012 (RA 10173).
                 </span>
               </label>
               {regErrors.terms && <p className="text-xs text-red-500 mt-1">{regErrors.terms}</p>}
@@ -280,7 +280,7 @@ export const AuthModal: React.FC = () => {
               className="w-full mt-2"
               loading={isLoading}
             >
-              Gumawa ng Citizen Account
+              Create Citizen Account
             </Button>
           </form>
         )}

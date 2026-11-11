@@ -38,13 +38,13 @@ export const BayanihanPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">
           <HeartHandshake className="w-4 h-4" />
-          <span>Direktoryo ng Bayanihan at Komunidad</span>
+          <span>Community & Bayanihan Directory</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          BAYANIHAN: Serbisyong Boluntaryo at Programa ng Komunidad
+          BAYANIHAN: Volunteer Opportunities & Community Programs
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Makilahok sa mga programang pangkomunidad tulad ng Red Cross Blood Drive, Brigada Eskwela, food bank pantries, at disaster relief volunteer mobilization.
+          Participate in civic community initiatives including Red Cross Blood Donation Drives, Brigada Eskwela, food pantries, and disaster relief volunteer mobilization.
         </p>
 
         {/* Search & Filter */}
@@ -53,7 +53,7 @@ export const BayanihanPage: React.FC = () => {
             <SearchField
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Maghanap ng volunteer drive o organisasyon..."
+              placeholder="Search volunteer drives or community organizations..."
             />
           </div>
           <div className="sm:col-span-4">
@@ -61,7 +61,7 @@ export const BayanihanPage: React.FC = () => {
               value={programType}
               onChange={e => setProgramType(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Uri ng Inisyatiba' },
+                { value: 'all', label: 'All Initiative Types' },
                 { value: 'volunteer', label: 'Volunteer Services' },
                 { value: 'community_pantry', label: 'Community Pantries / Food Rescue' },
                 { value: 'donation', label: 'Donation Drives' }
@@ -75,8 +75,8 @@ export const BayanihanPage: React.FC = () => {
       <div>
         {filteredList.length > 0 ? (
           <GroupedList
-            title={`Mga Programa ng Bayanihan (${filteredList.length})`}
-            subtitle="Pindutin para mabasa ang buong detalye o direktang magpatala bilang volunteer"
+            title={`Community Programs (${filteredList.length})`}
+            subtitle="Click to review full program details or register directly as a volunteer"
           >
             {filteredList.map(item => {
               const saved = isSaved(item.id);
@@ -93,7 +93,7 @@ export const BayanihanPage: React.FC = () => {
                       </Badge>
                       {item.volunteersNeeded && (
                         <span className="text-[10px] text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.2 rounded font-medium">
-                          Nangangailangan ng {item.volunteersNeeded} volunteers
+                          Needs {item.volunteersNeeded} volunteers
                         </span>
                       )}
                     </div>
@@ -101,9 +101,9 @@ export const BayanihanPage: React.FC = () => {
                   subtitle={`${item.organization} • ${item.location}`}
                   metadata={
                     <>
-                      <span>Iskedyul: {item.dates}</span>
+                      <span>Schedule: {item.dates}</span>
                       <span>•</span>
-                      <span>Benepisyaryo: {item.targetBeneficiaries}</span>
+                      <span>Beneficiaries: {item.targetBeneficiaries}</span>
                     </>
                   }
                   trailing={
@@ -117,14 +117,14 @@ export const BayanihanPage: React.FC = () => {
                         }}
                         className="text-xs py-1 px-2.5 hidden sm:inline-flex"
                       >
-                        Mag-volunteer
+                        Volunteer Now
                       </Button>
                       <button
                         type="button"
                         onClick={e => {
                           e.stopPropagation();
                           const state = toggleSave(item.id);
-                          showToast(state ? 'Nai-save ang programa!' : 'Inalis sa talaan.', 'info');
+                          showToast(state ? 'Program saved to bookmarks!' : 'Removed from bookmarks.', 'info');
                         }}
                         className={`p-2 rounded-full transition-colors ${
                           saved
@@ -144,9 +144,9 @@ export const BayanihanPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<HeartHandshake className="w-8 h-8" />}
-            title="Walang Nahanap na Programa"
-            description={`Walang nahanap na bayanihan drive para sa iyong paghahanap na "${searchQuery}".`}
-            actionLabel="I-reset ang Paghahanap"
+            title="No Community Programs Found"
+            description={`No community or volunteer drives matched your search query "${searchQuery}".`}
+            actionLabel="Reset Search"
             onAction={() => {
               setSearchQuery('');
               setProgramType('all');

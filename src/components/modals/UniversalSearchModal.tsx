@@ -61,7 +61,7 @@ export const UniversalSearchModal: React.FC = () => {
             autoFocus
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="Maghanap ng serbisyo, ahensya, trabaho, tulong pinansyal..."
+            placeholder="Search services, agencies, jobs, financial assistance..."
             className="flex-1 bg-transparent text-sm text-ios-lightText dark:text-ios-darkText placeholder:text-ios-lightMuted/70 outline-none"
           />
           {query ? (
@@ -85,13 +85,25 @@ export const UniversalSearchModal: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-all text-xs font-medium capitalize ${
+              className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-all text-xs font-medium ${
                 activeCategory === cat
                   ? 'bg-ios-navy text-white font-semibold'
                   : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted hover:text-ios-lightText'
               }`}
             >
-              {cat === 'all' ? 'Lahat' : cat}
+              {cat === 'all'
+                ? 'All'
+                : cat === 'serbisyo'
+                ? 'Services'
+                : cat === 'trabaho'
+                ? 'Jobs'
+                : cat === 'pera'
+                ? 'Financial Aid'
+                : cat === 'bayanihan'
+                ? 'Community'
+                : cat === 'aral'
+                ? 'Education'
+                : 'Safety'}
             </button>
           ))}
         </div>
@@ -102,7 +114,7 @@ export const UniversalSearchModal: React.FC = () => {
             filteredResults.length > 0 ? (
               <div className="space-y-1">
                 <p className="text-[11px] font-semibold tracking-wider uppercase text-ios-lightMuted dark:text-ios-darkMuted mb-2 px-1">
-                  Mga Resulta ({filteredResults.length})
+                  Results ({filteredResults.length})
                 </p>
                 {filteredResults.map(item => (
                   <div
@@ -133,10 +145,10 @@ export const UniversalSearchModal: React.FC = () => {
             ) : (
               <div className="text-center py-8">
                 <p className="text-sm font-medium text-ios-lightText dark:text-ios-darkText">
-                  Walang nahanap na serbisyo para sa "{query}"
+                  No services found for "{query}"
                 </p>
                 <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-1">
-                  Subukang maghanap gamit ang ibang salita o ahensya (hal. DFA, PhilSys, SSS, Trabaho).
+                  Try searching with different keywords or agency acronyms (e.g., DFA, PhilSys, SSS, Jobs).
                 </p>
               </div>
             )
@@ -146,7 +158,7 @@ export const UniversalSearchModal: React.FC = () => {
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted mb-2 px-1">
                   <History className="w-3.5 h-3.5" />
-                  <span>Kamakailang Hinanap</span>
+                  <span>Recent Searches</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {recentSearches.map(term => (
@@ -166,7 +178,7 @@ export const UniversalSearchModal: React.FC = () => {
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted mb-2 px-1">
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Pinakasikat na mga Paghahanap</span>
+                  <span>Popular Searches</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
@@ -196,7 +208,7 @@ export const UniversalSearchModal: React.FC = () => {
 
         {/* Footer info */}
         <div className="p-3 bg-ios-lightSecondary/60 dark:bg-ios-darkSecondary/60 border-t border-ios-lightBorder dark:border-ios-darkBorder flex items-center justify-between text-[11px] text-ios-lightMuted dark:text-ios-darkMuted">
-          <span>Pindutin ang resulta upang buksan ang buong detalye</span>
+          <span>Click a result to view full requirements and instructions</span>
           <button
             onClick={() => {
               closeSearchModal();
@@ -204,7 +216,7 @@ export const UniversalSearchModal: React.FC = () => {
             }}
             className="text-ios-navy dark:text-blue-400 font-semibold hover:underline"
           >
-            Tingnan lahat ng resulta →
+            View all results →
           </button>
         </div>
       </div>

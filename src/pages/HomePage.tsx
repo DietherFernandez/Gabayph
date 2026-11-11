@@ -36,7 +36,7 @@ export const HomePage: React.FC = () => {
       id: 'trabaho',
       name: 'Trabaho',
       subtitle: 'Employment & Careers',
-      count: '5+ Aktibong Trabaho',
+      count: '5+ Active Job Openings',
       icon: <Briefcase className="w-5 h-5" />,
       color: 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300',
       path: '/trabaho'
@@ -45,7 +45,7 @@ export const HomePage: React.FC = () => {
       id: 'serbisyo',
       name: 'Serbisyo',
       subtitle: 'Government IDs & Docs',
-      count: '8+ Pangunahing Serbisyo',
+      count: '8+ Essential Services',
       icon: <FileText className="w-5 h-5" />,
       color: 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300',
       path: '/serbisyo'
@@ -54,7 +54,7 @@ export const HomePage: React.FC = () => {
       id: 'pera',
       name: 'Pera',
       subtitle: 'Financial Assistance & Aid',
-      count: '5+ Programa ng Ayuda',
+      count: '5+ Assistance Programs',
       icon: <DollarSign className="w-5 h-5" />,
       color: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300',
       path: '/pera'
@@ -63,7 +63,7 @@ export const HomePage: React.FC = () => {
       id: 'bayanihan',
       name: 'Bayanihan',
       subtitle: 'Volunteer & Donations',
-      count: '4+ Programang Pangkomunidad',
+      count: '4+ Community Programs',
       icon: <HeartHandshake className="w-5 h-5" />,
       color: 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300',
       path: '/bayanihan'
@@ -72,7 +72,7 @@ export const HomePage: React.FC = () => {
       id: 'aral',
       name: 'Aral',
       subtitle: 'Scholarships & TVET',
-      count: '4+ Iskolarship at Kurso',
+      count: '4+ Scholarship Programs',
       icon: <GraduationCap className="w-5 h-5" />,
       color: 'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-300',
       path: '/aral'
@@ -81,7 +81,7 @@ export const HomePage: React.FC = () => {
       id: 'kaligtasan',
       name: 'Kaligtasan',
       subtitle: 'Emergency Hotlines & Guides',
-      count: '10+ Pambansang Hotline',
+      count: '10+ Verified Hotlines',
       icon: <ShieldAlert className="w-5 h-5" />,
       color: 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300',
       path: '/kaligtasan'
@@ -95,15 +95,15 @@ export const HomePage: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center px-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ios-navy/10 dark:bg-blue-900/30 text-ios-navy dark:text-blue-300 text-xs font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5 text-ios-navy dark:text-yellow-400" />
-            <span>Ang Iyong Gabay sa Serbisyong Publiko ng Pilipinas</span>
+            <span>Your Comprehensive Philippine Public Services Directory</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ios-lightText dark:text-ios-darkText mb-2.5">
-            Mabilis, Maaasahan, at Malinaw na Impormasyon ng Pamahalaan
+            Fast, Verified, and Clear Philippine Government Information
           </h1>
 
           <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted max-w-xl mx-auto mb-5 leading-relaxed">
-            Tuklasin ang mga kinakailangang dokumento para sa mga ID, bukas na trabaho sa gobyerno, tulong medikal, scholarship, at agarang numerong pang-emergency.
+            Discover verified requirements for government IDs, plantilla civil service careers, emergency cash assistance, national scholarships, and 24/7 emergency hotlines.
           </p>
 
           {/* iOS Compact Search Field Trigger */}
@@ -115,10 +115,10 @@ export const HomePage: React.FC = () => {
               <Search className="w-4 h-4" />
             </div>
             <span className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted text-left flex-1 truncate">
-              Maghanap ng Serbisyo (hal. PhilSys ID, Passport, 4Ps, SSS)...
+              Search directory (e.g. PhilSys ID, DFA Passport, 4Ps, SSS, TUPAD)...
             </span>
             <kbd className="hidden sm:inline-block px-2 py-0.5 text-[11px] font-mono bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted rounded border border-ios-lightBorder dark:border-ios-darkBorder">
-              Pindutin
+              Press /
             </kbd>
           </div>
 
@@ -129,10 +129,10 @@ export const HomePage: React.FC = () => {
             </span>
             {[
               { label: 'PhilSys National ID', id: 'srv-philsys' },
-              { label: 'DFA Passport', id: 'srv-dfa-passport' },
+              { label: 'DFA e-Passport', id: 'srv-dfa-passport' },
               { label: 'NBI Clearance', id: 'srv-nbi-clearance' },
-              { label: 'DSWD AICS Ayuda', id: 'ast-aics-dswd' },
-              { label: 'Emergency 911', id: 'safe-911' }
+              { label: 'DSWD AICS Assistance', id: 'ast-aics-dswd' },
+              { label: 'National Emergency 911', id: 'safe-911' }
             ].map(item => (
               <button
                 key={item.label}
@@ -151,17 +151,17 @@ export const HomePage: React.FC = () => {
         <div className="flex items-center justify-between mb-3 px-1">
           <div>
             <h2 className="text-sm sm:text-base font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-              Anim na Pangunahing Kategorya
+              Six Core Categories
             </h2>
             <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-              Pumili ng sektor upang masuri ang mga kaugnay na serbisyo
+              Select a sector to explore public services, requirements, and guides
             </p>
           </div>
           <button
             onClick={() => navigate('/serbisyo')}
             className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
           >
-            Lahat ng Direktoryo <ChevronRight className="w-3.5 h-3.5" />
+            Full Directory <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -198,10 +198,10 @@ export const HomePage: React.FC = () => {
             </span>
             <div>
               <h3 className="text-sm font-bold text-red-900 dark:text-red-200">
-                Agarang Pambansang Emergency Hotlines
+                National Emergency Hotlines
               </h3>
               <p className="text-xs text-red-700/80 dark:text-red-300/80">
-                Toll-free 24/7 na mga numerong handang sumaklolo sa buong bansa
+                Toll-free 24/7 verified emergency numbers active nationwide
               </p>
             </div>
           </div>
@@ -209,7 +209,7 @@ export const HomePage: React.FC = () => {
             onClick={() => navigate('/kaligtasan')}
             className="text-xs font-semibold text-red-700 dark:text-red-300 hover:underline flex items-center gap-1"
           >
-            Tingnan Lahat ng Hotline & Gabay <ChevronRight className="w-3.5 h-3.5" />
+            View All Hotlines & Safety Guides <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -242,14 +242,14 @@ export const HomePage: React.FC = () => {
       {/* Popular Government Services (Serbisyo) */}
       <section>
         <GroupedList
-          title="Pinakasikat na mga Serbisyo ng Pamahalaan"
-          subtitle="Mga kinakailangang ID, sertipiko, at lisensya"
+          title="Popular Government Services"
+          subtitle="Essential national IDs, civil registry documents, and clearances"
           action={
             <button
               onClick={() => navigate('/serbisyo')}
               className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
             >
-              Iba pang Serbisyo <ChevronRight className="w-3 h-3" />
+              More Services <ChevronRight className="w-3.5 h-3.5" />
             </button>
           }
         >
@@ -276,7 +276,7 @@ export const HomePage: React.FC = () => {
                     </span>
                     <span>•</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-                      Na-verify: {srv.lastVerified}
+                      Verified: {srv.lastVerified}
                     </span>
                   </>
                 }
@@ -287,7 +287,7 @@ export const HomePage: React.FC = () => {
                       e.stopPropagation();
                       const state = toggleSave(srv.id);
                       showToast(
-                        state ? 'Nai-save sa iyong talaan!' : 'Inalis sa iyong talaan.',
+                        state ? 'Saved to your bookmarks!' : 'Removed from bookmarks.',
                         'info'
                       );
                     }}
@@ -312,14 +312,14 @@ export const HomePage: React.FC = () => {
         {/* Featured Trabaho */}
         <div>
           <GroupedList
-            title="Bukas na mga Trabaho sa Gobyerno"
-            subtitle="Mga regular at contractual na posisyon"
+            title="Open Government & Public Sector Jobs"
+            subtitle="Civil service plantilla positions and contractual roles"
             action={
               <button
                 onClick={() => navigate('/trabaho')}
                 className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
               >
-                Lahat ng Trabaho <ChevronRight className="w-3 h-3" />
+                All Job Listings <ChevronRight className="w-3 h-3" />
               </button>
             }
           >
@@ -347,14 +347,14 @@ export const HomePage: React.FC = () => {
         {/* Featured Financial Aid (Pera) */}
         <div>
           <GroupedList
-            title="Tulong Pinansyal at Ayuda"
-            subtitle="Mga ayuda at subsidyo mula sa DSWD, DOLE, at SSS"
+            title="Financial Assistance & Emergency Subsidies"
+            subtitle="Social safety net assistance from DSWD, DOLE, and SSS"
             action={
               <button
                 onClick={() => navigate('/pera')}
                 className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
               >
-                Lahat ng Ayuda <ChevronRight className="w-3 h-3" />
+                All Financial Programs <ChevronRight className="w-3 h-3" />
               </button>
             }
           >
@@ -383,14 +383,14 @@ export const HomePage: React.FC = () => {
         {/* Education & Scholarships */}
         <div>
           <GroupedList
-            title="Mga Iskolarship at Libreng Kurso"
-            subtitle="Suporta sa edukasyon mula sa DOST, CHED, at TESDA"
+            title="Scholarships & Free Skills Training"
+            subtitle="Educational assistance and vocational TVET opportunities"
             action={
               <button
                 onClick={() => navigate('/aral')}
                 className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
               >
-                Iba pang Iskolarship <ChevronRight className="w-3 h-3" />
+                More Scholarships <ChevronRight className="w-3 h-3" />
               </button>
             }
           >
@@ -410,14 +410,14 @@ export const HomePage: React.FC = () => {
         {/* Official Advisories / Announcements */}
         <div>
           <GroupedList
-            title="Pinakahuling Opisyal na Abiso"
-            subtitle="Mga anunsyo ukol sa presyo, holiday, at kaligtasan"
+            title="Latest Official Public Advisories"
+            subtitle="Public advisories regarding price freezes, deadlines, and alerts"
             action={
               <button
                 onClick={() => navigate('/announcements')}
                 className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
               >
-                Lahat ng Abiso <ChevronRight className="w-3 h-3" />
+                All Advisories <ChevronRight className="w-3 h-3" />
               </button>
             }
           >

@@ -85,7 +85,7 @@ export const AdminDashboardPage: React.FC = () => {
   const [formAcronym, setFormAcronym] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [formFees, setFormFees] = useState('Libre (Free)');
-  const [formProcessingTime, setFormProcessingTime] = useState('1 hanggang 3 araw');
+  const [formProcessingTime, setFormProcessingTime] = useState('1 to 3 working days');
   const [formOfficialUrl, setFormOfficialUrl] = useState('https://gov.ph');
 
   const refreshAllData = () => {
@@ -104,7 +104,7 @@ export const AdminDashboardPage: React.FC = () => {
   const handleOpenCreate = (cat: CategoryType) => {
     setFormCategory(cat);
     setFormTitle('');
-    setFormAgency('Kagawaran ng Pamahalaan');
+    setFormAgency('Department of Public Works and Highways');
     setFormAcronym('GOV');
     setFormDescription('');
     setFormFees('Libre (Free)');
@@ -128,7 +128,7 @@ export const AdminDashboardPage: React.FC = () => {
   const handleSaveRecord = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formTitle.trim()) {
-      showToast('Pakilagay ang pamagat ng tala.', 'error');
+      showToast('Please enter the title of the record.', 'error');
       return;
     }
 
@@ -144,7 +144,7 @@ export const AdminDashboardPage: React.FC = () => {
         lastVerified: 'November 2026'
       };
       MockStorage.updateItem(updatedItem);
-      showToast(`Nai-update ang tala: ${formTitle}`, 'success');
+      showToast(`Record updated: ${formTitle}`, 'success');
     } else {
       // Create new
       const newItem: BaseItem = {
@@ -165,10 +165,10 @@ export const AdminDashboardPage: React.FC = () => {
           category: 'serbisyo',
           serviceType: 'identity',
           requirements: ['Valid Government ID', 'Barangay Clearance'],
-          eligibility: ['Lahat ng mamamayang Pilipino'],
+          eligibility: ['All Filipino citizens of legal age'],
           fees: formFees,
           processingTime: formProcessingTime,
-          steps: ['Isumite ang online application form.', 'Pumunta sa pinakamalapit na tanggapan.'],
+          steps: ['Submit online application via official portal.', 'Present required documents at designated field office.'],
           officeLocations: ['Regional Offices nationwide'],
           onlineServiceAvailable: true
         };
@@ -176,7 +176,7 @@ export const AdminDashboardPage: React.FC = () => {
       } else {
         MockStorage.addItem(newItem);
       }
-      showToast(`Nalikha ang bagong ${formCategory} tala: ${formTitle}`, 'success');
+      showToast(`Created new ${formCategory} record: ${formTitle}`, 'success');
     }
 
     setIsCreateModalOpen(false);
@@ -184,41 +184,41 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   const handleDeleteRecord = (category: CategoryType, id: string, title: string) => {
-    if (window.confirm(`Sigurado ka bang nais mong burahin ang record na "${title}"?`)) {
+    if (window.confirm(`Are you sure you want to delete the record "${title}"?`)) {
       MockStorage.deleteItem(category, id);
       refreshAllData();
-      showToast(`Nabura ang tala: ${title}`, 'info');
+      showToast(`Deleted record: ${title}`, 'info');
     }
   };
 
   const handleUpdateReportStatus = (id: string, status: CitizenReport['status']) => {
     MockStorage.updateReportStatus(id, status);
     refreshAllData();
-    showToast(`Binago ang estado ng ulat sa ${status}.`, 'info');
+    showToast(`Updated report status to ${status}.`, 'info');
   };
 
   const handleUpdateSuggestionStatus = (id: string, status: ServiceSuggestion['status']) => {
     MockStorage.updateSuggestionStatus(id, status);
     refreshAllData();
-    showToast(`Binago ang estado ng mungkahi sa ${status}.`, 'info');
+    showToast(`Updated suggestion status to ${status}.`, 'info');
   };
 
   const navTabs: { id: AdminTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'overview', label: 'Pangkalahatan', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { id: 'services', label: 'Mga Serbisyo', icon: <FileText className="w-4 h-4" />, badge: services.length },
-    { id: 'jobs', label: 'Trabaho', icon: <Briefcase className="w-4 h-4" />, badge: jobs.length },
-    { id: 'assistance', label: 'Ayuda at Pera', icon: <DollarSign className="w-4 h-4" />, badge: assistance.length },
-    { id: 'education', label: 'Edukasyon', icon: <GraduationCap className="w-4 h-4" />, badge: education.length },
-    { id: 'bayanihan', label: 'Bayanihan', icon: <HeartHandshake className="w-4 h-4" />, badge: bayanihan.length },
-    { id: 'safety', label: 'Kaligtasan', icon: <ShieldAlert className="w-4 h-4" />, badge: safety.length },
-    { id: 'announcements', label: 'Mga Anunsyo', icon: <Bell className="w-4 h-4" />, badge: announcements.length },
+    { id: 'overview', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { id: 'services', label: 'Public Services', icon: <FileText className="w-4 h-4" />, badge: services.length },
+    { id: 'jobs', label: 'Careers & Jobs', icon: <Briefcase className="w-4 h-4" />, badge: jobs.length },
+    { id: 'assistance', label: 'Financial Assistance', icon: <DollarSign className="w-4 h-4" />, badge: assistance.length },
+    { id: 'education', label: 'Education & TVET', icon: <GraduationCap className="w-4 h-4" />, badge: education.length },
+    { id: 'bayanihan', label: 'Community Programs', icon: <HeartHandshake className="w-4 h-4" />, badge: bayanihan.length },
+    { id: 'safety', label: 'Safety & Hotlines', icon: <ShieldAlert className="w-4 h-4" />, badge: safety.length },
+    { id: 'announcements', label: 'Public Bulletins', icon: <Bell className="w-4 h-4" />, badge: announcements.length },
     {
       id: 'reports',
-      label: 'Moderation / Ulat',
+      label: 'Moderation Reports',
       icon: <AlertTriangle className="w-4 h-4 text-amber-500" />,
       badge: reports.filter(r => r.status === 'pending').length
     },
-    { id: 'suggestions', label: 'Mga Mungkahi', icon: <CheckCircle2 className="w-4 h-4 text-emerald-500" />, badge: suggestions.length },
+    { id: 'suggestions', label: 'Service Suggestions', icon: <CheckCircle2 className="w-4 h-4 text-emerald-500" />, badge: suggestions.length },
     { id: 'logs', label: 'Audit Trail Logs', icon: <History className="w-4 h-4" /> },
     { id: 'settings', label: 'Admin Settings', icon: <Settings className="w-4 h-4" /> }
   ];
@@ -241,7 +241,7 @@ export const AdminDashboardPage: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-slate-900/80 font-medium">
-              Pamamahala ng mga talaan, pagsusuri ng ulat ng mamamayan, at pagpapatunay ng serbisyo.
+              Centralized record management, citizen feedback moderation, and data verification.
             </p>
           </div>
         </div>
@@ -254,11 +254,11 @@ export const AdminDashboardPage: React.FC = () => {
             onClick={() => {
               setRole('citizen');
               navigate('/');
-              showToast('Bumalik sa Citizen Interface.', 'info');
+              showToast('Returned to Citizen Interface.', 'info');
             }}
             className="text-xs font-bold bg-slate-950 text-white hover:bg-slate-800"
           >
-            Bumalik sa Citizen View
+            Return to Citizen View
           </Button>
         </div>
       </div>
@@ -307,19 +307,19 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="p-4 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                   <span className="text-[11px] font-semibold text-ios-lightMuted dark:text-ios-darkMuted uppercase">
-                    Kabuuang Serbisyo
+                    Total Services
                   </span>
                   <div className="text-2xl font-bold text-ios-navy dark:text-blue-400 mt-1">
                     {services.length}
                   </div>
                   <span className="text-[10px] text-emerald-600 font-medium mt-1 block">
-                    ✓ Lahat ay beripikado
+                    ✓ Verified standard
                   </span>
                 </div>
 
                 <div className="p-4 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                   <span className="text-[11px] font-semibold text-ios-lightMuted dark:text-ios-darkMuted uppercase">
-                    Bukas na Trabaho
+                    Active Job Postings
                   </span>
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
                     {jobs.length}
@@ -331,25 +331,25 @@ export const AdminDashboardPage: React.FC = () => {
 
                 <div className="p-4 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                   <span className="text-[11px] font-semibold text-ios-lightMuted dark:text-ios-darkMuted uppercase">
-                    Mga Ulat ng Mamamayan
+                    Citizen Inaccuracy Reports
                   </span>
                   <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
                     {reports.filter(r => r.status === 'pending').length}
                   </div>
                   <span className="text-[10px] text-amber-600 font-medium mt-1 block">
-                    Nangangailangan ng aksyon
+                    Pending review
                   </span>
                 </div>
 
                 <div className="p-4 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                   <span className="text-[11px] font-semibold text-ios-lightMuted dark:text-ios-darkMuted uppercase">
-                    Mga Mungkahi
+                    Service Suggestions
                   </span>
                   <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                     {suggestions.length}
                   </div>
                   <span className="text-[10px] text-ios-lightMuted mt-1 block">
-                    Bagong mungkahi mula sa publiko
+                    Public user submissions
                   </span>
                 </div>
               </div>
@@ -357,20 +357,20 @@ export const AdminDashboardPage: React.FC = () => {
               {/* Quick Actions Panel */}
               <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted mb-3">
-                  Mabilisang Aksyon sa Paglikha ng Tala
+                  Quick Record Creation Actions
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   <Button size="sm" variant="primary" onClick={() => handleOpenCreate('serbisyo')}>
-                    <Plus className="w-3.5 h-3.5" /> Magdagdag ng Serbisyo
+                    <Plus className="w-3.5 h-3.5" /> Add Public Service
                   </Button>
                   <Button size="sm" variant="secondary" onClick={() => handleOpenCreate('trabaho')}>
-                    <Plus className="w-3.5 h-3.5" /> Magdagdag ng Trabaho
+                    <Plus className="w-3.5 h-3.5" /> Add Job Posting
                   </Button>
                   <Button size="sm" variant="secondary" onClick={() => handleOpenCreate('pera')}>
-                    <Plus className="w-3.5 h-3.5" /> Magdagdag ng Ayuda
+                    <Plus className="w-3.5 h-3.5" /> Add Financial Aid
                   </Button>
                   <Button size="sm" variant="secondary" onClick={() => handleOpenCreate('aral')}>
-                    <Plus className="w-3.5 h-3.5" /> Magdagdag ng Iskolarship
+                    <Plus className="w-3.5 h-3.5" /> Add Scholarship
                   </Button>
                 </div>
               </div>
@@ -379,13 +379,13 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
-                    Kamakailang Audit Trail (Huling 5 Aksyon)
+                    Recent Audit Trail (Latest 5 Events)
                   </h3>
                   <button
                     onClick={() => setActiveTab('logs')}
                     className="text-xs text-ios-navy dark:text-blue-400 font-semibold hover:underline"
                   >
-                    Tingnan Lahat
+                    View Full Log
                   </button>
                 </div>
                 <div className="divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
@@ -396,7 +396,7 @@ export const AdminDashboardPage: React.FC = () => {
                           {log.action}
                         </span>
                         <div className="text-[11px] text-ios-lightMuted">
-                          Isinagawa ni: {log.user} • {log.timestamp}
+                          Actor: {log.user} • {log.timestamp}
                         </div>
                       </div>
                       <Badge variant={log.status === 'success' ? 'verified' : log.status === 'warning' ? 'urgent' : 'default'}>
@@ -415,14 +415,14 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                    Pamamahala ng mga Serbisyo ng Pamahalaan
+                    Government Services Directory Management
                   </h2>
                   <p className="text-xs text-ios-lightMuted">
-                    {services.length} kabuuang tala sa direktoryo
+                    {services.length} verified records in directory
                   </p>
                 </div>
                 <Button size="sm" variant="primary" onClick={() => handleOpenCreate('serbisyo')}>
-                  <Plus className="w-3.5 h-3.5" /> Bagong Serbisyo
+                  <Plus className="w-3.5 h-3.5" /> New Service Record
                 </Button>
               </div>
 
@@ -430,11 +430,11 @@ export const AdminDashboardPage: React.FC = () => {
                 <table className="w-full text-xs text-left">
                   <thead className="bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted font-semibold uppercase text-[10px]">
                     <tr>
-                      <th className="p-3">Serbisyo</th>
-                      <th className="p-3">Ahensya</th>
-                      <th className="p-3">Bayarin</th>
-                      <th className="p-3">Beripikasyon</th>
-                      <th className="p-3 text-right">Aksyon</th>
+                      <th className="p-3">Service Title</th>
+                      <th className="p-3">Agency</th>
+                      <th className="p-3">Fees</th>
+                      <th className="p-3">Verification</th>
+                      <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ios-lightBorder dark:divide-ios-darkBorder">
@@ -456,14 +456,14 @@ export const AdminDashboardPage: React.FC = () => {
                           <button
                             onClick={() => handleOpenEdit(srv)}
                             className="p-1.5 text-ios-lightMuted hover:text-ios-navy rounded hover:bg-black/5"
-                            title="I-edit"
+                            title="Edit record"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteRecord('serbisyo', srv.id, srv.title)}
                             className="p-1.5 text-ios-lightMuted hover:text-red-500 rounded hover:bg-black/5"
-                            title="Burahin"
+                            title="Delete record"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -482,14 +482,14 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                    Pamamahala ng Trabaho (Employment)
+                    Employment & Careers Management
                   </h2>
                   <p className="text-xs text-ios-lightMuted">
-                    {jobs.length} bakanteng posisyon sa talaan
+                    {jobs.length} positions currently active
                   </p>
                 </div>
                 <Button size="sm" variant="primary" onClick={() => handleOpenCreate('trabaho')}>
-                  <Plus className="w-3.5 h-3.5" /> Magdagdag ng Trabaho
+                  <Plus className="w-3.5 h-3.5" /> Add Job Posting
                 </Button>
               </div>
 
@@ -497,11 +497,11 @@ export const AdminDashboardPage: React.FC = () => {
                 <table className="w-full text-xs text-left">
                   <thead className="bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted font-semibold uppercase text-[10px]">
                     <tr>
-                      <th className="p-3">Posisyon</th>
-                      <th className="p-3">Ahensya</th>
-                      <th className="p-3">Sahod</th>
+                      <th className="p-3">Position Title</th>
+                      <th className="p-3">Agency</th>
+                      <th className="p-3">Salary Schedule</th>
                       <th className="p-3">Deadline</th>
-                      <th className="p-3 text-right">Aksyon</th>
+                      <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-ios-lightBorder dark:divide-ios-darkBorder">
@@ -523,14 +523,14 @@ export const AdminDashboardPage: React.FC = () => {
                           <button
                             onClick={() => handleOpenEdit(job)}
                             className="p-1.5 text-ios-lightMuted hover:text-ios-navy rounded hover:bg-black/5"
-                            title="I-edit"
+                            title="Edit record"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteRecord('trabaho', job.id, job.title)}
                             className="p-1.5 text-ios-lightMuted hover:text-red-500 rounded hover:bg-black/5"
-                            title="Burahin"
+                            title="Delete record"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -549,14 +549,14 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                    Pamamahala ng Tulong Pinansyal (Ayuda)
+                    Financial Assistance & Subsidies Management
                   </h2>
                   <p className="text-xs text-ios-lightMuted">
-                    {assistance.length} programa sa talaan
+                    {assistance.length} assistance programs in directory
                   </p>
                 </div>
                 <Button size="sm" variant="primary" onClick={() => handleOpenCreate('pera')}>
-                  <Plus className="w-3.5 h-3.5" /> Bagong Programa ng Ayuda
+                  <Plus className="w-3.5 h-3.5" /> Add Assistance Program
                 </Button>
               </div>
 
@@ -568,7 +568,7 @@ export const AdminDashboardPage: React.FC = () => {
                         {ast.title}
                       </h4>
                       <p className="text-ios-lightMuted text-[11px] mt-0.5">
-                        {ast.agency} • Halaga: <strong>{ast.amountOrCoverage.split(';')[0]}</strong>
+                        {ast.agency} • Amount: <strong>{ast.amountOrCoverage.split(';')[0]}</strong>
                       </p>
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -597,14 +597,14 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                    Mga Ulat ng Maling Impormasyon (Moderation)
+                    Inaccuracy Reports & Moderation Queue
                   </h2>
                   <p className="text-xs text-ios-lightMuted">
-                    Suriin at aksyunan ang mga sumbong ng mamamayan ukol sa mga bayarin o sirang link
+                    Review and process citizen feedback regarding requirements, fees, and broken agency links
                   </p>
                 </div>
                 <Badge variant="urgent">
-                  {reports.filter(r => r.status === 'pending').length} Nakabinbin
+                  {reports.filter(r => r.status === 'pending').length} Pending Review
                 </Badge>
               </div>
 
@@ -630,13 +630,13 @@ export const AdminDashboardPage: React.FC = () => {
                     </div>
 
                     <p className="text-ios-lightText dark:text-ios-darkText font-medium">
-                      Uri ng Isyu: <span className="capitalize">{rep.reportType.replace('_', ' ')}</span>
+                      Issue Category: <span className="capitalize">{rep.reportType.replace('_', ' ')}</span>
                     </p>
                     <p className="text-ios-lightMuted bg-white dark:bg-slate-900 p-2.5 rounded border border-ios-lightBorder/60 dark:border-ios-darkBorder/60">
                       "{rep.details}"
                     </p>
                     <p className="text-[11px] text-ios-lightMuted">
-                      Isumite noong: {rep.submittedAt} {rep.reporterEmail ? `mula kay ${rep.reporterEmail}` : ''}
+                      Submitted: {rep.submittedAt} {rep.reporterEmail ? `by ${rep.reporterEmail}` : ''}
                     </p>
 
                     <div className="flex items-center gap-2 pt-2 border-t border-ios-lightBorder dark:border-ios-darkBorder justify-end">
@@ -672,10 +672,10 @@ export const AdminDashboardPage: React.FC = () => {
             <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
               <div>
                 <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                  Mga Mungkahing Serbisyo mula sa Publiko
+                  Public Service Suggestions Queue
                 </h2>
                 <p className="text-xs text-ios-lightMuted">
-                  Maaaring aprobahan upang maging opisyal na tala sa direktoryo
+                  Review community suggestions for promotion to official directory entries
                 </p>
               </div>
 
@@ -698,14 +698,14 @@ export const AdminDashboardPage: React.FC = () => {
                       </span>
                     </div>
                     <p className="text-ios-navy dark:text-blue-400 font-semibold">
-                      Ahensya: {sug.agencyName}
+                      Agency: {sug.agencyName}
                     </p>
                     <p className="text-ios-lightMuted">
                       {sug.description}
                     </p>
                     <div className="flex items-center justify-between pt-2 border-t border-ios-lightBorder dark:border-ios-darkBorder">
                       <span className="text-[11px] text-ios-lightMuted">
-                        Petsa: {sug.submittedAt}
+                        Date: {sug.submittedAt}
                       </span>
                       <div className="flex items-center gap-1.5">
                         <Button
@@ -714,7 +714,7 @@ export const AdminDashboardPage: React.FC = () => {
                           onClick={() => handleUpdateSuggestionStatus(sug.id, 'approved')}
                           className="text-xs py-1"
                         >
-                          Aprobahan
+                          Approve
                         </Button>
                         <Button
                           size="sm"
@@ -722,7 +722,7 @@ export const AdminDashboardPage: React.FC = () => {
                           onClick={() => handleUpdateSuggestionStatus(sug.id, 'rejected')}
                           className="text-xs py-1"
                         >
-                          Tanggihan
+                          Reject
                         </Button>
                       </div>
                     </div>
@@ -762,31 +762,31 @@ export const AdminDashboardPage: React.FC = () => {
           {activeTab === 'settings' && (
             <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4 text-xs">
               <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
-                Mga Setting ng Administrasyon (Prototype)
+                Administration Settings (Prototype Mode)
               </h2>
               <p className="text-ios-lightMuted">
-                Ang application ay tumatakbo sa Frontend Prototype Mode (Phase 1). Walang live backend database na nakakonekta alinsunod sa mga panuntunan ng proyekto.
+                The platform is running in Frontend Prototype Mode (Phase 1). No external backend database or cloud service is connected in compliance with project directives.
               </p>
 
               <div className="p-4 rounded-ios-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/60 flex items-center justify-between">
                 <div>
                   <h4 className="font-bold text-red-700 dark:text-red-300">
-                    I-reset ang Lahat ng Prototype Data
+                    Reset All Prototype Mock Fixtures
                   </h4>
                   <p className="text-ios-lightMuted text-[11px]">
-                    Ibabalik nito ang lahat ng services, jobs, ayuda, at reports sa orihinal na initial mock fixtures.
+                    This operation restores all services, jobs, assistance, announcements, and reports back to their initial factory mock fixtures.
                   </p>
                 </div>
                 <Button
                   size="sm"
                   variant="destructive"
                   onClick={() => {
-                    if (window.confirm('I-reset ang buong prototype database?')) {
+                    if (window.confirm('Reset entire prototype database back to initial fixtures?')) {
                       MockStorage.resetAllToDefaults();
                     }
                   }}
                 >
-                  <RotateCcw className="w-3.5 h-3.5" /> I-reset Lahat
+                  <RotateCcw className="w-3.5 h-3.5" /> Reset All Data
                 </Button>
               </div>
             </div>
@@ -797,14 +797,14 @@ export const AdminDashboardPage: React.FC = () => {
             <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText capitalize">
-                  Pamamahala ng {activeTab}
+                  Management: {activeTab}
                 </h2>
                 <Button size="sm" variant="primary" onClick={() => handleOpenCreate('serbisyo')}>
-                  <Plus className="w-3.5 h-3.5" /> Magdagdag ng Tala
+                  <Plus className="w-3.5 h-3.5" /> Add Record
                 </Button>
               </div>
               <p className="text-xs text-ios-lightMuted">
-                Aktibong pinamamahalaan ang seksyong {activeTab} sa ilalim ng local simulated store.
+                Section {activeTab} is actively managed via the local client mock store.
               </p>
             </div>
           )}
@@ -815,60 +815,60 @@ export const AdminDashboardPage: React.FC = () => {
       <Modal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        title={editingItem ? `I-edit ang Tala (${formCategory})` : `Lumikha ng Bagong Tala (${formCategory})`}
+        title={editingItem ? `Edit Record (${formCategory})` : `Create New Record (${formCategory})`}
         maxWidth="lg"
       >
         <form onSubmit={handleSaveRecord} className="space-y-3.5">
           <TextInput
-            label="Pamagat ng Tala o Serbisyo"
+            label="Record or Service Title"
             required
             value={formTitle}
             onChange={e => setFormTitle(e.target.value)}
-            placeholder="hal. PhilHealth Registration, DOST Scholarship..."
+            placeholder="e.g. PhilHealth Registration, DOST Scholarship..."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <TextInput
-              label="Ahensya ng Pamahalaan"
+              label="Government Agency"
               required
               value={formAgency}
               onChange={e => setFormAgency(e.target.value)}
-              placeholder="hal. Department of Health"
+              placeholder="e.g. Department of Health"
             />
             <TextInput
-              label="Akronim ng Ahensya"
+              label="Agency Acronym"
               value={formAcronym}
               onChange={e => setFormAcronym(e.target.value)}
-              placeholder="hal. DOH, PSA, DOLE"
+              placeholder="e.g. DOH, PSA, DOLE"
             />
           </div>
 
           <Textarea
-            label="Paglalarawan (Description)"
+            label="Description"
             required
             rows={3}
             value={formDescription}
             onChange={e => setFormDescription(e.target.value)}
-            placeholder="Maikling buod ng layunin at saklaw ng serbisyo..."
+            placeholder="Brief summary of service objectives, eligibility, and coverage..."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <TextInput
-              label="Bayarin (Fees)"
+              label="Processing Fees"
               value={formFees}
               onChange={e => setFormFees(e.target.value)}
-              placeholder="hal. Libre (Free) o ₱950.00"
+              placeholder="e.g. Free (₱0.00) or Standard Schedule"
             />
             <TextInput
-              label="Panahon ng Pagproseso"
+              label="Processing Time"
               value={formProcessingTime}
               onChange={e => setFormProcessingTime(e.target.value)}
-              placeholder="hal. 3–5 working days"
+              placeholder="e.g. 3–5 working days"
             />
           </div>
 
           <TextInput
-            label="Opisyal na Website Link"
+            label="Official Portal URL"
             type="url"
             value={formOfficialUrl}
             onChange={e => setFormOfficialUrl(e.target.value)}
@@ -877,10 +877,10 @@ export const AdminDashboardPage: React.FC = () => {
 
           <div className="flex items-center justify-end gap-2 pt-3 border-t border-ios-lightBorder dark:border-ios-darkBorder">
             <Button type="button" variant="secondary" onClick={() => setIsCreateModalOpen(false)}>
-              Kanselahin
+              Cancel
             </Button>
             <Button type="submit" variant="primary">
-              I-save ang Tala
+              Save Record
             </Button>
           </div>
         </form>

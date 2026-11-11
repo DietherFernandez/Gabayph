@@ -42,7 +42,7 @@ export const ProfilePage: React.FC = () => {
         const result = reader.result as string;
         setAvatarUrl(result);
         updateUser({ avatarUrl: result });
-        showToast('Nai-update ang iyong profile photo preview!', 'success');
+        showToast('Profile photo preview updated!', 'success');
       };
       reader.readAsDataURL(file);
     }
@@ -63,14 +63,14 @@ export const ProfilePage: React.FC = () => {
         notificationsEnabled: notifEnabled,
         emergencyAlertsEnabled: emergencyAlerts
       });
-      showToast('Matagumpay na nai-save ang iyong profile settings!', 'success');
+      showToast('Profile settings saved successfully!', 'success');
     }, 500);
   };
 
   const handleLogout = () => {
-    if (window.confirm('Nais mo bang mag-logout mula sa iyong citizen account?')) {
+    if (window.confirm('Are you sure you want to sign out of your citizen account?')) {
       logout();
-      showToast('Naka-logout na mula sa iyong account.', 'info');
+      showToast('Successfully signed out of your account.', 'info');
       navigate('/');
     }
   };
@@ -92,7 +92,7 @@ export const ProfilePage: React.FC = () => {
             <label
               htmlFor="avatar-upload"
               className="absolute bottom-0 right-0 p-1.5 rounded-full bg-ios-navy hover:bg-ios-navyLight text-white shadow-ios-sm cursor-pointer transition-transform group-hover:scale-110"
-              title="Mag-upload ng bagong profile photo"
+              title="Upload new profile photo"
             >
               <Camera className="w-3.5 h-3.5" />
               <input
@@ -111,7 +111,7 @@ export const ProfilePage: React.FC = () => {
                 {name}
               </h1>
               <Badge variant="verified">
-                <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Beripikadong Mamamayan
+                <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Verified Citizen
               </Badge>
             </div>
             <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mb-2">
@@ -130,12 +130,12 @@ export const ProfilePage: React.FC = () => {
       <form onSubmit={handleSaveProfile} className="space-y-6">
         <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
           <h2 className="text-sm font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
-            Personal na Impormasyon
+            Personal Information
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <TextInput
-              label="Buong Pangalan"
+              label="Full Name"
               required
               value={name}
               onChange={e => setName(e.target.value)}
@@ -150,13 +150,13 @@ export const ProfilePage: React.FC = () => {
               leadingIcon={<Mail className="w-4 h-4" />}
             />
             <TextInput
-              label="Numero ng Mobile"
+              label="Mobile Number"
               value={phone}
               onChange={e => setPhone(e.target.value)}
               leadingIcon={<Phone className="w-4 h-4" />}
             />
             <TextInput
-              label="Lungsod / Bayan"
+              label="City / Municipality"
               value={city}
               onChange={e => setCity(e.target.value)}
               leadingIcon={<MapPin className="w-4 h-4" />}
@@ -164,7 +164,7 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           <TextInput
-            label="Lalawigan / Probinsya"
+            label="Province / Region"
             value={province}
             onChange={e => setProvince(e.target.value)}
             placeholder="Metro Manila, Cebu, Davao del Sur..."
@@ -174,7 +174,7 @@ export const ProfilePage: React.FC = () => {
         {/* Preferences & Settings */}
         <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
           <h2 className="text-sm font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
-            Mga Kagustuhan at Abiso
+            Preferences & Alert Settings
           </h2>
 
           <div className="divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
@@ -182,10 +182,10 @@ export const ProfilePage: React.FC = () => {
             <div className="flex items-center justify-between py-3">
               <div>
                 <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
-                  Mga Abiso sa App
+                  In-App Notifications
                 </span>
                 <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-                  Makatanggap ng abiso kapag may update sa mga serbisyo
+                  Receive notifications regarding service updates and deadline reminders
                 </span>
               </div>
               <input
@@ -200,10 +200,10 @@ export const ProfilePage: React.FC = () => {
             <div className="flex items-center justify-between py-3">
               <div>
                 <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
-                  Mga Alerto sa Kalamidad at Sakuna
+                  Emergency & Disaster Advisories
                 </span>
                 <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-                  Priority push broadcast alerts mula sa NDRRMC at PAGASA
+                  Priority broadcast alerts and bulletins from NDRRMC and PAGASA
                 </span>
               </div>
               <input
@@ -218,10 +218,10 @@ export const ProfilePage: React.FC = () => {
             <div className="flex items-center justify-between py-3">
               <div>
                 <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
-                  Tema ng Interface (Dark Mode)
+                  Interface Theme (Dark Mode)
                 </span>
                 <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-                  Kasalukuyang naka-{theme === 'dark' ? 'Dark' : 'Light'} Mode
+                  Currently in {theme === 'dark' ? 'Dark' : 'Light'} Mode
                 </span>
               </div>
               <button
@@ -243,7 +243,7 @@ export const ProfilePage: React.FC = () => {
             loading={saving}
             className="w-full sm:w-auto"
           >
-            <Save className="w-4 h-4" /> I-save ang mga Pagbabago
+            <Save className="w-4 h-4" /> Save Changes
           </Button>
 
           <Button
@@ -252,7 +252,7 @@ export const ProfilePage: React.FC = () => {
             onClick={handleLogout}
             className="w-full sm:w-auto text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900"
           >
-            <LogOut className="w-4 h-4" /> Mag-logout
+            <LogOut className="w-4 h-4" /> Sign Out
           </Button>
         </div>
       </form>

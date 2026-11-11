@@ -31,13 +31,13 @@ export const AnnouncementsPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ios-navy dark:text-blue-400 mb-1">
           <AlertCircle className="w-4 h-4" />
-          <span>Opisyal na Bulletin ng Pamahalaan</span>
+          <span>Official Government Bulletin</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          Mga Anunsyo, Alerto, at Pampublikong Payo
+          Official Bulletins, Alerts & Public Advisories
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Opisyal na balita mula sa Malacañang, DTI, DOH, DOST, LTO, at iba pang pangunahing ahensya ukol sa holidays, price freezes, at kaligtasan.
+          Official bulletins and public advisories from Malacañang, DTI, DOH, DOST, LTO, and partner agencies regarding holidays, price freezes, and safety.
         </p>
 
         {/* Filters */}
@@ -46,7 +46,7 @@ export const AnnouncementsPage: React.FC = () => {
             <SearchField
               value={query}
               onChange={setQuery}
-              placeholder="Maghanap sa mga anunsyo o ahensya..."
+              placeholder="Search advisories or issuing agencies..."
             />
           </div>
           <div className="sm:col-span-4">
@@ -54,11 +54,11 @@ export const AnnouncementsPage: React.FC = () => {
               value={filterCategory}
               onChange={e => setFilterCategory(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Kategorya' },
-                { value: 'pera', label: 'Ekonomiya at Presyo' },
-                { value: 'serbisyo', label: 'Serbisyo at Lisensya' },
-                { value: 'aral', label: 'Edukasyon at Scholarship' },
-                { value: 'kaligtasan', label: 'Kaligtasan at Kalusugan' }
+                { value: 'all', label: 'All Categories' },
+                { value: 'pera', label: 'Economy & Price Controls' },
+                { value: 'serbisyo', label: 'Public Services & Licensing' },
+                { value: 'aral', label: 'Education & Scholarships' },
+                { value: 'kaligtasan', label: 'Safety & Public Health' }
               ]}
             />
           </div>
@@ -100,7 +100,7 @@ export const AnnouncementsPage: React.FC = () => {
               {anc.affectedAreas && (
                 <div className="flex items-center gap-2 text-xs text-ios-lightMuted dark:text-ios-darkMuted mb-3">
                   <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                  <span>Apektadong Lugar: <strong>{anc.affectedAreas.join(', ')}</strong></span>
+                  <span>Affected Areas: <strong>{anc.affectedAreas.join(', ')}</strong></span>
                 </div>
               )}
 
@@ -112,7 +112,7 @@ export const AnnouncementsPage: React.FC = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline"
                   >
-                    Basahin sa Opisyal na Website <ExternalLink className="w-3.5 h-3.5" />
+                    Read on Official Agency Portal <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
               )}
@@ -121,9 +121,9 @@ export const AnnouncementsPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<AlertCircle className="w-8 h-8" />}
-            title="Walang Nahanap na Anunsyo"
-            description={`Walang tumugmang anunsyo para sa iyong filter na "${query}".`}
-            actionLabel="I-clear ang Filter"
+            title="No Advisories Found"
+            description={`No official advisories matched your query "${query}".`}
+            actionLabel="Clear Filter"
             onAction={() => {
               setQuery('');
               setFilterCategory('all');

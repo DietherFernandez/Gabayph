@@ -13,23 +13,23 @@ export const NotFoundPage: React.FC = () => {
       </div>
 
       <span className="text-xs font-bold uppercase tracking-wider text-red-500 bg-red-50 dark:bg-red-950/50 px-2.5 py-1 rounded-full">
-        Error 404: Pahina ay Hindi Nahanap
+        Error 404: Page Not Found
       </span>
 
       <h1 className="text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-        Nawawala ba ang iyong hinahanap?
+        Looking for Something in Particular?
       </h1>
 
       <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted leading-relaxed max-w-sm mx-auto">
-        Paumanhin, ang pahinang iyong tinutungo ay hindi umiiral o nailipat sa ibang seksyon ng GabayPH directory.
+        The page you are looking for does not exist or may have been relocated within the GabayPH public directory.
       </p>
 
       <div className="flex items-center justify-center gap-2 pt-2">
         <Button variant="primary" size="md" onClick={() => navigate('/')}>
-          <Home className="w-4 h-4" /> Bumalik sa Home
+          <Home className="w-4 h-4" /> Return to Home
         </Button>
         <Button variant="secondary" size="md" onClick={openSearchModal}>
-          <Search className="w-4 h-4" /> Maghanap ng Serbisyo
+          <Search className="w-4 h-4" /> Search Directory
         </Button>
       </div>
     </div>

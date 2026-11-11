@@ -39,13 +39,13 @@ export const AralPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1">
           <GraduationCap className="w-4 h-4" />
-          <span>Direktoryo ng Edukasyon at Iskolarship</span>
+          <span>Education & Scholarships Directory</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          ARAL: Mga Iskolarship, TVET, at Libreng Pagsasanay
+          ARAL: Scholarships, TVET & Free Skills Training
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Tuklasin ang mga opisyal na scholarship mula sa DOST-SEI, CHED Tulong Dunong, libreng kurso sa TESDA, at digital upskilling programs ng DICT para sa mga mag-aaral at manggagawang Pilipino.
+          Discover verified scholarships from DOST-SEI, CHED Tulong Dunong, free technical-vocational courses from TESDA, and digital upskilling programs from DICT.
         </p>
 
         {/* Search & Filters */}
@@ -54,7 +54,7 @@ export const AralPage: React.FC = () => {
             <SearchField
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Maghanap ng scholarship o ahensya (hal. DOST, CHED, TESDA)..."
+              placeholder="Search scholarships or agencies (e.g. DOST, CHED, TESDA)..."
             />
           </div>
           <div className="sm:col-span-3">
@@ -62,9 +62,9 @@ export const AralPage: React.FC = () => {
               value={levelFilter}
               onChange={e => setLevelFilter(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Antas ng Pag-aaral' },
-                { value: 'tertiary', label: 'Kolehiyo (Tertiary / BS)' },
-                { value: 'vocational', label: 'Bokasyonal (TVET)' },
+                { value: 'all', label: 'All Educational Levels' },
+                { value: 'tertiary', label: 'College / Tertiary (BS / BA)' },
+                { value: 'vocational', label: 'Vocational Technical (TVET)' },
                 { value: 'secondary', label: 'Senior High School' }
               ]}
             />
@@ -74,10 +74,10 @@ export const AralPage: React.FC = () => {
               value={typeFilter}
               onChange={e => setTypeFilter(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Uri' },
+                { value: 'all', label: 'All Program Types' },
                 { value: 'scholarship', label: 'Scholarship Grants' },
                 { value: 'tvet', label: 'Free Technical TVET' },
-                { value: 'free_course', label: 'Libreng Online Courses' }
+                { value: 'free_course', label: 'Free Online Courses' }
               ]}
             />
           </div>
@@ -88,8 +88,8 @@ export const AralPage: React.FC = () => {
       <div>
         {filteredList.length > 0 ? (
           <GroupedList
-            title={`Mga Oportunidad sa Edukasyon (${filteredList.length})`}
-            subtitle="Pindutin ang scholarship para makita ang mga buwanang benepisyo, allowance, at checklist"
+            title={`Educational Opportunities (${filteredList.length})`}
+            subtitle="Click a scholarship to review monthly stipends, allowances, and requirement checklists"
           >
             {filteredList.map(item => {
               const saved = isSaved(item.id);
@@ -127,7 +127,7 @@ export const AralPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(item.id);
-                        showToast(state ? 'Nai-save ang scholarship!' : 'Inalis sa talaan.', 'info');
+                        showToast(state ? 'Scholarship saved to bookmarks!' : 'Removed from bookmarks.', 'info');
                       }}
                       className={`p-2 rounded-full transition-colors ${
                         saved
@@ -146,9 +146,9 @@ export const AralPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<GraduationCap className="w-8 h-8" />}
-            title="Walang Nahanap na Iskolarship"
-            description={`Walang nahanap na programa para sa iyong paghahanap na "${searchQuery}".`}
-            actionLabel="I-reset ang Paghahanap"
+            title="No Educational Opportunities Found"
+            description={`No educational opportunities matched your search query "${searchQuery}".`}
+            actionLabel="Reset Search"
             onAction={() => {
               setSearchQuery('');
               setLevelFilter('all');

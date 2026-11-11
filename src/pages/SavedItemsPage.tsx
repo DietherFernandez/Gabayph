@@ -26,9 +26,9 @@ export const SavedItemsPage: React.FC = () => {
   }, [savedItems, activeCategory]);
 
   const handleClearAll = () => {
-    if (window.confirm('Sigurado ka bang nais mong alisin ang lahat ng nai-save na serbisyo?')) {
+    if (window.confirm('Are you sure you want to remove all saved bookmarks?')) {
       MockStorage.clearAllSavedItems();
-      showToast('Inalis ang lahat ng naka-save na serbisyo.', 'info');
+      showToast('Cleared all saved bookmarks.', 'info');
     }
   };
 
@@ -39,13 +39,13 @@ export const SavedItemsPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ios-navy dark:text-blue-400 mb-1">
             <Bookmark className="w-4 h-4 fill-current" />
-            <span>Iyong Personal na Talaan</span>
+            <span>Your Personal Bookmarks</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-            Nai-save na mga Serbisyo at Oportunidad
+            Saved Public Services & Opportunities
           </h1>
           <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Lokal na nakaimbak ang iyong mga piniling ID, trabaho, at tulong pinansyal para sa mabilisang pag-access.
+            Locally stored bookmarks for quick access to government IDs, job openings, and financial assistance.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export const SavedItemsPage: React.FC = () => {
             onClick={handleClearAll}
             className="text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900 shrink-0"
           >
-            <Trash2 className="w-3.5 h-3.5" /> Alisin Lahat
+            <Trash2 className="w-3.5 h-3.5" /> Clear All
           </Button>
         )}
       </div>
@@ -78,7 +78,7 @@ export const SavedItemsPage: React.FC = () => {
                     : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder hover:text-ios-lightText'
                 }`}
               >
-                <span className="capitalize">{cat === 'all' ? 'Lahat' : cat}</span>
+                <span className="capitalize">{cat === 'all' ? 'All' : cat}</span>
                 <span className="text-[10px] opacity-80 px-1 rounded-full bg-black/10 dark:bg-white/10">
                   {count}
                 </span>
@@ -92,8 +92,8 @@ export const SavedItemsPage: React.FC = () => {
       <div>
         {filteredItems.length > 0 ? (
           <GroupedList
-            title={`Nai-save na mga Tala (${filteredItems.length})`}
-            subtitle="Pindutin para mabasa ang buong impormasyon o tanggalin gamit ang basurahan"
+            title={`Saved Bookmarks (${filteredItems.length})`}
+            subtitle="Click to view full details or remove using the trash action"
           >
             {filteredItems.map(item => (
               <GroupedListItem
@@ -116,10 +116,10 @@ export const SavedItemsPage: React.FC = () => {
                     onClick={e => {
                       e.stopPropagation();
                       toggleSave(item.id);
-                      showToast('Inalis sa iyong talaan.', 'info');
+                      showToast('Removed from bookmarks.', 'info');
                     }}
                     className="p-2 rounded-full text-ios-lightMuted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
-                    title="Tanggalin sa naka-save"
+                    title="Remove bookmark"
                     aria-label="Remove item"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -131,9 +131,9 @@ export const SavedItemsPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<Bookmark className="w-8 h-8" />}
-            title="Walang Naka-save na Tala"
-            description="I-bookmark ang mga serbisyo ng gobyerno, trabaho, o ayuda na nais mong balikan anumang oras."
-            actionLabel="Maghanap sa Direktoryo"
+            title="No Saved Bookmarks"
+            description="Bookmark public services, job openings, or assistance programs to quickly revisit them anytime."
+            actionLabel="Browse Directory"
             onAction={() => navigate('/serbisyo')}
           />
         )}

@@ -27,7 +27,7 @@ export const KaligtasanPage: React.FC = () => {
   const handleCopyNumber = (id: string, num: string) => {
     navigator.clipboard.writeText(num);
     setCopiedId(id);
-    showToast(`Kinopya ang numero: ${num}`, 'info');
+    showToast(`Copied hotline number: ${num}`, 'info');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -37,20 +37,20 @@ export const KaligtasanPage: React.FC = () => {
       <div className="bg-red-500 text-white p-5 rounded-ios-xl shadow-ios-lg">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-red-100 mb-1">
           <ShieldAlert className="w-4 h-4 text-yellow-300" />
-          <span>Opisyal na Sentro ng Kaligtasan at Saklolo</span>
+          <span>Official Emergency & Safety Center</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
-          KALIGTASAN: Mga Pambansang Hotline at Gabay sa Sakuna
+          KALIGTASAN: National Hotlines & Disaster Preparedness
         </h1>
         <p className="text-xs sm:text-sm text-red-100 mt-1 max-w-2xl">
-          Agarang tawag sa mga beripikadong emergency responders sa buong Pilipinas: Pulisya, Bumbero, Red Cross, NDRRMC, at Mental Health Crisis Support.
+          Immediate access to verified national emergency responders across the Philippines: PNP Police, BFP Fire Protection, Philippine Red Cross, NDRRMC, and Mental Health Crisis Support.
         </p>
 
         {/* Tab switch */}
         <div className="mt-4 pt-3 border-t border-red-400/50 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
           {[
-            { id: 'hotlines', label: 'Mga Emergency Hotline', count: hotlines.length },
-            { id: 'guides', label: 'Gabay sa Bagyo & Lindol', count: disasterGuides.length },
+            { id: 'hotlines', label: 'Emergency Hotlines', count: hotlines.length },
+            { id: 'guides', label: 'Typhoon & Earthquake Guides', count: disasterGuides.length },
             { id: 'firstaid', label: 'First Aid Protocols', count: firstAidGuides.length },
             { id: 'evac', label: 'Evacuation Centers (Sample)', count: SAMPLE_EVACUATION_CENTERS.length }
           ].map(tab => (
@@ -74,7 +74,7 @@ export const KaligtasanPage: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
             <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-              Tandaan: Ang mga numerong ito ay beripikadong pambansang numero ng Republika ng Pilipinas.
+              Note: These verified emergency contact numbers operate nationwide under the Republic of the Philippines.
             </span>
           </div>
 
@@ -111,17 +111,17 @@ export const KaligtasanPage: React.FC = () => {
                       <button
                         onClick={() => handleCopyNumber(hotline.id, hotline.hotlineNumber || '')}
                         className="px-2.5 py-1.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary hover:bg-slate-200 dark:hover:bg-slate-700/60 text-xs font-medium text-ios-lightText dark:text-ios-darkText flex items-center gap-1 transition-colors"
-                        title="Kopyahin ang numero"
+                        title="Copy hotline number"
                       >
                         {copiedId === hotline.id ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span className="hidden sm:inline">Kopyahin</span>
+                        <span className="hidden sm:inline">Copy</span>
                       </button>
                       <a
                         href={`tel:${cleanNumber}`}
                         className="px-3 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-ios-sm ios-active"
                       >
                         <PhoneCall className="w-3.5 h-3.5" />
-                        Tawagan
+                        Call
                       </a>
                     </div>
                   </div>
@@ -156,7 +156,7 @@ export const KaligtasanPage: React.FC = () => {
               {guide.actionProtocol && (
                 <div className="bg-ios-lightSecondary dark:bg-ios-darkSecondary p-4 rounded-ios-lg space-y-2">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-ios-navy dark:text-blue-400">
-                    Mga Hakbang sa Pag-iingat at Babala:
+                    Precautionary Protocols & Action Steps:
                   </h4>
                   <ul className="space-y-1.5 text-xs text-ios-lightText dark:text-ios-darkText">
                     {guide.actionProtocol.map((proto, idx) => (
@@ -201,7 +201,7 @@ export const KaligtasanPage: React.FC = () => {
                       className="p-3.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 text-xs"
                     >
                       <span className="font-bold text-red-600 dark:text-red-400 block mb-1">
-                        Hakbang #{idx + 1}
+                        Step #{idx + 1}
                       </span>
                       <p className="text-ios-lightText dark:text-ios-darkText leading-relaxed">
                         {step}
@@ -221,7 +221,7 @@ export const KaligtasanPage: React.FC = () => {
           <div className="p-3.5 rounded-ios-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/60 flex items-start gap-2.5 text-xs text-amber-900 dark:text-amber-200">
             <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold">Paunawa sa Prototipo:</span> Ang sumusunod na listahan ng evacuation centers ay sample data para sa demonstrasyon. Sa oras ng totoong sakuna, makipag-ugnayan agad sa inyong lokal na Barangay Disaster Risk Reduction and Management Office (BDRRMC) para sa opisyal na itinalagang evacuation centers sa inyong lugar.
+              <span className="font-bold">Prototype Demonstration Notice:</span> The evacuation center listings below are sample fixtures for demonstration. During an actual emergency or typhoon, contact your local Barangay Disaster Risk Reduction and Management Council (BDRRMC) for officially designated shelters in your area.
             </div>
           </div>
 
@@ -236,7 +236,7 @@ export const KaligtasanPage: React.FC = () => {
                     <span className="text-xs font-bold text-ios-navy dark:text-blue-400">
                       {evac.lgu}, {evac.province}
                     </span>
-                    <Badge variant="outline">Kapasidad: {evac.capacityPersons} tao</Badge>
+                    <Badge variant="outline">Capacity: {evac.capacityPersons} persons</Badge>
                   </div>
                   <h4 className="text-sm font-bold text-ios-lightText dark:text-ios-darkText">
                     {evac.name}
@@ -258,7 +258,7 @@ export const KaligtasanPage: React.FC = () => {
 
                 <div className="text-right shrink-0 w-full sm:w-auto">
                   <span className="text-xs text-ios-lightMuted block mb-1">
-                    Lokal na Disaster Hotline:
+                    Local Disaster Hotline:
                   </span>
                   <span className="text-xs font-mono font-bold text-ios-lightText dark:text-ios-darkText block">
                     {evac.contactNumber}

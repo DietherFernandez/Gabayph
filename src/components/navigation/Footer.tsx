@@ -14,9 +14,9 @@ export const Footer: React.FC = () => {
   const { showToast } = useToast();
 
   const handleResetData = () => {
-    if (window.confirm('I-reset ang lahat ng sample prototype data sa default state?')) {
+    if (window.confirm('Reset all prototype mock records and stored state to default?')) {
       MockStorage.resetAllToDefaults();
-      showToast('Nai-reset ang prototype data sa default state.', 'info');
+      showToast('Prototype data successfully reset to default state.', 'info');
     }
   };
 
@@ -31,10 +31,10 @@ export const Footer: React.FC = () => {
             </div>
             <div>
               <h4 className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText">
-                Pampublikong Pamantayan ng Pagpapatunay ng Datos
+                Public Data Verification & Citizen's Charter Standard
               </h4>
               <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 max-w-2xl">
-                Lahat ng serbisyo, bayarin, kinakailangang dokumento, at direktoryo ng GabayPH ay hango sa mga opisyal na Citizen's Charter ng mga ahensya ng Pamahalaan ng Pilipinas.
+                All public services, processing fees, documentary requirements, and agency directories in GabayPH are benchmarked against official Citizen's Charters of Republic of the Philippines agencies.
               </p>
             </div>
           </div>
@@ -43,13 +43,13 @@ export const Footer: React.FC = () => {
               onClick={openSuggestModal}
               className="text-xs font-medium px-3 py-1.5 rounded-ios-lg bg-white dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
             >
-              Magmungkahi ng Serbisyo
+              Suggest a Service
             </button>
             <button
               onClick={openContactModal}
               className="text-xs font-medium px-3 py-1.5 rounded-ios-lg bg-ios-navy text-white hover:bg-ios-navyLight transition-colors"
             >
-              Makipag-ugnayan
+              Contact Support
             </button>
           </div>
         </div>
@@ -65,7 +65,7 @@ export const Footer: React.FC = () => {
               <span className="font-bold text-base text-ios-navy dark:text-blue-400">GabayPH</span>
             </div>
             <p className="text-ios-lightMuted dark:text-ios-darkMuted leading-relaxed mb-3">
-              Isang sentralisadong pampublikong direktoryo para sa mga mamamayang Pilipino upang madaling matuklasan ang mga serbisyo ng gobyerno, trabaho, tulong pinansyal, edukasyon, at kaligtasan.
+              A centralized public information and government services directory dedicated to helping Filipino citizens discover essential public programs, employment opportunities, financial assistance, educational scholarships, and emergency resources.
             </p>
             <div className="inline-flex items-center gap-1.5 text-[10px] text-ios-lightMuted dark:text-ios-darkMuted bg-slate-100 dark:bg-slate-800/80 px-2.5 py-1 rounded-md">
               <Info className="w-3 h-3 text-ios-navy dark:text-blue-400" />
@@ -73,10 +73,10 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: Mga Kategorya */}
+          {/* Col 2: Directory Categories */}
           <div>
             <h5 className="font-semibold text-ios-lightText dark:text-ios-darkText uppercase tracking-wider text-[11px] mb-3">
-              Mga Kategorya
+              Categories
             </h5>
             <ul className="space-y-2 text-ios-lightMuted dark:text-ios-darkMuted">
               <li>
@@ -86,22 +86,22 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button onClick={() => navigate('/serbisyo')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Serbisyo (Government IDs)
+                  Serbisyo (Government Services)
                 </button>
               </li>
               <li>
                 <button onClick={() => navigate('/pera')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Pera (Financial Aid)
+                  Pera (Financial Assistance)
                 </button>
               </li>
               <li>
                 <button onClick={() => navigate('/bayanihan')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Bayanihan (Community)
+                  Bayanihan (Community Programs)
                 </button>
               </li>
               <li>
                 <button onClick={() => navigate('/aral')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Aral (Scholarships)
+                  Aral (Education & TVET)
                 </button>
               </li>
               <li>
@@ -112,10 +112,10 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Mga Pambansang Hotline */}
+          {/* Col 3: Verified National Hotlines */}
           <div>
             <h5 className="font-semibold text-ios-lightText dark:text-ios-darkText uppercase tracking-wider text-[11px] mb-3">
-              Pambansang Hotline
+              National Hotlines
             </h5>
             <ul className="space-y-2 text-ios-lightMuted dark:text-ios-darkMuted">
               <li>
@@ -125,41 +125,41 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="tel:8888" className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  8888 — Citizens' Complaint
+                  8888 — Citizens' Complaint Center
                 </a>
               </li>
               <li>
                 <a href="tel:1343" className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  1343 — Anti-Trafficking
+                  1343 — Anti-Human Trafficking
                 </a>
               </li>
               <li>
                 <a href="tel:143" className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  143 — Red Cross Emergency
+                  143 — Philippine Red Cross
                 </a>
               </li>
               <li>
                 <a href="tel:1553" className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  1553 — Mental Health Crisis
+                  1553 — National Mental Health Crisis
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: Impormasyon */}
+          {/* Col 4: Information & Help */}
           <div>
             <h5 className="font-semibold text-ios-lightText dark:text-ios-darkText uppercase tracking-wider text-[11px] mb-3">
-              Impormasyon
+              Citizen Resources
             </h5>
             <ul className="space-y-2 text-ios-lightMuted dark:text-ios-darkMuted">
               <li>
                 <button onClick={() => navigate('/announcements')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Mga Opisyal na Abiso
+                  Official Public Advisories
                 </button>
               </li>
               <li>
                 <button onClick={() => navigate('/saved')} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Nai-save na Serbisyo
+                  Saved Bookmarks
                 </button>
               </li>
               <li>
@@ -169,12 +169,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button onClick={openSuggestModal} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Magsumite ng Suhestiyon
+                  Submit Service Suggestion
                 </button>
               </li>
               <li>
                 <button onClick={openContactModal} className="hover:text-ios-navy dark:hover:text-white transition-colors">
-                  Tulong at Feedback
+                  Help & Feedback Inquiries
                 </button>
               </li>
             </ul>
@@ -183,21 +183,21 @@ export const Footer: React.FC = () => {
           {/* Col 5: Prototype Controls */}
           <div>
             <h5 className="font-semibold text-ios-lightText dark:text-ios-darkText uppercase tracking-wider text-[11px] mb-3">
-              Prototype Tools
+              Prototype Controls
             </h5>
             <div className="space-y-2">
               <button
                 onClick={() => navigate('/admin')}
                 className="w-full text-left px-2.5 py-1.5 rounded bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/60 hover:bg-amber-100 transition-colors font-medium text-[11px]"
               >
-                Buksan ang Admin Dashboard
+                Open Admin Portal
               </button>
               <button
                 onClick={handleResetData}
                 className="w-full text-left px-2.5 py-1.5 rounded bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted hover:text-red-500 transition-colors flex items-center gap-1.5 text-[11px]"
-                title="Reset all localStorage records back to factory mock state"
+                title="Reset all local prototype records back to factory mock state"
               >
-                <RotateCcw className="w-3 h-3" /> I-reset ang Sample Data
+                <RotateCcw className="w-3 h-3" /> Reset Sample Data
               </button>
             </div>
           </div>
@@ -205,9 +205,9 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright & disclaimer */}
         <div className="pt-6 border-t border-ios-lightBorder dark:border-ios-darkBorder flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-ios-lightMuted dark:text-ios-darkMuted">
-          <p>© 2026 GabayPH. Proyektong Prototipo para sa Serbisyong Publiko ng Pilipinas.</p>
+          <p>© 2026 GabayPH. Republic of the Philippines Public Services Prototype.</p>
           <p className="text-center sm:text-right">
-            Walang personal na datos ang ipinapadala sa panlabas na server. Lahat ay lokal na nakaimbak (Frontend Prototype).
+            No personal data is transmitted to external servers. All information operates locally in client memory and storage (Frontend Prototype).
           </p>
         </div>
       </div>

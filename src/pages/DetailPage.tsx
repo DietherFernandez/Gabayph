@@ -50,9 +50,9 @@ export const DetailPage: React.FC = () => {
       <div className="py-8">
         <EmptyState
           icon={<AlertTriangle className="w-8 h-8 text-amber-500" />}
-          title="Hindi Nahanap ang Impormasyon"
-          description="Maaaring inalis o binago ang talaang ito sa aming pampublikong direktoryo."
-          actionLabel="Bumalik sa Homepage"
+          title="Information Not Found"
+          description="This entry may have been updated, relocated, or archived in the public directory."
+          actionLabel="Return to Homepage"
           onAction={() => navigate('/')}
         />
       </div>
@@ -66,12 +66,12 @@ export const DetailPage: React.FC = () => {
     if (navigator.share) {
       navigator.share({
         title: item.title,
-        text: `Tingnan ang ${item.title} sa GabayPH Public Services:`,
+        text: `View ${item.title} on GabayPH Public Services:`,
         url
       }).catch(() => {});
     } else {
       navigator.clipboard.writeText(url);
-      showToast('Kinopya ang link sa iyong clipboard!', 'success');
+      showToast('Link copied to your clipboard!', 'success');
     }
   };
 
@@ -90,7 +90,7 @@ export const DetailPage: React.FC = () => {
           onClick={() => window.history.back()}
           className="flex items-center gap-1.5 text-xs font-semibold text-ios-lightMuted hover:text-ios-lightText dark:hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" /> Bumalik
+          <ArrowLeft className="w-4 h-4" /> Back
         </button>
 
         <div className="flex items-center gap-1.5">
@@ -98,7 +98,7 @@ export const DetailPage: React.FC = () => {
           <button
             onClick={handleShare}
             className="p-2 rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText transition-colors"
-            title="I-share ang serbisyo"
+            title="Share this public service"
             aria-label="Share"
           >
             <Share2 className="w-4 h-4" />
@@ -108,14 +108,14 @@ export const DetailPage: React.FC = () => {
           <button
             onClick={() => {
               const state = toggleSave(item.id);
-              showToast(state ? 'Nai-save sa iyong talaan!' : 'Inalis sa iyong talaan.', 'info');
+              showToast(state ? 'Saved to bookmarks!' : 'Removed from bookmarks.', 'info');
             }}
             className={`p-2 rounded-ios-lg border transition-colors ${
               saved
                 ? 'bg-blue-50 dark:bg-blue-950/40 text-ios-navy dark:text-blue-400 border-blue-200 dark:border-blue-800'
                 : 'bg-ios-lightSurface dark:bg-ios-darkSurface border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText'
             }`}
-            title="I-save sa iyong profile"
+            title="Save to bookmarks"
             aria-label="Save"
           >
             <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
@@ -125,7 +125,7 @@ export const DetailPage: React.FC = () => {
           <button
             onClick={() => openReportModal({ id: item.id, title: item.title })}
             className="p-2 rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-red-500 transition-colors"
-            title="I-ulat ang maling impormasyon"
+            title="Report incorrect information"
             aria-label="Report incorrect information"
           >
             <AlertTriangle className="w-4 h-4" />
@@ -144,7 +144,7 @@ export const DetailPage: React.FC = () => {
           </span>
           {item.isVerified && (
             <Badge variant="verified">
-              <ShieldCheck className="w-3 h-3" /> Na-verify: {item.lastVerified}
+              <ShieldCheck className="w-3 h-3" /> Verified: {item.lastVerified}
             </Badge>
           )}
         </div>
@@ -162,15 +162,15 @@ export const DetailPage: React.FC = () => {
           {srv && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Opisyal na Bayarin:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Official Processing Fee:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{srv.fees}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Panahon ng Pagproseso:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Processing Time:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{srv.processingTime}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Ahensyang Nagpapatupad:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Implementing Agency:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{srv.agencyAcronym || srv.agency}</span>
               </div>
             </>
@@ -179,15 +179,15 @@ export const DetailPage: React.FC = () => {
           {job && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Buwanang Sahod:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Monthly Salary Schedule:</span>
                 <span className="font-semibold text-ios-navy dark:text-blue-400">{job.salaryRange}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Lokasyon:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Office Location:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{job.location}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Huling Araw ng Pasa:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Application Deadline:</span>
                 <span className="font-semibold text-red-600 dark:text-red-400">{job.deadline}</span>
               </div>
             </>
@@ -196,15 +196,15 @@ export const DetailPage: React.FC = () => {
           {ast && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Halaga / Saklaw ng Ayuda:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Assistance Amount / Coverage:</span>
                 <span className="font-semibold text-emerald-700 dark:text-emerald-400">{ast.amountOrCoverage}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Paraan ng Pamamahagi:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Disbursement Mode:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{ast.disbursementMode}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Uri ng Tulong:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Assistance Classification:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText capitalize">{ast.assistanceType.replace('_', ' ')}</span>
               </div>
             </>
@@ -213,15 +213,15 @@ export const DetailPage: React.FC = () => {
           {byh && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Organisasyon:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Lead Organization:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{byh.organization}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Lugar ng Aksyon:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Activity Location:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{byh.location}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Numero ng Ugnayan:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Contact Hotline:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{byh.contactNumber}</span>
               </div>
             </>
@@ -230,15 +230,15 @@ export const DetailPage: React.FC = () => {
           {edu && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Antas ng Mag-aaral:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Target Academic Level:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText capitalize">{edu.educationalLevel}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Huling Araw ng Rehistrasyon:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Registration Deadline:</span>
                 <span className="font-semibold text-red-600 dark:text-red-400">{edu.deadline}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Uri ng Iskolarship:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Scholarship Classification:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText capitalize">{edu.educationType}</span>
               </div>
             </>
@@ -247,15 +247,15 @@ export const DetailPage: React.FC = () => {
           {safe && (
             <>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Emergency Number:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Emergency Hotline Number:</span>
                 <span className="font-bold text-red-600 font-mono text-sm">{safe.hotlineNumber || 'N/A'}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Oras ng Pagtugon:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Response Hours:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{safe.operatingHours}</span>
               </div>
               <div className="p-2.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary">
-                <span className="text-ios-lightMuted block text-[11px] font-medium">Sakop ng Serbisyo:</span>
+                <span className="text-ios-lightMuted block text-[11px] font-medium">Jurisdiction / Coverage:</span>
                 <span className="font-semibold text-ios-lightText dark:text-ios-darkText">{safe.coverage}</span>
               </div>
             </>
@@ -272,7 +272,7 @@ export const DetailPage: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-ios-lg bg-ios-navy hover:bg-ios-navyLight text-white text-xs font-semibold shadow-ios-sm ios-active"
               >
-                Bisitahin ang Opisyal na Website <ExternalLink className="w-3.5 h-3.5" />
+                Visit Official Portal <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
             {byh && (
@@ -281,7 +281,7 @@ export const DetailPage: React.FC = () => {
                 size="sm"
                 onClick={() => openVolunteerModal({ id: byh.id, title: byh.title })}
               >
-                Mag-volunteer Dito
+                Volunteer for this Program
               </Button>
             )}
             {safe && safe.hotlineNumber && (
@@ -289,7 +289,7 @@ export const DetailPage: React.FC = () => {
                 href={`tel:${safe.hotlineNumber.replace(/[^0-9]/g, '')}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-ios-sm"
               >
-                <PhoneCall className="w-3.5 h-3.5" /> Tawagan Agad ({safe.hotlineNumber})
+                <PhoneCall className="w-3.5 h-3.5" /> Call Immediately ({safe.hotlineNumber})
               </a>
             )}
           </div>
@@ -298,7 +298,7 @@ export const DetailPage: React.FC = () => {
             onClick={() => openReportModal({ id: item.id, title: item.title })}
             className="text-xs text-ios-lightMuted hover:text-red-600 dark:hover:text-red-400 flex items-center gap-1"
           >
-            <AlertTriangle className="w-3.5 h-3.5" /> May mali sa impormasyon? I-ulat dito
+            <AlertTriangle className="w-3.5 h-3.5" /> Found inaccurate information? Report here
           </button>
         </div>
       </div>
@@ -308,7 +308,7 @@ export const DetailPage: React.FC = () => {
         <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
           <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText mb-3 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            Checklist ng mga Kinakailangang Dokumento (Requirements)
+            Documentary Requirements Checklist
           </h2>
           <ul className="space-y-2 text-xs sm:text-sm text-ios-lightText dark:text-ios-darkText">
             {(srv?.requirements || job?.requirements || ast?.requiredDocuments || edu?.requirements || []).map((req, idx) => (
@@ -327,7 +327,7 @@ export const DetailPage: React.FC = () => {
       {(srv?.steps || job?.howToApply || ast?.applicationSteps || edu?.applicationSteps || byh?.howToParticipate || safe?.actionProtocol) && (
         <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
           <h2 className="text-base font-bold text-ios-lightText dark:text-ios-darkText mb-3">
-            Hakbang-hakbang na Proseso at Gabay sa Pag-aapply
+            Step-by-Step Application Procedures & Guidelines
           </h2>
           <div className="space-y-3">
             {(srv?.steps || job?.howToApply || ast?.applicationSteps || edu?.applicationSteps || byh?.howToParticipate || safe?.actionProtocol || []).map((step, idx) => (
@@ -351,7 +351,7 @@ export const DetailPage: React.FC = () => {
       {relatedItems.length > 0 && (
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted mb-2 px-1">
-            Kaugnay na mga Serbisyo at Oportunidad
+            Related Public Services & Opportunities
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {relatedItems.map(rel => (

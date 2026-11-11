@@ -40,13 +40,13 @@ export const TrabahoPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">
           <Briefcase className="w-4 h-4" />
-          <span>Direktoryo ng Trabaho at Karera</span>
+          <span>Careers & Employment Directory</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          TRABAHO: Oportunidad sa Gobyerno at Pribadong Sektor
+          TRABAHO: Government & Public Sector Careers
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Tingnan ang mga opisyal na bakanteng posisyon sa Civil Service Commission, kagawaran ng pamahalaan, at mga katuwang na institusyon.
+          Explore verified civil service vacancies, agency plantilla postings, and partner institutional career opportunities.
         </p>
 
         {/* Search & Filters */}
@@ -55,7 +55,7 @@ export const TrabahoPage: React.FC = () => {
             <SearchField
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Maghanap ng posisyon, ahensya, o lokasyon..."
+              placeholder="Search job titles, agencies, or locations..."
             />
           </div>
           <div className="sm:col-span-3">
@@ -63,7 +63,7 @@ export const TrabahoPage: React.FC = () => {
               value={employmentType}
               onChange={e => setEmploymentType(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Uri ng Trabaho' },
+                { value: 'all', label: 'All Employment Types' },
                 { value: 'government', label: 'Government / Plantilla' },
                 { value: 'contractual', label: 'Contract of Service' },
                 { value: 'full-time', label: 'Full-Time NGO/Private' }
@@ -75,8 +75,8 @@ export const TrabahoPage: React.FC = () => {
               value={sectorFilter}
               onChange={e => setSectorFilter(e.target.value)}
               options={[
-                { value: 'all', label: 'Lahat ng Sektor' },
-                { value: 'public', label: 'Public / Pamahalaan' },
+                { value: 'all', label: 'All Sectors' },
+                { value: 'public', label: 'Public Sector / Government' },
                 { value: 'ngo', label: 'NGO / Humanitarian' },
                 { value: 'private', label: 'Private Sector' }
               ]}
@@ -89,8 +89,8 @@ export const TrabahoPage: React.FC = () => {
       <div>
         {filteredJobs.length > 0 ? (
           <GroupedList
-            title={`Bukas na Trabaho (${filteredJobs.length})`}
-            subtitle="Pindutin ang posisyon para makita ang kwalipikasyon, requirements, at paraan ng pag-apply"
+            title={`Open Job Positions (${filteredJobs.length})`}
+            subtitle="Click a position to review qualifications, requirements, and application procedures"
           >
             {filteredJobs.map(job => {
               const saved = isSaved(job.id);
@@ -106,7 +106,7 @@ export const TrabahoPage: React.FC = () => {
                         {job.employmentType}
                       </Badge>
                       <span className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted bg-ios-lightSecondary dark:bg-ios-darkSecondary px-1.5 py-0.2 rounded">
-                        {job.vacancies} bakante
+                        {job.vacancies} {job.vacancies === 1 ? 'vacancy' : 'vacancies'}
                       </span>
                     </div>
                   }
@@ -128,7 +128,7 @@ export const TrabahoPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(job.id);
-                        showToast(state ? 'Nai-save ang trabaho sa iyong talaan!' : 'Inalis ang trabaho.', 'info');
+                        showToast(state ? 'Saved job to your bookmarks!' : 'Removed job from bookmarks.', 'info');
                       }}
                       className={`p-2 rounded-full transition-colors ${
                         saved
@@ -147,9 +147,9 @@ export const TrabahoPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<Briefcase className="w-8 h-8" />}
-            title="Walang Nahanap na Trabaho"
-            description={`Walang tumugmang trabaho para sa iyong paghahanap na "${searchQuery}".`}
-            actionLabel="I-reset ang Paghahanap"
+            title="No Job Positions Found"
+            description={`No job vacancies matched your search query "${searchQuery}".`}
+            actionLabel="Reset Filters"
             onAction={() => {
               setSearchQuery('');
               setEmploymentType('all');

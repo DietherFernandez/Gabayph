@@ -26,15 +26,15 @@ export const NotificationCenterPage: React.FC = () => {
     MockStorage.markAllNotificationsAsRead();
     setNotifications(MockStorage.getNotifications());
     refreshNotifications();
-    showToast('Minarkahan ang lahat ng abiso bilang nabasa na.', 'success');
+    showToast('Marked all notifications as read.', 'success');
   };
 
   const handleClearAll = () => {
-    if (window.confirm('Sigurado ka bang nais mong burahin ang lahat ng abiso?')) {
+    if (window.confirm('Are you sure you want to clear all notifications?')) {
       MockStorage.clearNotifications();
       setNotifications([]);
       refreshNotifications();
-      showToast('Binura ang lahat ng abiso.', 'info');
+      showToast('Cleared all notifications.', 'info');
     }
   };
 
@@ -54,13 +54,13 @@ export const NotificationCenterPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ios-navy dark:text-blue-400 mb-1">
             <Bell className="w-4 h-4" />
-            <span>Sentro ng mga Abiso</span>
+            <span>Notification Center</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-            Mga Abiso at Anunsyo ng Gobyerno
+            Official Government Notifications & Bulletins
           </h1>
           <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Manatiling updated sa mga paalala sa deadline, emergency advisories, at bagong appointment slots.
+            Stay informed with deadline reminders, urgent disaster advisories, and consular appointment openings.
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export const NotificationCenterPage: React.FC = () => {
                 onClick={handleMarkAllAsRead}
                 className="text-xs"
               >
-                <CheckCheck className="w-3.5 h-3.5" /> Basahin Lahat
+                <CheckCheck className="w-3.5 h-3.5" /> Mark All Read
               </Button>
             )}
             <Button
@@ -82,7 +82,7 @@ export const NotificationCenterPage: React.FC = () => {
               onClick={handleClearAll}
               className="text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900"
             >
-              <Trash2 className="w-3.5 h-3.5" /> Burahin
+              <Trash2 className="w-3.5 h-3.5" /> Clear All
             </Button>
           </div>
         )}
@@ -99,7 +99,7 @@ export const NotificationCenterPage: React.FC = () => {
                 : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder'
             }`}
           >
-            Lahat ({notifications.length})
+            All ({notifications.length})
           </button>
           <button
             onClick={() => setFilter('unread')}
@@ -109,7 +109,7 @@ export const NotificationCenterPage: React.FC = () => {
                 : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder'
             }`}
           >
-            Hindi pa Nabasa ({unreadCount})
+            Unread ({unreadCount})
           </button>
         </div>
       )}
@@ -118,8 +118,8 @@ export const NotificationCenterPage: React.FC = () => {
       <div>
         {filteredNotifs.length > 0 ? (
           <GroupedList
-            title={`Talaan ng mga Abiso (${filteredNotifs.length})`}
-            subtitle="Pindutin ang abiso upang direktang pumunta sa kinauukulang pahina"
+            title={`Notification Feed (${filteredNotifs.length})`}
+            subtitle="Click a notification to navigate directly to the relevant service or advisory"
           >
             {filteredNotifs.map(notif => (
               <GroupedListItem
@@ -140,7 +140,7 @@ export const NotificationCenterPage: React.FC = () => {
                     </span>
                     {!notif.isRead && (
                       <span className="text-[10px] bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-300 font-bold px-1.5 py-0.2 rounded">
-                        BAGO
+                        NEW
                       </span>
                     )}
                   </div>
@@ -159,11 +159,11 @@ export const NotificationCenterPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<Bell className="w-8 h-8" />}
-            title="Walang mga Abiso"
+            title="No Notifications"
             description={
               filter === 'unread'
-                ? 'Wala kang bagong abisong hindi pa nababasa.'
-                : 'Kasalukuyang walang nakaimbak na mga abiso sa iyong notification center.'
+                ? 'You have no unread notifications.'
+                : 'No notifications currently stored in your notification center.'
             }
           />
         )}

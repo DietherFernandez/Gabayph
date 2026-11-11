@@ -50,13 +50,13 @@ export const UniversalSearchPage: React.FC = () => {
   }, [allItems, query, activeCategory, sortBy]);
 
   const categories = [
-    { id: 'all', label: 'Lahat' },
-    { id: 'serbisyo', label: 'Serbisyo' },
-    { id: 'trabaho', label: 'Trabaho' },
-    { id: 'pera', label: 'Pera' },
-    { id: 'bayanihan', label: 'Bayanihan' },
-    { id: 'aral', label: 'Aral' },
-    { id: 'kaligtasan', label: 'Kaligtasan' }
+    { id: 'all', label: 'All' },
+    { id: 'serbisyo', label: 'Services' },
+    { id: 'trabaho', label: 'Jobs' },
+    { id: 'pera', label: 'Financial Aid' },
+    { id: 'bayanihan', label: 'Community' },
+    { id: 'aral', label: 'Education' },
+    { id: 'kaligtasan', label: 'Safety' }
   ];
 
   return (
@@ -64,7 +64,7 @@ export const UniversalSearchPage: React.FC = () => {
       {/* Search Header */}
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight mb-3">
-          Paghahanap sa Buong GabayPH
+          Search Across GabayPH
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
@@ -72,7 +72,7 @@ export const UniversalSearchPage: React.FC = () => {
             <SearchField
               value={query}
               onChange={setQuery}
-              placeholder="Maghanap ng kahit anong serbisyo, ahensya, trabaho, o ayuda..."
+              placeholder="Search all services, agencies, job openings, or assistance..."
             />
           </div>
           <div className="sm:col-span-4">
@@ -80,8 +80,8 @@ export const UniversalSearchPage: React.FC = () => {
               value={sortBy}
               onChange={e => setSortBy(e.target.value as any)}
               options={[
-                { value: 'relevance', label: 'Pagsunud-sunod: Relevance' },
-                { value: 'title', label: 'Pagsunud-sunod: Titulo (A–Z)' }
+                { value: 'relevance', label: 'Sort: Relevance' },
+                { value: 'title', label: 'Sort: Title (A–Z)' }
               ]}
             />
           </div>
@@ -109,8 +109,8 @@ export const UniversalSearchPage: React.FC = () => {
       <div>
         {searchResults.length > 0 ? (
           <GroupedList
-            title={`Mga Nahanap na Tala (${searchResults.length})`}
-            subtitle={query ? `Mga resulta para sa paghahanap na "${query}"` : 'Ipinapakita ang lahat ng tala sa direktoryo'}
+            title={`Matching Directory Records (${searchResults.length})`}
+            subtitle={query ? `Search results for "${query}"` : 'Displaying all verified directory records'}
           >
             {searchResults.map(item => {
               const saved = isSaved(item.id);
@@ -137,7 +137,7 @@ export const UniversalSearchPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(item.id);
-                        showToast(state ? 'Nai-save sa talaan!' : 'Inalis sa talaan.', 'info');
+                        showToast(state ? 'Saved to bookmarks!' : 'Removed from bookmarks.', 'info');
                       }}
                       className={`p-2 rounded-full transition-colors ${
                         saved
@@ -156,9 +156,9 @@ export const UniversalSearchPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<Search className="w-8 h-8" />}
-            title="Walang Tumugmang Resulta"
-            description={`Walang nahanap na serbisyo, trabaho, o ayuda para sa "${query}". Subukang gumamit ng ibang mga salita.`}
-            actionLabel="I-clear ang Search"
+            title="No Matching Results Found"
+            description={`No services, jobs, or assistance matched "${query}". Try searching with alternative keywords.`}
+            actionLabel="Clear Search"
             onAction={() => {
               setQuery('');
               setActiveCategory('all');

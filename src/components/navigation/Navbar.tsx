@@ -35,18 +35,18 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { label: 'Home', path: '/' },
-    { label: 'Trabaho', path: '/trabaho' },
-    { label: 'Serbisyo', path: '/serbisyo' },
-    { label: 'Pera', path: '/pera' },
-    { label: 'Bayanihan', path: '/bayanihan' },
-    { label: 'Aral', path: '/aral' },
-    { label: 'Kaligtasan', path: '/kaligtasan' },
+    { label: 'Trabaho', sublabel: 'Employment', path: '/trabaho' },
+    { label: 'Serbisyo', sublabel: 'Services', path: '/serbisyo' },
+    { label: 'Pera', sublabel: 'Financial Aid', path: '/pera' },
+    { label: 'Bayanihan', sublabel: 'Community', path: '/bayanihan' },
+    { label: 'Aral', sublabel: 'Education', path: '/aral' },
+    { label: 'Kaligtasan', sublabel: 'Safety', path: '/kaligtasan' },
     { label: 'Advisories', path: '/announcements' },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-ios-darkSurface/90 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
-      {/* Top Hotline Emergency Ribbon */}
+    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-ios-darkSurface/95 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
+      {/* Top Emergency Hotline Ribbon */}
       <div className="bg-ios-navy text-white text-[11px] py-1 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export const Navbar: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
-            <span className="font-semibold tracking-wide">Pambansang Hotline ng Pilipinas:</span>
+            <span className="font-semibold tracking-wide">National Emergency Hotlines:</span>
             <a
               href="tel:911"
               className="inline-flex items-center gap-1 font-bold text-yellow-300 hover:underline"
@@ -66,6 +66,7 @@ export const Navbar: React.FC = () => {
             <a
               href="tel:8888"
               className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:underline"
+              title="Call 8888 Citizens' Complaint Center"
             >
               8888 (Citizens' Complaint)
             </a>
@@ -74,8 +75,8 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 text-white/80 text-[10px]">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="hidden md:inline">Opisyal na Direktoryo ng Impormasyong Pampubliko</span>
-              <span className="md:hidden">GabayPH Prototype</span>
+              <span className="hidden md:inline">Official Philippine Public Information Directory</span>
+              <span className="md:hidden">GabayPH Portal</span>
             </div>
 
             {/* Prototype Role Switcher */}
@@ -128,11 +129,11 @@ export const Navbar: React.FC = () => {
                   GabayPH
                 </span>
                 <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 rounded bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted dark:text-ios-darkMuted border border-ios-lightBorder dark:border-ios-darkBorder">
-                  Phase 1
+                  Public Directory
                 </span>
               </div>
               <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted leading-none mt-0.5 hidden sm:block">
-                Portal ng Serbisyo Publiko
+                Republic of the Philippines Public Services
               </p>
             </div>
           </button>
@@ -146,13 +147,18 @@ export const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => navigate(link.path)}
-                className={`px-2.5 py-1.5 text-xs font-medium rounded-ios-lg transition-colors ${
+                className={`px-2.5 py-1.5 text-xs font-medium rounded-ios-lg transition-colors flex items-center gap-1 ${
                   isActive
                     ? 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-navy dark:text-blue-400 font-semibold'
                     : 'text-ios-lightMuted dark:text-ios-darkMuted hover:text-ios-lightText dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.sublabel && (
+                  <span className="text-[10px] opacity-70 font-normal hidden xl:inline">
+                    ({link.sublabel})
+                  </span>
+                )}
               </button>
             );
           })}
@@ -165,7 +171,7 @@ export const Navbar: React.FC = () => {
                   : 'text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30'
               }`}
             >
-              <Shield className="w-3.5 h-3.5" /> Admin Panel
+              <Shield className="w-3.5 h-3.5" /> Admin Portal
             </button>
           )}
         </nav>
@@ -179,7 +185,7 @@ export const Navbar: React.FC = () => {
             title="Search GabayPH (Press to search)"
           >
             <Search className="w-3.5 h-3.5 text-ios-lightMuted dark:text-ios-darkMuted" />
-            <span className="hidden sm:inline">Maghanap...</span>
+            <span className="hidden sm:inline">Search directory...</span>
             <kbd className="hidden md:inline text-[10px] bg-white dark:bg-slate-800 px-1.5 py-0.2 rounded border border-ios-lightBorder dark:border-ios-darkBorder font-mono">
               /
             </kbd>
@@ -190,7 +196,7 @@ export const Navbar: React.FC = () => {
             onClick={() => navigate('/saved')}
             className="relative p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label={`Saved items (${savedIds.length})`}
-            title="Talaan ng Naka-save"
+            title="Saved Items"
           >
             <Bookmark className="w-4 h-4" />
             {savedIds.length > 0 && (
@@ -205,7 +211,7 @@ export const Navbar: React.FC = () => {
             onClick={() => navigate('/notifications')}
             className="relative p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             aria-label={`Notifications (${unreadNotifsCount} unread)`}
-            title="Mga Abiso"
+            title="Notifications"
           >
             <Bell className="w-4 h-4" />
             {unreadNotifsCount > 0 && (
@@ -249,7 +255,7 @@ export const Navbar: React.FC = () => {
               className="text-xs px-2.5 py-1.5"
             >
               <User className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Mag-login</span>
+              <span className="hidden sm:inline">Sign In</span>
             </Button>
           )}
 
@@ -281,7 +287,12 @@ export const Navbar: React.FC = () => {
                     : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightText dark:text-ios-darkText'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.sublabel && (
+                  <span className="block text-[10px] opacity-70">
+                    {link.sublabel}
+                  </span>
+                )}
               </button>
             ))}
           </div>

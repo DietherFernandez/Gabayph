@@ -63,8 +63,8 @@ const DEFAULT_USER: UserProfile = {
 const DEFAULT_NOTIFICATIONS: UserNotification[] = [
   {
     id: 'notif-1',
-    title: 'Passport Appointment Slots Available',
-    message: 'DFA has added weekend Saturday consular appointment slots across NCR offices.',
+    title: 'Saturday Passport Appointment Slots Open',
+    message: 'The Department of Foreign Affairs (DFA) opened additional Saturday consular slots across NCR offices.',
     category: 'serbisyo',
     date: '2 hours ago',
     isRead: false,
@@ -72,8 +72,8 @@ const DEFAULT_NOTIFICATIONS: UserNotification[] = [
   },
   {
     id: 'notif-2',
-    title: 'Typhoon Price Freeze in Effect',
-    message: 'DTI has declared a mandatory 60-day price freeze in calamity-declared provinces.',
+    title: 'Automatic Price Freeze in Calamity Areas',
+    message: 'DTI enforced a 60-day price freeze on basic necessities across provinces under a State of Calamity.',
     category: 'pera',
     date: 'Yesterday',
     isRead: false,
@@ -81,8 +81,8 @@ const DEFAULT_NOTIFICATIONS: UserNotification[] = [
   },
   {
     id: 'notif-3',
-    title: 'DOST-SEI Scholarship Reminder',
-    message: 'The deadline for Senior High School STEM applicants is December 31, 2026.',
+    title: 'DOST-SEI Scholarship Deadline Reminder',
+    message: 'Applications for graduating Grade 12 STEM students close on December 31, 2026.',
     category: 'aral',
     date: '3 days ago',
     isRead: true,
@@ -90,8 +90,8 @@ const DEFAULT_NOTIFICATIONS: UserNotification[] = [
   },
   {
     id: 'notif-4',
-    title: 'Philippine Red Cross Blood Drive',
-    message: 'New volunteer phlebotomists and donor signups requested at Mandaluyong NHQ.',
+    title: 'Philippine Red Cross Blood Donation Drive',
+    message: 'Volunteer phlebotomists and donor registrations requested at Mandaluyong National Headquarters.',
     category: 'bayanihan',
     date: '4 days ago',
     isRead: true,
@@ -104,7 +104,7 @@ const DEFAULT_ACTIVITY_LOGS: ActivityLogItem[] = [
     id: 'log-1',
     timestamp: 'Just now',
     user: 'System Initializer',
-    action: 'Database initialized with verified public agency records',
+    action: 'Database initialized with verified public agency records and Citizen\'s Charter data',
     entityType: 'System',
     entityId: 'INIT-2026',
     status: 'info'
@@ -113,7 +113,7 @@ const DEFAULT_ACTIVITY_LOGS: ActivityLogItem[] = [
     id: 'log-2',
     timestamp: '1 hour ago',
     user: 'Admin Maria Santos',
-    action: 'Verified PSA PhilSys online ePhilID download requirements',
+    action: 'Verified PSA PhilSys online ePhilID download requirements and procedures',
     entityType: 'Service',
     entityId: 'srv-philsys',
     status: 'success'
@@ -122,7 +122,7 @@ const DEFAULT_ACTIVITY_LOGS: ActivityLogItem[] = [
     id: 'log-3',
     timestamp: '3 hours ago',
     user: 'Admin Maria Santos',
-    action: 'Approved DTI Price Freeze emergency advisory notice',
+    action: 'Approved DTI Price Freeze public advisory announcement',
     entityType: 'Announcement',
     entityId: 'anc-dti-price-freeze',
     status: 'warning'
@@ -146,7 +146,6 @@ function setStoredJson<T>(key: string, value: T): void {
   }
 }
 
-// Storage helpers
 export const MockStorage = {
   // Services
   getServices: (): ServiceItem[] => getStoredJson(STORAGE_KEYS.SERVICES, INITIAL_SERVICES),
@@ -176,7 +175,7 @@ export const MockStorage = {
   getAnnouncements: (): AnnouncementItem[] => getStoredJson(STORAGE_KEYS.ANNOUNCEMENTS, INITIAL_ANNOUNCEMENTS),
   saveAnnouncements: (items: AnnouncementItem[]) => setStoredJson(STORAGE_KEYS.ANNOUNCEMENTS, items),
 
-  // All Items consolidated for universal search & lookup
+  // All Items consolidated for search
   getAllItems: (): BaseItem[] => {
     return [
       ...MockStorage.getServices(),
@@ -293,7 +292,7 @@ export const MockStorage = {
     {
       id: 'sug-1',
       serviceName: 'Barangay Solo Parent ID Registration',
-      agencyName: 'Local Social Welfare and Development Office',
+      agencyName: 'Local Social Welfare and Development Office (LSWDO)',
       description: 'Requesting inclusion of the Solo Parent ID application requirements and 10% discount privileges under RA 11861.',
       submittedBy: 'ParentAdvocate@example.com',
       submittedAt: 'Nov 7, 2026',
@@ -342,7 +341,7 @@ export const MockStorage = {
       submittedAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
     setStoredJson(STORAGE_KEYS.CONTACT_SUBMISSIONS, [newContact, ...list]);
-    MockStorage.logActivity(`Received contact message: ${contact.subject}`, 'Contact', newContact.id, 'info');
+    MockStorage.logActivity(`Received contact inquiry: ${contact.subject}`, 'Contact', newContact.id, 'info');
     return newContact;
   },
 
@@ -441,7 +440,7 @@ export const MockStorage = {
     window.dispatchEvent(new Event('gabayph_data_updated'));
   },
 
-  // Reset to initial demo data
+  // Reset to initial mock fixtures
   resetAllToDefaults: () => {
     localStorage.removeItem(STORAGE_KEYS.SERVICES);
     localStorage.removeItem(STORAGE_KEYS.JOBS);

@@ -40,12 +40,12 @@ export const SerbisyoPage: React.FC = () => {
   }, [services, searchQuery, activeType, feeFilter]);
 
   const typeOptions = [
-    { value: 'all', label: 'Lahat' },
+    { value: 'all', label: 'All Services' },
     { value: 'identity', label: 'Government IDs' },
     { value: 'civil_registry', label: 'Civil Registry' },
     { value: 'clearance', label: 'Clearances' },
-    { value: 'business', label: 'Negosyo' },
-    { value: 'health', label: 'Kalusugan' },
+    { value: 'business', label: 'Business & Trade' },
+    { value: 'health', label: 'Health & Medical' },
     { value: 'social_welfare', label: 'Social Welfare' }
   ];
 
@@ -55,13 +55,13 @@ export const SerbisyoPage: React.FC = () => {
       <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
           <FileText className="w-4 h-4" />
-          <span>Direktoryo ng Serbisyong Publiko</span>
+          <span>Government Services Directory</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          SERBISYO: Mga ID, Dokumento, at Lisensya
+          SERBISYO: Government IDs, Documents & Clearances
         </h1>
         <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
-          Komprehensibong gabay sa mga kinakailangang dokumento, hakbang, bayarin, at opisyal na portal para sa Philippine National ID, Passport, NBI, SSS, LTO, at civil registry.
+          Comprehensive guides to required documents, application steps, fee schedules, and official portals for the Philippine National ID, Passport, NBI, SSS, LTO, and civil registry.
         </p>
 
         {/* Search & Filters */}
@@ -70,7 +70,7 @@ export const SerbisyoPage: React.FC = () => {
             <SearchField
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Maghanap ng serbisyo o ahensya (hal. PSA, Passport, LTO, Driver's License)..."
+              placeholder="Search services or agencies (e.g. PSA, Passport, LTO, Driver's License)..."
             />
           </div>
           <div className="sm:col-span-4">
@@ -78,9 +78,9 @@ export const SerbisyoPage: React.FC = () => {
               value={feeFilter}
               onChange={e => setFeeFilter(e.target.value as any)}
               options={[
-                { value: 'all', label: 'Lahat ng Bayarin' },
-                { value: 'free', label: 'Libre Lamang (Free)' },
-                { value: 'paid', label: 'May Bayad (Standard Fees)' }
+                { value: 'all', label: 'All Fee Schedules' },
+                { value: 'free', label: 'Free Services Only' },
+                { value: 'paid', label: 'Standard Fees Only' }
               ]}
             />
           </div>
@@ -108,8 +108,8 @@ export const SerbisyoPage: React.FC = () => {
       <div>
         {filteredServices.length > 0 ? (
           <GroupedList
-            title={`Mga Nahanap na Serbisyo (${filteredServices.length})`}
-            subtitle="Pindutin ang serbisyo upang mabasa ang kumpletong checklist ng requirements at gabay"
+            title={`Matching Services (${filteredServices.length})`}
+            subtitle="Click a service to view the complete checklist of documentary requirements and application steps"
           >
             {filteredServices.map(srv => {
               const saved = isSaved(srv.id);
@@ -139,7 +139,7 @@ export const SerbisyoPage: React.FC = () => {
                       </span>
                       <span>•</span>
                       <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-                        Na-verify: {srv.lastVerified}
+                        Verified: {srv.lastVerified}
                       </span>
                     </>
                   }
@@ -149,7 +149,7 @@ export const SerbisyoPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(srv.id);
-                        showToast(state ? 'Nai-save sa iyong talaan!' : 'Inalis sa iyong talaan.', 'info');
+                        showToast(state ? 'Saved to bookmarks!' : 'Removed from bookmarks.', 'info');
                       }}
                       className={`p-2 rounded-full transition-colors ${
                         saved
@@ -168,9 +168,9 @@ export const SerbisyoPage: React.FC = () => {
         ) : (
           <EmptyState
             icon={<FileText className="w-8 h-8" />}
-            title="Walang Nahanap na Serbisyo"
-            description={`Walang tumugmang serbisyo para sa iyong mga napiling filter o hinahanap na "${searchQuery}".`}
-            actionLabel="I-reset ang mga Filter"
+            title="No Services Found"
+            description={`No government services matched your active filters or search query "${searchQuery}".`}
+            actionLabel="Reset All Filters"
             onAction={() => {
               setSearchQuery('');
               setActiveType('all');

@@ -292,5 +292,42 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     ],
     onlineServiceAvailable: true,
     onlineServiceUrl: 'https://bnrs.dti.gov.ph'
+  },
+  {
+    id: 'srv-pagibig-membership',
+    title: 'Pag-IBIG Fund Member Registration & Virtual Pag-IBIG (MID)',
+    category: 'serbisyo',
+    serviceType: 'identity',
+    agency: 'Home Development Mutual Fund',
+    agencyAcronym: 'Pag-IBIG',
+    description: 'Online membership registration to secure a permanent Pag-IBIG Member ID (MID) Number, access provident savings (Regular and MP2), housing loans, and Multi-Purpose emergency loans.',
+    lastVerified: 'November 2026',
+    officialUrl: 'https://www.pagibigfundservices.com',
+    isVerified: true,
+    featured: true,
+    fees: 'FREE registration and MID generation (Mandatory monthly savings: ₱200/month)',
+    processingTime: 'Instant online tracking slip; Permanent MID assigned within 2 to 3 business days via SMS',
+    requirements: [
+      'One (1) valid primary government ID (PhilSys ID, Passport, Driver\'s License, or SSS UMID)',
+      'PSA-issued Birth Certificate details',
+      'Employer Tax Identification Number (TIN) or business trade name if employed'
+    ],
+    eligibility: [
+      'Mandatory for all private and government employees, self-employed individuals earning at least ₱1,000/month, and OFWs',
+      'Voluntary for non-working spouses, students aged 18 and above, and freelancers'
+    ],
+    steps: [
+      'Navigate to the Pag-IBIG Online Services portal and click "Membership Registration".',
+      'Fill out the electronic Member\'s Data Form (e-MDF) with accurate personal, family, and employment details.',
+      'Submit the form and save the Registration Tracking Number (RTN).',
+      'Receive your permanent 12-digit Pag-IBIG MID number via SMS after verification.',
+      'Activate your Virtual Pag-IBIG account for 24/7 online balance inquiries and loan applications.'
+    ],
+    officeLocations: [
+      'Pag-IBIG Fund Corporate Headquarters, Petron MegaPlaza, Sen. Gil Puyat Ave, Makati City',
+      'Pag-IBIG Member Services Branches (MSB) in cities and provincial capitals nationwide'
+    ],
+    onlineServiceAvailable: true,
+    onlineServiceUrl: 'https://www.pagibigfundservices.com/virtualpagibig'
   }
 ];
