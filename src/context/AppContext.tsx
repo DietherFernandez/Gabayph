@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { MockStorage } from '../data/mockStorage';
 import { UserProfile, CategoryType } from '../types';

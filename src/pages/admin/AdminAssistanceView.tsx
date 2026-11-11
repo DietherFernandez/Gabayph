@@ -96,39 +96,38 @@ export const AdminAssistanceView: React.FC<AdminAssistanceViewProps> = ({
         </div>
       </div>
 
-      {/* Search & Filter */}
-      <div className="p-3.5 rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col md:flex-row items-center gap-3">
-        <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search assistance program title, agency, or coverage..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
-          />
-        </div>
-
-        <div className="w-full md:w-64">
-          <IOSSelect
-            value={selectedType}
-            onChange={setSelectedType}
-            size="sm"
-            className="w-full"
-            options={[
-              { value: 'all', label: 'All Assistance Types' },
-              { value: 'emergency_aid', label: 'Emergency Aid / Outright Grant' },
-              { value: 'subsidy', label: 'Direct Subsidy' },
-              { value: 'cash_grant', label: 'Conditional Cash Grant (4Ps)' },
-              { value: 'loan', label: 'Livelihood Loan / Micro-financing' },
-              { value: 'pension', label: 'Social Pension' },
-            ]}
-          />
-        </div>
-      </div>
-
-      {/* Assistance Records List */}
+      {/* Assistance Records Table with Integrated Management Toolbar */}
       <div className="rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm overflow-hidden">
+        {/* Integrated Management Toolbar */}
+        <div className="p-3 bg-slate-50/60 dark:bg-slate-800/40 border-b border-ios-lightBorder dark:border-ios-darkBorder flex flex-col md:flex-row items-center gap-3">
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search assistance program title, agency, or coverage..."
+              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
+            />
+          </div>
+
+          <div className="w-full md:w-64">
+            <IOSSelect
+              value={selectedType}
+              onChange={setSelectedType}
+              size="sm"
+              className="w-full"
+              options={[
+                { value: 'all', label: 'All Assistance Types' },
+                { value: 'emergency_aid', label: 'Emergency Aid / Outright Grant' },
+                { value: 'subsidy', label: 'Direct Subsidy' },
+                { value: 'cash_grant', label: 'Conditional Cash Grant (4Ps)' },
+                { value: 'loan', label: 'Livelihood Loan / Micro-financing' },
+                { value: 'pension', label: 'Social Pension' },
+              ]}
+            />
+          </div>
+        </div>
         {filteredItems.length === 0 ? (
           <div className="p-8 text-center text-xs text-ios-lightMuted space-y-2">
             <DollarSign className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />

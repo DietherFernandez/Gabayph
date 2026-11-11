@@ -56,7 +56,8 @@ export const BottomTabBar: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex-1 flex flex-col items-center justify-center py-1 transition-all ios-active ${
+              aria-current={isActive ? 'page' : undefined}
+              className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 transition-all ios-active ${
                 isActive
                   ? 'text-ios-navy dark:text-blue-400 font-semibold'
                   : 'text-ios-lightMuted dark:text-ios-darkMuted hover:text-ios-lightText'

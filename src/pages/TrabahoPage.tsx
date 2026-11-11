@@ -36,8 +36,8 @@ export const TrabahoPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
+      {/* Editorial Category Header */}
+      <div className="px-1 pt-1">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">
           <Briefcase className="w-4 h-4" />
           <span>Careers & Employment Directory</span>
@@ -45,12 +45,12 @@ export const TrabahoPage: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
           TRABAHO: Government & Public Sector Careers
         </h1>
-        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
+        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl leading-relaxed">
           Explore verified civil service vacancies, agency plantilla postings, and partner institutional career opportunities.
         </p>
 
         {/* Search & Filters */}
-        <div className="mt-4 pt-4 border-t border-ios-lightBorder/80 dark:border-ios-darkBorder/80 grid grid-cols-1 sm:grid-cols-12 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-3">
           <div className="sm:col-span-6">
             <SearchField
               value={searchQuery}

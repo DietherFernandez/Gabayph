@@ -35,8 +35,8 @@ export const AralPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
+      {/* Editorial Category Header */}
+      <div className="px-1 pt-1">
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1">
           <GraduationCap className="w-4 h-4" />
           <span>Education & Scholarships Directory</span>
@@ -44,12 +44,12 @@ export const AralPage: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
           ARAL: Scholarships, TVET & Free Skills Training
         </h1>
-        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
+        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl leading-relaxed">
           Discover verified scholarships from DOST-SEI, CHED Tulong Dunong, free technical-vocational courses from TESDA, and digital upskilling programs from DICT.
         </p>
 
         {/* Search & Filters */}
-        <div className="mt-4 pt-4 border-t border-ios-lightBorder/80 dark:border-ios-darkBorder/80 grid grid-cols-1 sm:grid-cols-12 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-3">
           <div className="sm:col-span-6">
             <SearchField
               value={searchQuery}

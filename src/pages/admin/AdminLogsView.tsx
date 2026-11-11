@@ -84,53 +84,52 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
         </div>
       </div>
 
-      {/* Search & Filters */}
-      <div className="p-3.5 rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col md:flex-row items-center gap-3">
-        <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search action description, operator name, or entity ID..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
-          />
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
-          <IOSSelect
-            value={statusFilter}
-            onChange={setStatusFilter}
-            size="sm"
-            className="w-full sm:w-44"
-            options={[
-              { value: 'all', label: 'All Severities' },
-              { value: 'success', label: 'Success / Additions' },
-              { value: 'warning', label: 'Warning / Deletions' },
-              { value: 'info', label: 'Informational Updates' },
-            ]}
-          />
-
-          <IOSSelect
-            value={entityFilter}
-            onChange={setEntityFilter}
-            size="sm"
-            className="w-full sm:w-44"
-            options={[
-              { value: 'all', label: 'All Entity Types' },
-              { value: 'service', label: 'Services (Serbisyo)' },
-              { value: 'trabaho', label: 'Careers (Trabaho)' },
-              { value: 'pera', label: 'Financial (Pera)' },
-              { value: 'bulletin', label: 'Public Bulletins' },
-              { value: 'report', label: 'Reports' },
-              { value: 'system', label: 'System Core' },
-            ]}
-          />
-        </div>
-      </div>
-
-      {/* Audit Log Table */}
+      {/* Audit Log Table with Integrated Management Toolbar */}
       <div className="rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm overflow-hidden">
+        {/* Integrated Management Toolbar */}
+        <div className="p-3 bg-slate-50/60 dark:bg-slate-800/40 border-b border-ios-lightBorder dark:border-ios-darkBorder flex flex-col md:flex-row items-center gap-3">
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Search action description, operator name, or entity ID..."
+              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+            <IOSSelect
+              value={statusFilter}
+              onChange={setStatusFilter}
+              size="sm"
+              className="w-full sm:w-44"
+              options={[
+                { value: 'all', label: 'All Severities' },
+                { value: 'success', label: 'Success / Additions' },
+                { value: 'warning', label: 'Warning / Deletions' },
+                { value: 'info', label: 'Informational Updates' },
+              ]}
+            />
+
+            <IOSSelect
+              value={entityFilter}
+              onChange={setEntityFilter}
+              size="sm"
+              className="w-full sm:w-44"
+              options={[
+                { value: 'all', label: 'All Entity Types' },
+                { value: 'service', label: 'Services (Serbisyo)' },
+                { value: 'trabaho', label: 'Careers (Trabaho)' },
+                { value: 'pera', label: 'Financial (Pera)' },
+                { value: 'bulletin', label: 'Public Bulletins' },
+                { value: 'report', label: 'Reports' },
+                { value: 'system', label: 'System Core' },
+              ]}
+            />
+          </div>
+        </div>
         {filteredLogs.length === 0 ? (
           <div className="p-8 text-center text-xs text-ios-lightMuted space-y-2">
             <History className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />

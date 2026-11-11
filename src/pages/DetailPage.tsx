@@ -133,7 +133,7 @@ export const DetailPage: React.FC = () => {
           {/* Report Button */}
           <button
             onClick={() => openReportModal({ id: item.id, title: item.title })}
-            className="p-2 rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-red-500 transition-colors"
+            className="p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-red-500 transition-colors"
             title="Report incorrect information"
             aria-label="Report incorrect information"
           >
