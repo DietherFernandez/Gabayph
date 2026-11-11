@@ -89,11 +89,11 @@ export const GroupedListItem: React.FC<GroupedListItemProps> = ({
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <div className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText truncate">
+          <div className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText line-clamp-2 leading-snug break-words">
             {title}
           </div>
           {subtitle && (
-            <div className="text-xs text-ios-lightMuted dark:text-ios-darkMuted truncate mt-0.5">
+            <div className="text-xs text-ios-lightMuted dark:text-ios-darkMuted line-clamp-1 mt-0.5">
               {subtitle}
             </div>
           )}

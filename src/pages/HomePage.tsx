@@ -123,8 +123,8 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Quick Search Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3 text-xs">
-            <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted mr-1">
+          <div className="flex items-center justify-start sm:justify-center gap-1.5 mt-3 text-xs overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+            <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted shrink-0 font-medium mr-1">
               Popular:
             </span>
             {[
@@ -137,7 +137,7 @@ export const HomePage: React.FC = () => {
               <button
                 key={item.label}
                 onClick={() => navigate(`/item/${item.id}`)}
-                className="px-2.5 py-1 rounded-full bg-white dark:bg-ios-darkSurface text-ios-lightText dark:text-ios-darkText border border-ios-lightBorder/80 dark:border-ios-darkBorder text-[11px] font-medium hover:border-ios-navy dark:hover:border-blue-400 transition-colors"
+                className="px-3 py-1 rounded-full bg-white dark:bg-ios-darkSurface text-ios-lightText dark:text-ios-darkText border border-ios-lightBorder/80 dark:border-ios-darkBorder text-[11px] font-medium hover:border-ios-navy dark:hover:border-blue-400 transition-colors whitespace-nowrap shrink-0 shadow-2xs"
               >
                 {item.label}
               </button>

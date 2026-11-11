@@ -47,33 +47,37 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-ios-darkSurface/95 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
       {/* Top Emergency Hotline Ribbon */}
-      <div className="bg-ios-navy text-white text-[11px] py-1 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 relative">
+      <div className="bg-ios-navy text-white text-[11px] py-1 px-3 sm:px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <span className="flex h-2 w-2 relative shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
-            <span className="font-semibold tracking-wide">National Emergency Hotlines:</span>
+            <span className="font-semibold tracking-wide shrink-0">
+              <span className="hidden sm:inline">National Emergency </span>Hotlines:
+            </span>
             <a
               href="tel:911"
-              className="inline-flex items-center gap-1 font-bold text-yellow-300 hover:underline"
+              className="inline-flex items-center gap-1 font-bold text-yellow-300 hover:underline shrink-0"
               title="Call National Emergency 911"
             >
-              <PhoneCall className="w-3 h-3" /> 911 (Emergency)
+              <PhoneCall className="w-3 h-3" />
+              <span>911</span>
+              <span className="hidden xs:inline">(Emergency)</span>
             </a>
             <span className="hidden sm:inline text-white/50">|</span>
             <a
               href="tel:8888"
-              className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:underline"
+              className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:underline shrink-0"
               title="Call 8888 Citizens' Complaint Center"
             >
               8888 (Citizens' Complaint)
             </a>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-white/80 text-[10px]">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="hidden sm:flex items-center gap-1.5 text-white/80 text-[10px]">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span className="hidden md:inline">Official Philippine Public Information Directory</span>
               <span className="md:hidden">GabayPH Portal</span>
