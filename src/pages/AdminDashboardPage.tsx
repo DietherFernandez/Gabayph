@@ -40,6 +40,7 @@ import { Badge } from '../components/common/Badge';
 import { TextInput, Textarea } from '../components/common/Input';
 import { Modal } from '../components/common/Modal';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 
 type AdminTab =
   | 'overview'
@@ -59,6 +60,7 @@ type AdminTab =
 export const AdminDashboardPage: React.FC = () => {
   const { setRole, navigate } = useApp();
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
 
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
 
@@ -184,11 +186,17 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   const handleDeleteRecord = (category: CategoryType, id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the record "${title}"?`)) {
-      MockStorage.deleteItem(category, id);
-      refreshAllData();
-      showToast(`Deleted record: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Record?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Record',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem(category, id);
+        refreshAllData();
+        showToast(`Deleted record: ${title}`, 'info');
+      }
+    });
   };
 
   const handleUpdateReportStatus = (id: string, status: CitizenReport['status']) => {
@@ -781,9 +789,17 @@ export const AdminDashboardPage: React.FC = () => {
                   size="sm"
                   variant="destructive"
                   onClick={() => {
-                    if (window.confirm('Reset entire prototype database back to initial fixtures?')) {
-                      MockStorage.resetAllToDefaults();
-                    }
+                    confirmAction({
+                      title: 'Reset Entire Database?',
+                      message: 'Are you sure you want to restore all public services, jobs, assistance, announcements, and reports back to their initial factory mock fixtures?',
+                      confirmLabel: 'Reset All Data',
+                      isDestructive: true,
+                      onConfirm: () => {
+                        MockStorage.resetAllToDefaults();
+                        refreshAllData();
+                        showToast('Database reset to initial fixtures.', 'info');
+                      }
+                    });
                   }}
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Reset All Data

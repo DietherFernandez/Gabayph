@@ -8,16 +8,24 @@ import {
   Info
 } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
 
 export const Footer: React.FC = () => {
   const { navigate, openContactModal, openSuggestModal } = useApp();
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
 
   const handleResetData = () => {
-    if (window.confirm('Reset all prototype mock records and stored state to default?')) {
-      MockStorage.resetAllToDefaults();
-      showToast('Prototype data successfully reset to default state.', 'info');
-    }
+    confirmAction({
+      title: 'Reset Prototype Data?',
+      message: 'Are you sure you want to restore all public directory records, sample forms, and settings to original defaults?',
+      confirmLabel: 'Reset Data',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.resetAllToDefaults();
+        showToast('Prototype data successfully reset to default state.', 'info');
+      }
+    });
   };
 
   return (

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Search, X } from 'lucide-react';
+import { IOSSelect, IOSSelectOption } from './IOSSelect';
+
+export type { IOSSelectOption };
 
 interface InputBaseProps {
   label?: string;
@@ -107,47 +110,50 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   );
 };
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement>, InputBaseProps {
-  options: { value: string; label: string }[];
+export interface SelectProps extends InputBaseProps {
+  options: IOSSelectOption[];
+  value?: string;
+  onChange?: (e: any) => void;
+  placeholder?: string;
+  size?: 'sm' | 'md';
+  disabled?: boolean;
+  className?: string;
+  id?: string;
 }
 
 export const Select: React.FC<SelectProps> = ({
   label,
   options,
+  value = '',
+  onChange,
+  placeholder,
   error,
   helperText,
   required,
+  size = 'md',
+  disabled,
   className = '',
   id,
-  ...props
 }) => {
-  const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+  const handleChange = (val: string) => {
+    if (onChange) {
+      onChange({ target: { value: val }, currentTarget: { value: val } } as any);
+    }
+  };
 
   return (
     <div className="w-full">
-      {label && (
-        <label
-          htmlFor={selectId}
-          className="block text-xs font-medium text-ios-lightText dark:text-ios-darkText mb-1.5"
-        >
-          {label} {required && <span className="text-red-500">*</span>}
-        </label>
-      )}
-      <select
-        id={selectId}
-        className={`w-full bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightText dark:text-ios-darkText text-sm rounded-ios-lg px-3.5 py-2.5 transition-all border ${
-          error
-            ? 'border-red-400 focus:border-red-500'
-            : 'border-ios-lightBorder dark:border-ios-darkBorder focus:border-ios-navy focus:ring-1 focus:ring-ios-navy'
-        } outline-none cursor-pointer ${className}`}
-        {...props}
-      >
-        {options.map(opt => (
-          <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900">
-            {opt.label}
-          </option>
-        ))}
-      </select>
+      <IOSSelect
+        id={id}
+        label={label ? `${label}${required ? ' *' : ''}` : undefined}
+        value={String(value || (options[0]?.value ?? ''))}
+        onChange={handleChange}
+        options={options}
+        placeholder={placeholder}
+        size={size}
+        disabled={disabled}
+        className={className}
+      />
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
       {!error && helperText && <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-1">{helperText}</p>}
     </div>

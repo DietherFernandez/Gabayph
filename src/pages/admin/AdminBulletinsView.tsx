@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { AnnouncementItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   Bell,
   Search,
@@ -28,6 +30,7 @@ export const AdminBulletinsView: React.FC<AdminBulletinsViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [bulletins, setBulletins] = useState<AnnouncementItem[]>(() => MockStorage.getAnnouncements());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUrgency, setSelectedUrgency] = useState<string>('all');
@@ -38,11 +41,17 @@ export const AdminBulletinsView: React.FC<AdminBulletinsViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the public bulletin "${title}"?`)) {
-      MockStorage.deleteItem('announcements', id);
-      refreshList();
-      showToast(`Deleted bulletin: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Public Bulletin?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Bulletin',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('announcements', id);
+        refreshList();
+        showToast(`Deleted bulletin: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredItems = useMemo(() => {
@@ -106,16 +115,18 @@ export const AdminBulletinsView: React.FC<AdminBulletinsViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="w-full md:w-56">
+          <IOSSelect
             value={selectedUrgency}
-            onChange={e => setSelectedUrgency(e.target.value)}
-            className="w-full md:w-auto px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Advisories</option>
-            <option value="urgent">Urgent Alerts Only</option>
-            <option value="standard">Standard Advisories</option>
-          </select>
+            onChange={setSelectedUrgency}
+            size="sm"
+            className="w-full"
+            options={[
+              { value: 'all', label: 'All Advisories' },
+              { value: 'urgent', label: 'Urgent Alerts Only' },
+              { value: 'standard', label: 'Standard Advisories' },
+            ]}
+          />
         </div>
       </div>
 

@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { JobItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   Briefcase,
   Search,
@@ -28,6 +30,7 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [jobs, setJobs] = useState<JobItem[]>(() => MockStorage.getJobs());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -39,11 +42,17 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the job posting "${title}"?`)) {
-      MockStorage.deleteItem('trabaho', id);
-      refreshList();
-      showToast(`Deleted job posting: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Job Posting?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Job',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('trabaho', id);
+        refreshList();
+        showToast(`Deleted job posting: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredJobs = useMemo(() => {
@@ -103,28 +112,32 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Employment Types</option>
-            <option value="government">Government / Plantilla</option>
-            <option value="full-time">Full-Time</option>
-            <option value="contractual">Contract of Service (COS)</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full sm:w-48"
+            options={[
+              { value: 'all', label: 'All Employment Types' },
+              { value: 'government', label: 'Government / Plantilla' },
+              { value: 'full-time', label: 'Full-Time' },
+              { value: 'contractual', label: 'Contract of Service (COS)' },
+            ]}
+          />
 
-          <select
+          <IOSSelect
             value={selectedSector}
-            onChange={e => setSelectedSector(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Sectors</option>
-            <option value="public">Public / Government</option>
-            <option value="ngo">NGO / Development</option>
-            <option value="private">Private Partnership</option>
-          </select>
+            onChange={setSelectedSector}
+            size="sm"
+            className="w-full sm:w-44"
+            options={[
+              { value: 'all', label: 'All Sectors' },
+              { value: 'public', label: 'Public / Government' },
+              { value: 'ngo', label: 'NGO / Development' },
+              { value: 'private', label: 'Private Partnership' },
+            ]}
+          />
         </div>
       </div>
 

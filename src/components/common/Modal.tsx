@@ -50,33 +50,33 @@ export const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 z-50 flex flex-col justify-end sm:justify-center sm:items-center">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-slate-950/50 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Dialog Surface (iOS sheet on mobile, centered card on desktop) */}
       <div
-        className={`relative z-10 w-full ${maxWidthStyles[maxWidth]} bg-ios-lightSurface dark:bg-ios-darkSurface rounded-t-[20px] sm:rounded-ios-xl shadow-ios-sheet sm:shadow-ios-lg border-t sm:border border-ios-lightBorder dark:border-ios-darkBorder overflow-hidden max-h-[92vh] sm:max-h-[85vh] flex flex-col animate-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200`}
+        className={`relative z-10 w-full ${maxWidthStyles[maxWidth]} bg-white dark:bg-slate-900 rounded-t-[26px] sm:rounded-ios-2xl shadow-2xl border-t sm:border border-ios-lightBorder dark:border-ios-darkBorder overflow-hidden max-h-[92vh] sm:max-h-[85vh] flex flex-col animate-in slide-in-from-bottom-8 sm:zoom-in-95 duration-200`}
         role="dialog"
         aria-modal="true"
       >
-        {/* iOS Grab Handle for Mobile */}
-        <div className="sm:hidden pt-2.5 pb-1 flex justify-center">
-          <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+        {/* iOS Grab Handle for Mobile Sheet */}
+        <div className="sm:hidden pt-3 pb-1 flex justify-center">
+          <div className="w-11 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
         </div>
 
         {/* Modal Header */}
         {(title || showCloseButton) && (
-          <div className="flex items-start justify-between px-5 pt-3.5 pb-3 border-b border-ios-lightBorder dark:border-ios-darkBorder">
-            <div className="pr-4">
+          <div className="flex items-center justify-between px-5 pt-3.5 pb-3 border-b border-ios-lightBorder dark:border-ios-darkBorder">
+            <div className="pr-4 min-w-0">
               {title && (
-                <h3 className="text-base font-semibold text-ios-lightText dark:text-ios-darkText tracking-tight">
+                <h3 className="text-base font-bold text-ios-lightText dark:text-ios-darkText tracking-tight truncate">
                   {title}
                 </h3>
               )}
               {subtitle && (
-                <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
+                <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 truncate">
                   {subtitle}
                 </p>
               )}
@@ -84,7 +84,7 @@ export const Modal: React.FC<ModalProps> = ({
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shrink-0"
                 aria-label="Close dialog"
               >
                 <X className="w-4 h-4" />
