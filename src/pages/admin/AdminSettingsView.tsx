@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
@@ -10,12 +10,12 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
-import { Modal } from '../../components/common/Modal';
+import { useConfirm } from '../../context/ConfirmContext';
 
 export const AdminSettingsView: React.FC = () => {
   const { setRole, navigate } = useApp();
   const { showToast } = useToast();
-  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+  const { confirmAction } = useConfirm();
 
   const services = MockStorage.getServices();
   const jobs = MockStorage.getJobs();
@@ -54,12 +54,19 @@ export const AdminSettingsView: React.FC = () => {
     showToast('Downloaded full database JSON backup successfully.', 'success');
   };
 
-  const handleConfirmReset = () => {
-    setIsResetConfirmOpen(false);
-    showToast('Resetting prototype database to default mock fixtures...', 'info');
-    setTimeout(() => {
-      MockStorage.resetAllToDefaults();
-    }, 500);
+  const handleTriggerReset = () => {
+    confirmAction({
+      title: 'Confirm Factory Data Reset',
+      message: 'Are you sure you want to restore all directories, user bookmarks, and moderation queues back to their initial factory fixtures? Any records added or modified will be permanently erased.',
+      confirmLabel: 'Reset Everything',
+      isDestructive: true,
+      onConfirm: () => {
+        showToast('Resetting prototype database to default mock fixtures...', 'info');
+        setTimeout(() => {
+          MockStorage.resetAllToDefaults();
+        }, 300);
+      }
+    });
   };
 
   return (
@@ -183,7 +190,7 @@ export const AdminSettingsView: React.FC = () => {
           <Button
             size="sm"
             variant="destructive"
-            onClick={() => setIsResetConfirmOpen(true)}
+            onClick={handleTriggerReset}
             className="font-bold flex items-center gap-1.5"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -191,32 +198,6 @@ export const AdminSettingsView: React.FC = () => {
           </Button>
         </div>
       </div>
-
-      {/* Confirmation Modal */}
-      <Modal
-        isOpen={isResetConfirmOpen}
-        onClose={() => setIsResetConfirmOpen(false)}
-        title="Confirm Factory Data Reset"
-        maxWidth="sm"
-      >
-        <div className="space-y-3 text-xs">
-          <p className="text-ios-lightText dark:text-ios-darkText">
-            Are you sure you want to restore all directories, user bookmarks, and moderation queues back to their initial factory fixtures?
-          </p>
-          <p className="text-red-600 font-semibold text-[11px]">
-            Any records you added or modified during this session will be permanently erased.
-          </p>
-
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-ios-lightBorder dark:border-ios-darkBorder">
-            <Button size="sm" variant="secondary" onClick={() => setIsResetConfirmOpen(false)}>
-              Cancel
-            </Button>
-            <Button size="sm" variant="destructive" onClick={handleConfirmReset}>
-              Yes, Reset Everything
-            </Button>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 };

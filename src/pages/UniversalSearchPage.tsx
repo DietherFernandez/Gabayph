@@ -157,8 +157,12 @@ export const UniversalSearchPage: React.FC = () => {
           <EmptyState
             icon={<Search className="w-8 h-8" />}
             title="No Matching Results Found"
-            description={`No services, jobs, or assistance matched "${query}". Try searching with alternative keywords.`}
-            actionLabel="Clear Search"
+            description={
+              query
+                ? `No services, jobs, or assistance matched "${query}". Try searching with alternative keywords or selecting another category.`
+                : 'No records found in this category. Try switching categories or resetting filters.'
+            }
+            actionLabel="Reset Search & Filters"
             onAction={() => {
               setQuery('');
               setActiveCategory('all');

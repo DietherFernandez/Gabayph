@@ -205,8 +205,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const closeAuthModal = () => setIsAuthModalOpen(false);
 
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const openSearchModal = () => setIsSearchModalOpen(true);
-  const closeSearchModal = () => setIsSearchModalOpen(false);
+  const openSearchModal = useCallback(() => setIsSearchModalOpen(true), []);
+  const closeSearchModal = useCallback(() => setIsSearchModalOpen(false), []);
+
+  // Global keyboard shortcut ('/' to trigger search modal)
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '/') {
+        const activeTag = document.activeElement?.tagName.toLowerCase();
+        const isEditable = document.activeElement?.getAttribute('contenteditable') === 'true';
+        if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || isEditable) {
+          return;
+        }
+        e.preventDefault();
+        openSearchModal();
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [openSearchModal]);
 
   const [reportModalItem, setReportModalItem] = useState<{ id: string; title: string } | null>(null);
   const openReportModal = (item: { id: string; title: string }) => setReportModalItem(item);

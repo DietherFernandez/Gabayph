@@ -82,12 +82,21 @@ export const DetailPage: React.FC = () => {
   const edu = item.category === 'aral' ? (item as EducationItem) : null;
   const safe = item.category === 'kaligtasan' ? (item as EmergencyResourceItem) : null;
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      navigate(`/${item.category}`);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
       {/* Top Back Navigation Bar */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => window.history.back()}
+          onClick={handleBack}
+          aria-label="Go back to previous page"
           className="flex items-center gap-1.5 text-xs font-semibold text-ios-lightMuted hover:text-ios-lightText dark:hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Back
@@ -97,9 +106,9 @@ export const DetailPage: React.FC = () => {
           {/* Share Button */}
           <button
             onClick={handleShare}
-            className="p-2 rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText transition-colors"
+            className="p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText transition-colors"
             title="Share this public service"
-            aria-label="Share"
+            aria-label="Share this service entry"
           >
             <Share2 className="w-4 h-4" />
           </button>
@@ -110,13 +119,13 @@ export const DetailPage: React.FC = () => {
               const state = toggleSave(item.id);
               showToast(state ? 'Saved to bookmarks!' : 'Removed from bookmarks.', 'info');
             }}
-            className={`p-2 rounded-ios-lg border transition-colors ${
+            aria-label={saved ? 'Remove bookmark' : 'Bookmark this service entry'}
+            className={`p-2 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-ios-lg border transition-colors ${
               saved
                 ? 'bg-blue-50 dark:bg-blue-950/40 text-ios-navy dark:text-blue-400 border-blue-200 dark:border-blue-800'
                 : 'bg-ios-lightSurface dark:bg-ios-darkSurface border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightMuted hover:text-ios-lightText'
             }`}
             title="Save to bookmarks"
-            aria-label="Save"
           >
             <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
           </button>
