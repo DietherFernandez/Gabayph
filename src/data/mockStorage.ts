@@ -363,7 +363,7 @@ export const MockStorage = {
   },
 
   // Delete Record by category & ID (Admin)
-  deleteItem: (category: CategoryType, id: string) => {
+  deleteItem: (category: CategoryType | 'announcements', id: string) => {
     switch (category) {
       case 'serbisyo':
         MockStorage.saveServices(MockStorage.getServices().filter(s => s.id !== id));
@@ -383,13 +383,23 @@ export const MockStorage = {
       case 'kaligtasan':
         MockStorage.saveSafety(MockStorage.getSafety().filter(s => s.id !== id));
         break;
+      case 'announcements':
+        MockStorage.saveAnnouncements(MockStorage.getAnnouncements().filter(an => an.id !== id));
+        break;
     }
     MockStorage.logActivity(`Deleted item ${id} from ${category}`, category, id, 'warning');
     window.dispatchEvent(new Event('gabayph_data_updated'));
   },
 
   // Add Item (Admin)
-  addItem: (item: BaseItem) => {
+  addItem: (item: BaseItem | AnnouncementItem) => {
+    if ('sourceAgency' in item) {
+      MockStorage.saveAnnouncements([item as AnnouncementItem, ...MockStorage.getAnnouncements()]);
+      MockStorage.logActivity(`Created public bulletin: ${item.title}`, 'Bulletin', item.id, 'success');
+      window.dispatchEvent(new Event('gabayph_data_updated'));
+      return;
+    }
+
     switch (item.category) {
       case 'serbisyo':
         MockStorage.saveServices([item as ServiceItem, ...MockStorage.getServices()]);
@@ -415,7 +425,14 @@ export const MockStorage = {
   },
 
   // Edit Item (Admin)
-  updateItem: (item: BaseItem) => {
+  updateItem: (item: BaseItem | AnnouncementItem) => {
+    if ('sourceAgency' in item) {
+      MockStorage.saveAnnouncements(MockStorage.getAnnouncements().map(an => an.id === item.id ? (item as AnnouncementItem) : an));
+      MockStorage.logActivity(`Updated public bulletin: ${item.title}`, 'Bulletin', item.id, 'info');
+      window.dispatchEvent(new Event('gabayph_data_updated'));
+      return;
+    }
+
     switch (item.category) {
       case 'serbisyo':
         MockStorage.saveServices(MockStorage.getServices().map(s => s.id === item.id ? (item as ServiceItem) : s));

@@ -5,7 +5,10 @@ import { Navbar } from './components/navigation/Navbar';
 import { BottomTabBar } from './components/navigation/BottomTabBar';
 import { Footer } from './components/navigation/Footer';
 
-// Pages
+// Admin Dedicated Workspace Layout
+import { AdminLayout } from './components/admin/AdminLayout';
+
+// Citizen Pages
 import { HomePage } from './pages/HomePage';
 import { SerbisyoPage } from './pages/SerbisyoPage';
 import { TrabahoPage } from './pages/TrabahoPage';
@@ -19,7 +22,6 @@ import { SavedItemsPage } from './pages/SavedItemsPage';
 import { NotificationCenterPage } from './pages/NotificationCenterPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { AnnouncementsPage } from './pages/AnnouncementsPage';
-import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 // Modals
@@ -34,6 +36,7 @@ import {
 
 const AppContent: React.FC = () => {
   const { currentPath } = useApp();
+  const isAdminRoute = currentPath.startsWith('/admin');
 
   // Dynamic Document Title based on current route
   useEffect(() => {
@@ -64,14 +67,41 @@ const AppContent: React.FC = () => {
       title = 'Citizen Profile & Settings — GabayPH';
     } else if (currentPath.startsWith('/announcements')) {
       title = 'Official Public Advisories — GabayPH';
-    } else if (currentPath.startsWith('/admin')) {
-      title = 'Admin Operations Dashboard — GabayPH';
+    } else if (currentPath === '/admin' || currentPath === '/admin/overview') {
+      title = 'Overview — GabayPH Admin Operations';
+    } else if (currentPath === '/admin/services') {
+      title = 'Public Services Management — GabayPH Admin';
+    } else if (currentPath === '/admin/jobs') {
+      title = 'Careers & Jobs Management — GabayPH Admin';
+    } else if (currentPath === '/admin/assistance') {
+      title = 'Financial Assistance Management — GabayPH Admin';
+    } else if (currentPath === '/admin/education') {
+      title = 'Education & TVET Management — GabayPH Admin';
+    } else if (currentPath === '/admin/bayanihan') {
+      title = 'Community Programs Management — GabayPH Admin';
+    } else if (currentPath === '/admin/safety') {
+      title = 'Safety & Hotlines Management — GabayPH Admin';
+    } else if (currentPath === '/admin/bulletins') {
+      title = 'Public Bulletins Management — GabayPH Admin';
+    } else if (currentPath === '/admin/reports') {
+      title = 'Citizen Moderation Reports — GabayPH Admin';
+    } else if (currentPath === '/admin/suggestions') {
+      title = 'Service Suggestions Queue — GabayPH Admin';
+    } else if (currentPath === '/admin/logs') {
+      title = 'Audit Trail & Activity Logs — GabayPH Admin';
+    } else if (currentPath === '/admin/settings') {
+      title = 'Admin Settings & Preferences — GabayPH Admin';
     }
     document.title = title;
   }, [currentPath]);
 
-  // Route Resolver
-  const renderCurrentPage = () => {
+  // If in administrative route, render dedicated Admin workspace shell
+  if (isAdminRoute) {
+    return <AdminLayout />;
+  }
+
+  // Citizen Route Resolver
+  const renderCitizenPage = () => {
     if (currentPath === '/') return <HomePage />;
     if (currentPath === '/serbisyo') return <SerbisyoPage />;
     if (currentPath === '/trabaho') return <TrabahoPage />;
@@ -85,25 +115,24 @@ const AppContent: React.FC = () => {
     if (currentPath === '/notifications') return <NotificationCenterPage />;
     if (currentPath === '/profile') return <ProfilePage />;
     if (currentPath === '/announcements') return <AnnouncementsPage />;
-    if (currentPath === '/admin') return <AdminDashboardPage />;
 
     return <NotFoundPage />;
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-ios-lightBg dark:bg-ios-darkBg text-ios-lightText dark:text-ios-darkText transition-colors selection:bg-ios-navy selection:text-white">
-      {/* Top Navigation */}
+      {/* Top Citizen Navigation */}
       <Navbar />
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 pb-24 lg:pb-12">
-        {renderCurrentPage()}
+        {renderCitizenPage()}
       </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Mobile iOS Bottom Tab Bar */}
+      {/* Mobile iOS Bottom Tab Bar (Citizen Only) */}
       <BottomTabBar />
 
       {/* Global Interactive Modals */}
