@@ -1,0 +1,163 @@
+import React, { useState, useMemo } from 'react';
+import { useApp } from '../context/AppContext';
+import { MockStorage } from '../data/mockStorage';
+import { Briefcase, Bookmark } from 'lucide-react';
+import { SearchField, Select } from '../components/common/Input';
+import { Badge } from '../components/common/Badge';
+import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
+import { EmptyState } from '../components/common/EmptyState';
+import { useToast } from '../context/ToastContext';
+
+export const TrabahoPage: React.FC = () => {
+  const { navigate, isSaved, toggleSave } = useApp();
+  const { showToast } = useToast();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [employmentType, setEmploymentType] = useState<string>('all');
+  const [sectorFilter, setSectorFilter] = useState<string>('all');
+
+  const jobs = useMemo(() => MockStorage.getJobs(), []);
+
+  const filteredJobs = useMemo(() => {
+    return jobs.filter(job => {
+      const matchesSearch =
+        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.agency.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (job.agencyAcronym && job.agencyAcronym.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        job.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesType = employmentType === 'all' || job.employmentType === employmentType;
+      const matchesSector = sectorFilter === 'all' || job.sector === sectorFilter;
+
+      return matchesSearch && matchesType && matchesSector;
+    });
+  }, [jobs, searchQuery, employmentType, sectorFilter]);
+
+  return (
+    <div className="space-y-6 animate-in fade-in duration-200">
+      {/* Header */}
+      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">
+          <Briefcase className="w-4 h-4" />
+          <span>Direktoryo ng Trabaho at Karera</span>
+        </div>
+        <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
+          TRABAHO: Oportunidad sa Gobyerno at Pribadong Sektor
+        </h1>
+        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl">
+          Tingnan ang mga opisyal na bakanteng posisyon sa Civil Service Commission, kagawaran ng pamahalaan, at mga katuwang na institusyon.
+        </p>
+
+        {/* Search & Filters */}
+        <div className="mt-4 pt-4 border-t border-ios-lightBorder/80 dark:border-ios-darkBorder/80 grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div className="sm:col-span-6">
+            <SearchField
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Maghanap ng posisyon, ahensya, o lokasyon..."
+            />
+          </div>
+          <div className="sm:col-span-3">
+            <Select
+              value={employmentType}
+              onChange={e => setEmploymentType(e.target.value)}
+              options={[
+                { value: 'all', label: 'Lahat ng Uri ng Trabaho' },
+                { value: 'government', label: 'Government / Plantilla' },
+                { value: 'contractual', label: 'Contract of Service' },
+                { value: 'full-time', label: 'Full-Time NGO/Private' }
+              ]}
+            />
+          </div>
+          <div className="sm:col-span-3">
+            <Select
+              value={sectorFilter}
+              onChange={e => setSectorFilter(e.target.value)}
+              options={[
+                { value: 'all', label: 'Lahat ng Sektor' },
+                { value: 'public', label: 'Public / Pamahalaan' },
+                { value: 'ngo', label: 'NGO / Humanitarian' },
+                { value: 'private', label: 'Private Sector' }
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Jobs Grouped List */}
+      <div>
+        {filteredJobs.length > 0 ? (
+          <GroupedList
+            title={`Bukas na Trabaho (${filteredJobs.length})`}
+            subtitle="Pindutin ang posisyon para makita ang kwalipikasyon, requirements, at paraan ng pag-apply"
+          >
+            {filteredJobs.map(job => {
+              const saved = isSaved(job.id);
+              return (
+                <GroupedListItem
+                  key={job.id}
+                  onClick={() => navigate(`/item/${job.id}`)}
+                  leadingIcon={<Briefcase className="w-4 h-4" />}
+                  title={
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span>{job.title}</span>
+                      <Badge category="trabaho" size="sm">
+                        {job.employmentType}
+                      </Badge>
+                      <span className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted bg-ios-lightSecondary dark:bg-ios-darkSecondary px-1.5 py-0.2 rounded">
+                        {job.vacancies} bakante
+                      </span>
+                    </div>
+                  }
+                  subtitle={`${job.agency} (${job.agencyAcronym}) • ${job.location}`}
+                  metadata={
+                    <>
+                      <span className="font-semibold text-ios-navy dark:text-blue-400">
+                        {job.salaryRange}
+                      </span>
+                      <span>•</span>
+                      <span className="text-red-600 dark:text-red-400 font-medium">
+                        Deadline: {job.deadline}
+                      </span>
+                    </>
+                  }
+                  trailing={
+                    <button
+                      type="button"
+                      onClick={e => {
+                        e.stopPropagation();
+                        const state = toggleSave(job.id);
+                        showToast(state ? 'Nai-save ang trabaho sa iyong talaan!' : 'Inalis ang trabaho.', 'info');
+                      }}
+                      className={`p-2 rounded-full transition-colors ${
+                        saved
+                          ? 'text-ios-navy dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40'
+                          : 'text-ios-lightMuted hover:text-ios-lightText'
+                      }`}
+                      aria-label="Bookmark job"
+                    >
+                      <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
+                    </button>
+                  }
+                />
+              );
+            })}
+          </GroupedList>
+        ) : (
+          <EmptyState
+            icon={<Briefcase className="w-8 h-8" />}
+            title="Walang Nahanap na Trabaho"
+            description={`Walang tumugmang trabaho para sa iyong paghahanap na "${searchQuery}".`}
+            actionLabel="I-reset ang Paghahanap"
+            onAction={() => {
+              setSearchQuery('');
+              setEmploymentType('all');
+              setSectorFilter('all');
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};

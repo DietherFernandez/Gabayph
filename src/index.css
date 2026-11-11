@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #F5F6F8;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F0F2F5;
+  --color-text-primary: #172033;
+  --color-text-secondary: #687386;
+  --color-border: #E4E7EC;
+  --color-navy: #173B67;
+  --color-green: #16866B;
+}
+
+.dark {
+  --color-bg: #101114;
+  --color-surface: #1A1C20;
+  --color-surface-secondary: #24272D;
+  --color-text-primary: #F5F6F7;
+  --color-text-secondary: #A0A6B2;
+  --color-border: #30343B;
+  --color-navy: #3164A4;
+  --color-green: #1DB28E;
+}
+
+/* iOS HIG smooth transitions and tap highlights */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Subtle iOS scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+/* iOS active tap feedback */
+.ios-active {
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.ios-active:active {
+  transform: scale(0.98);
+  opacity: 0.85;
+}
+
+/* Safe areas for iOS mobile view */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
