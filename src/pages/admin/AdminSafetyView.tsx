@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { EmergencyResourceItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   ShieldAlert,
   Search,
@@ -27,6 +29,7 @@ export const AdminSafetyView: React.FC<AdminSafetyViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [safety, setSafety] = useState<EmergencyResourceItem[]>(() => MockStorage.getSafety());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -37,11 +40,17 @@ export const AdminSafetyView: React.FC<AdminSafetyViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the emergency resource "${title}"?`)) {
-      MockStorage.deleteItem('kaligtasan', id);
-      refreshList();
-      showToast(`Deleted safety resource: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Safety Resource?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Resource',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('kaligtasan', id);
+        refreshList();
+        showToast(`Deleted safety resource: ${title}`, 'info');
+      }
+    });
   };
 
   const copyHotline = (number: string, title: string) => {
@@ -147,18 +156,20 @@ export const AdminSafetyView: React.FC<AdminSafetyViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="w-full md:w-64">
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="w-full md:w-auto px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Safety Resources</option>
-            <option value="hotline">Emergency Phone Hotlines</option>
-            <option value="disaster_guide">Disaster Preparedness Guides</option>
-            <option value="evacuation">Evacuation Center Network</option>
-            <option value="first_aid">First Aid Protocols</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full"
+            options={[
+              { value: 'all', label: 'All Safety Resources' },
+              { value: 'hotline', label: 'Emergency Phone Hotlines' },
+              { value: 'disaster_guide', label: 'Disaster Preparedness Guides' },
+              { value: 'evacuation', label: 'Evacuation Center Network' },
+              { value: 'first_aid', label: 'First Aid Protocols' },
+            ]}
+          />
         </div>
       </div>
 

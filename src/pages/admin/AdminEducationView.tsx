@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { EducationItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   GraduationCap,
   Search,
@@ -27,6 +29,7 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [education, setEducation] = useState<EducationItem[]>(() => MockStorage.getEducation());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLevel, setSelectedLevel] = useState<string>('all');
@@ -38,11 +41,17 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the education program "${title}"?`)) {
-      MockStorage.deleteItem('aral', id);
-      refreshList();
-      showToast(`Deleted education program: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Education Program?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Program',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('aral', id);
+        refreshList();
+        showToast(`Deleted education program: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredItems = useMemo(() => {
@@ -102,30 +111,34 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+          <IOSSelect
             value={selectedLevel}
-            onChange={e => setSelectedLevel(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Academic Levels</option>
-            <option value="tertiary">Tertiary / Undergraduate</option>
-            <option value="vocational">Vocational / TVET</option>
-            <option value="secondary">Secondary (SHS)</option>
-            <option value="post-graduate">Post-Graduate</option>
-          </select>
+            onChange={setSelectedLevel}
+            size="sm"
+            className="w-full sm:w-48"
+            options={[
+              { value: 'all', label: 'All Academic Levels' },
+              { value: 'tertiary', label: 'Tertiary / Undergraduate' },
+              { value: 'vocational', label: 'Vocational / TVET' },
+              { value: 'secondary', label: 'Secondary (SHS)' },
+              { value: 'post-graduate', label: 'Post-Graduate' },
+            ]}
+          />
 
-          <select
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Program Types</option>
-            <option value="scholarship">Full Scholarship</option>
-            <option value="tvet">TESDA TVET Training</option>
-            <option value="subsidy">Tuition Subsidy (UniFAST)</option>
-            <option value="free_course">Online Certification</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full sm:w-44"
+            options={[
+              { value: 'all', label: 'All Program Types' },
+              { value: 'scholarship', label: 'Full Scholarship' },
+              { value: 'tvet', label: 'TESDA TVET Training' },
+              { value: 'subsidy', label: 'Tuition Subsidy (UniFAST)' },
+              { value: 'free_course', label: 'Online Certification' },
+            ]}
+          />
         </div>
       </div>
 

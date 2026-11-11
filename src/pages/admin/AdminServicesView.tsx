@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { ServiceItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   FileText,
   Search,
@@ -26,6 +28,7 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [services, setServices] = useState<ServiceItem[]>(() => MockStorage.getServices());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -37,11 +40,17 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the public service "${title}"?`)) {
-      MockStorage.deleteItem('serbisyo', id);
-      refreshList();
-      showToast(`Deleted service record: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Public Service?',
+      message: `Are you sure you want to permanently remove "${title}" from the public services directory?`,
+      confirmLabel: 'Delete Service',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('serbisyo', id);
+        refreshList();
+        showToast(`Deleted service record: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredServices = useMemo(() => {
@@ -107,29 +116,33 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Service Types</option>
-            <option value="identity">Identity & Civil Registry</option>
-            <option value="clearance">Clearances & Permits</option>
-            <option value="business">Business & Licensing</option>
-            <option value="social_welfare">Social Welfare</option>
-            <option value="health">Health & Medical</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full sm:w-48"
+            options={[
+              { value: 'all', label: 'All Service Types' },
+              { value: 'identity', label: 'Identity & Civil Registry' },
+              { value: 'clearance', label: 'Clearances & Permits' },
+              { value: 'business', label: 'Business & Licensing' },
+              { value: 'social_welfare', label: 'Social Welfare' },
+              { value: 'health', label: 'Health & Medical' },
+            ]}
+          />
 
-          <select
+          <IOSSelect
             value={selectedFee}
-            onChange={e => setSelectedFee(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Fee Schedules</option>
-            <option value="free">Free Only (₱0)</option>
-            <option value="paid">Standard Processing Fee</option>
-          </select>
+            onChange={setSelectedFee}
+            size="sm"
+            className="w-full sm:w-44"
+            options={[
+              { value: 'all', label: 'All Fee Schedules' },
+              { value: 'free', label: 'Free Only (₱0)' },
+              { value: 'paid', label: 'Standard Processing Fee' },
+            ]}
+          />
         </div>
       </div>
 

@@ -8,10 +8,12 @@ import { Button } from '../components/common/Button';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 
 export const SavedItemsPage: React.FC = () => {
   const { savedIds, toggleSave, navigate } = useApp();
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
 
   const [activeCategory, setActiveCategory] = useState<CategoryType | 'all'>('all');
 
@@ -26,10 +28,16 @@ export const SavedItemsPage: React.FC = () => {
   }, [savedItems, activeCategory]);
 
   const handleClearAll = () => {
-    if (window.confirm('Are you sure you want to remove all saved bookmarks?')) {
-      MockStorage.clearAllSavedItems();
-      showToast('Cleared all saved bookmarks.', 'info');
-    }
+    confirmAction({
+      title: 'Clear All Bookmarks?',
+      message: 'Are you sure you want to remove all saved government services and records from your bookmarks?',
+      confirmLabel: 'Clear All',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.clearAllSavedItems();
+        showToast('Cleared all saved bookmarks.', 'info');
+      }
+    });
   };
 
   return (

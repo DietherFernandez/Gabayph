@@ -7,10 +7,12 @@ import { Button } from '../components/common/Button';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 
 export const NotificationCenterPage: React.FC = () => {
   const { navigate, refreshNotifications } = useApp();
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
 
   const [notifications, setNotifications] = useState<UserNotification[]>(() => MockStorage.getNotifications());
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
@@ -30,12 +32,18 @@ export const NotificationCenterPage: React.FC = () => {
   };
 
   const handleClearAll = () => {
-    if (window.confirm('Are you sure you want to clear all notifications?')) {
-      MockStorage.clearNotifications();
-      setNotifications([]);
-      refreshNotifications();
-      showToast('Cleared all notifications.', 'info');
-    }
+    confirmAction({
+      title: 'Clear All Notifications?',
+      message: 'Are you sure you want to dismiss all bulletin updates and status alerts?',
+      confirmLabel: 'Clear All',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.clearNotifications();
+        setNotifications([]);
+        refreshNotifications();
+        showToast('Cleared all notifications.', 'info');
+      }
+    });
   };
 
   const handleNotificationClick = (notif: UserNotification) => {

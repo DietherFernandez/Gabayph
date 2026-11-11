@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { BayanihanItem, VolunteerApplication } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   HeartHandshake,
   Search,
@@ -30,6 +32,7 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [bayanihan, setBayanihan] = useState<BayanihanItem[]>(() => MockStorage.getBayanihan());
   const [volunteerApps, setVolunteerApps] = useState<VolunteerApplication[]>(() => MockStorage.getVolunteerApps());
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,11 +46,17 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the community program "${title}"?`)) {
-      MockStorage.deleteItem('bayanihan', id);
-      refreshList();
-      showToast(`Deleted community program: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Community Drive?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Drive',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('bayanihan', id);
+        refreshList();
+        showToast(`Deleted community program: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredItems = useMemo(() => {
@@ -106,18 +115,20 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="w-full md:w-64">
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="w-full md:w-auto px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Drive Types</option>
-            <option value="volunteer">Volunteer Mobilization</option>
-            <option value="disaster_relief">Disaster Relief Operations</option>
-            <option value="donation">Blood & Medical Donations</option>
-            <option value="community_pantry">Food Security / Community Pantry</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full"
+            options={[
+              { value: 'all', label: 'All Drive Types' },
+              { value: 'volunteer', label: 'Volunteer Mobilization' },
+              { value: 'disaster_relief', label: 'Disaster Relief Operations' },
+              { value: 'donation', label: 'Blood & Medical Donations' },
+              { value: 'community_pantry', label: 'Food Security / Community Pantry' },
+            ]}
+          />
         </div>
       </div>
 

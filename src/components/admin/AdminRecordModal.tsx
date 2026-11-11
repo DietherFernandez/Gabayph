@@ -5,6 +5,7 @@ import { useToast } from '../../context/ToastContext';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { TextInput, Textarea } from '../common/Input';
+import { IOSSelect } from '../common/IOSSelect';
 
 export type AdminRecordCategory = CategoryType | 'announcements';
 
@@ -278,25 +279,22 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4 text-xs">
       {/* Category Picker */}
-      <div>
-        <label className="block text-xs font-semibold text-ios-lightText dark:text-ios-darkText mb-1.5">
-          Record Category
-        </label>
-        <select
-          disabled={!!initialItem}
-          value={category}
-          onChange={e => setCategory(e.target.value as AdminRecordCategory)}
-          className="w-full px-3 py-2 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none focus:ring-2 focus:ring-ios-navy"
-        >
-          <option value="serbisyo">Public Services (Serbisyo)</option>
-          <option value="trabaho">Careers & Jobs (Trabaho)</option>
-          <option value="pera">Financial Assistance (Pera)</option>
-          <option value="aral">Education & TVET (Aral)</option>
-          <option value="bayanihan">Community Programs (Bayanihan)</option>
-          <option value="kaligtasan">Safety & Hotlines (Kaligtasan)</option>
-          <option value="announcements">Public Bulletins & Advisories</option>
-        </select>
-      </div>
+      <IOSSelect
+        label="Record Category"
+        disabled={!!initialItem}
+        value={category}
+        onChange={val => setCategory(val as AdminRecordCategory)}
+        size="md"
+        options={[
+          { value: 'serbisyo', label: 'Public Services (Serbisyo)' },
+          { value: 'trabaho', label: 'Careers & Jobs (Trabaho)' },
+          { value: 'pera', label: 'Financial Assistance (Pera)' },
+          { value: 'aral', label: 'Education & TVET (Aral)' },
+          { value: 'bayanihan', label: 'Community Programs (Bayanihan)' },
+          { value: 'kaligtasan', label: 'Safety & Hotlines (Kaligtasan)' },
+          { value: 'announcements', label: 'Public Bulletins & Advisories' },
+        ]}
+      />
 
       {/* Title */}
       <TextInput

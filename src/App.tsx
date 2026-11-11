@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ConfirmProvider } from './context/ConfirmContext';
 import { ToastProvider } from './context/ToastContext';
 import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/navigation/Navbar';
@@ -149,9 +150,11 @@ const AppContent: React.FC = () => {
 export function App() {
   return (
     <ToastProvider>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
+      <ConfirmProvider>
+        <AppProvider>
+          <AppContent />
+        </AppProvider>
+      </ConfirmProvider>
     </ToastProvider>
   );
 }

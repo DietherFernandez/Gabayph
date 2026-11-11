@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { FinancialAssistanceItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
+import { IOSSelect } from '../../components/common/IOSSelect';
 import {
   DollarSign,
   Search,
@@ -27,6 +29,7 @@ export const AdminAssistanceView: React.FC<AdminAssistanceViewProps> = ({
   onDataChanged
 }) => {
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
   const [assistance, setAssistance] = useState<FinancialAssistanceItem[]>(() => MockStorage.getAssistance());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -37,11 +40,17 @@ export const AdminAssistanceView: React.FC<AdminAssistanceViewProps> = ({
   };
 
   const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the financial aid program "${title}"?`)) {
-      MockStorage.deleteItem('pera', id);
-      refreshList();
-      showToast(`Deleted assistance program: ${title}`, 'info');
-    }
+    confirmAction({
+      title: 'Delete Assistance Program?',
+      message: `Are you sure you want to permanently delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete Program',
+      isDestructive: true,
+      onConfirm: () => {
+        MockStorage.deleteItem('pera', id);
+        refreshList();
+        showToast(`Deleted assistance program: ${title}`, 'info');
+      }
+    });
   };
 
   const filteredItems = useMemo(() => {
@@ -100,19 +109,21 @@ export const AdminAssistanceView: React.FC<AdminAssistanceViewProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="w-full md:w-64">
+          <IOSSelect
             value={selectedType}
-            onChange={e => setSelectedType(e.target.value)}
-            className="w-full md:w-auto px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Assistance Types</option>
-            <option value="emergency_aid">Emergency Aid / Outright Grant</option>
-            <option value="subsidy">Direct Subsidy</option>
-            <option value="cash_grant">Conditional Cash Grant (4Ps)</option>
-            <option value="loan">Livelihood Loan / Micro-financing</option>
-            <option value="pension">Social Pension</option>
-          </select>
+            onChange={setSelectedType}
+            size="sm"
+            className="w-full"
+            options={[
+              { value: 'all', label: 'All Assistance Types' },
+              { value: 'emergency_aid', label: 'Emergency Aid / Outright Grant' },
+              { value: 'subsidy', label: 'Direct Subsidy' },
+              { value: 'cash_grant', label: 'Conditional Cash Grant (4Ps)' },
+              { value: 'loan', label: 'Livelihood Loan / Micro-financing' },
+              { value: 'pension', label: 'Social Pension' },
+            ]}
+          />
         </div>
       </div>
 

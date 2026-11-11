@@ -16,10 +16,12 @@ import { TextInput } from '../components/common/Input';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { useToast } from '../context/ToastContext';
+import { useConfirm } from '../context/ConfirmContext';
 
 export const ProfilePage: React.FC = () => {
   const { user, updateUser, logout, theme, toggleTheme, role, navigate } = useApp();
   const { showToast } = useToast();
+  const { confirmAction } = useConfirm();
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -68,11 +70,17 @@ export const ProfilePage: React.FC = () => {
   };
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to sign out of your citizen account?')) {
-      logout();
-      showToast('Successfully signed out of your account.', 'info');
-      navigate('/');
-    }
+    confirmAction({
+      title: 'Sign Out?',
+      message: 'Are you sure you want to sign out of your citizen account? Unsaved changes will be discarded.',
+      confirmLabel: 'Sign Out',
+      isDestructive: true,
+      onConfirm: () => {
+        logout();
+        showToast('Successfully signed out of your account.', 'info');
+        navigate('/');
+      }
+    });
   };
 
   return (

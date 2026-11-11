@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
+import { IOSSelect } from '../../components/common/IOSSelect';
 
 interface AdminLogsViewProps {
   onDataChanged: () => void;
@@ -96,31 +97,35 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <select
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+          <IOSSelect
             value={statusFilter}
-            onChange={e => setStatusFilter(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Severities</option>
-            <option value="success">Success / Additions</option>
-            <option value="warning">Warning / Deletions</option>
-            <option value="info">Informational Updates</option>
-          </select>
+            onChange={setStatusFilter}
+            size="sm"
+            className="w-full sm:w-44"
+            options={[
+              { value: 'all', label: 'All Severities' },
+              { value: 'success', label: 'Success / Additions' },
+              { value: 'warning', label: 'Warning / Deletions' },
+              { value: 'info', label: 'Informational Updates' },
+            ]}
+          />
 
-          <select
+          <IOSSelect
             value={entityFilter}
-            onChange={e => setEntityFilter(e.target.value)}
-            className="flex-1 md:flex-initial px-2.5 py-1.5 rounded-ios-lg bg-slate-50 dark:bg-slate-800 border border-ios-lightBorder dark:border-ios-darkBorder text-xs text-ios-lightText dark:text-ios-darkText font-medium focus:outline-none"
-          >
-            <option value="all">All Entity Types</option>
-            <option value="service">Services (Serbisyo)</option>
-            <option value="trabaho">Careers (Trabaho)</option>
-            <option value="pera">Financial (Pera)</option>
-            <option value="bulletin">Public Bulletins</option>
-            <option value="report">Reports</option>
-            <option value="system">System Core</option>
-          </select>
+            onChange={setEntityFilter}
+            size="sm"
+            className="w-full sm:w-44"
+            options={[
+              { value: 'all', label: 'All Entity Types' },
+              { value: 'service', label: 'Services (Serbisyo)' },
+              { value: 'trabaho', label: 'Careers (Trabaho)' },
+              { value: 'pera', label: 'Financial (Pera)' },
+              { value: 'bulletin', label: 'Public Bulletins' },
+              { value: 'report', label: 'Reports' },
+              { value: 'system', label: 'System Core' },
+            ]}
+          />
         </div>
       </div>
 
