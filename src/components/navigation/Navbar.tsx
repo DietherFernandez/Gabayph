@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import {
   Search,
@@ -10,6 +10,10 @@ import {
   ShieldCheck,
   User,
   Shield,
+  Menu,
+  X,
+  HelpCircle,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '../common/Button';
 
@@ -26,9 +30,13 @@ export const Navbar: React.FC = () => {
     openAuthModal,
     openSearchModal,
     isAuthenticated,
-    user
+    user,
+    openSuggestModal,
+    openContactModal
   } = useApp();
 
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
     { label: 'Home', path: '/' },
@@ -40,6 +48,21 @@ export const Navbar: React.FC = () => {
     { label: 'Kaligtasan', sublabel: 'Safety', path: '/kaligtasan' },
     { label: 'Advisories', path: '/announcements' },
   ];
+
+  // Close desktop dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setDesktopMenuOpen(false);
+      }
+    };
+    if (desktopMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [desktopMenuOpen]);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-ios-darkSurface/95 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
@@ -261,11 +284,91 @@ export const Navbar: React.FC = () => {
             </Button>
           )}
 
+          {/* Desktop Only Hamburger Menu & Tools Docker */}
+          <div className="relative hidden lg:block" ref={menuRef}>
+            <button
+              onClick={() => setDesktopMenuOpen(!desktopMenuOpen)}
+              className="p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center"
+              aria-label="Toggle desktop menu docker"
+              title="Quick Actions & System Docker"
+            >
+              {desktopMenuOpen ? <X className="w-5 h-5 text-ios-navy dark:text-blue-400" /> : <Menu className="w-5 h-5" />}
+            </button>
 
+            {/* Desktop Docker Dropdown Popover */}
+            {desktopMenuOpen && (
+              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-ios-darkSurface rounded-2xl shadow-ios-lg border border-ios-lightBorder dark:border-ios-darkBorder py-2.5 px-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-2 pb-2 mb-2 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80 flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
+                    Quick Actions & Tools
+                  </span>
+                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-ios-navy/10 dark:bg-blue-900/30 text-ios-navy dark:text-blue-400">
+                    GabayPH
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <button
+                    onClick={() => {
+                      openSuggestModal();
+                      setDesktopMenuOpen(false);
+                    }}
+                    className="w-full text-left px-2.5 py-2 rounded-xl text-xs font-medium text-ios-lightText dark:text-ios-darkText hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5 transition-colors"
+                  >
+                    <MessageSquare className="w-4 h-4 text-ios-navy dark:text-blue-400" />
+                    <div>
+                      <span className="block font-semibold">Suggest a Service</span>
+                      <span className="text-[11px] text-ios-lightMuted">Request missing government program</span>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      openContactModal();
+                      setDesktopMenuOpen(false);
+                    }}
+                    className="w-full text-left px-2.5 py-2 rounded-xl text-xs font-medium text-ios-lightText dark:text-ios-darkText hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5 transition-colors"
+                  >
+                    <HelpCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <div>
+                      <span className="block font-semibold">Help & Citizen Support</span>
+                      <span className="text-[11px] text-ios-lightMuted">Inquire about public directory guides</span>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      navigate('/kaligtasan');
+                      setDesktopMenuOpen(false);
+                    }}
+                    className="w-full text-left px-2.5 py-2 rounded-xl text-xs font-medium text-ios-lightText dark:text-ios-darkText hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5 transition-colors"
+                  >
+                    <PhoneCall className="w-4 h-4 text-red-500" />
+                    <div>
+                      <span className="block font-semibold">National Hotlines (911)</span>
+                      <span className="text-[11px] text-ios-lightMuted">Emergency, PNP, BFP, Red Cross</span>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      navigate('/admin');
+                      setDesktopMenuOpen(false);
+                    }}
+                    className="w-full text-left px-2.5 py-2 rounded-xl text-xs font-medium text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30 flex items-center gap-2.5 transition-colors border-t border-ios-lightBorder/60 dark:border-ios-darkBorder/60 mt-1 pt-2"
+                  >
+                    <Shield className="w-4 h-4 text-amber-600" />
+                    <div>
+                      <span className="block font-semibold">Admin Workspace</span>
+                      <span className="text-[11px] opacity-80">Manage services, jobs, and audits</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-
     </header>
   );
 };
