@@ -33,21 +33,21 @@ export const KaligtasanPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Category Header with Emergency Badge */}
-      <div className="bg-red-500 text-white p-5 rounded-ios-xl shadow-ios-lg">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-red-100 mb-1">
-          <ShieldAlert className="w-4 h-4 text-yellow-300" />
+      {/* Editorial Header (Cardless & Official) */}
+      <div className="pt-2 pb-1 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80">
+        <div className="flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-1">
+          <ShieldAlert className="w-4 h-4 text-red-600 dark:text-red-400" />
           <span>Official Emergency & Safety Center</span>
         </div>
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+        <h1 className="text-[24px] sm:text-[30px] font-bold tracking-tight text-ios-lightText dark:text-ios-darkText leading-tight">
           KALIGTASAN: National Hotlines & Disaster Preparedness
         </h1>
-        <p className="text-xs sm:text-sm text-red-100 mt-1 max-w-2xl">
+        <p className="text-[14px] text-ios-lightMuted dark:text-ios-darkMuted mt-1.5 max-w-2xl leading-relaxed">
           Immediate access to verified national emergency responders across the Philippines: PNP Police, BFP Fire Protection, Philippine Red Cross, NDRRMC, and Mental Health Crisis Support.
         </p>
 
-        {/* Tab switch */}
-        <div className="mt-4 pt-3 border-t border-red-400/50 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+        {/* iOS Segmented Tabs */}
+        <div className="mt-4 pt-2 flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-2">
           {[
             { id: 'hotlines', label: 'Emergency Hotlines', count: hotlines.length },
             { id: 'guides', label: 'Typhoon & Earthquake Guides', count: disasterGuides.length },
@@ -57,10 +57,10 @@ export const KaligtasanPage: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
-                  ? 'bg-white text-red-700 shadow-sm'
-                  : 'bg-red-600/80 text-white hover:bg-red-600'
+                  ? 'bg-red-600 text-white shadow-2xs font-semibold'
+                  : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightText dark:text-ios-darkText hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
             >
               {tab.label}
@@ -69,48 +69,46 @@ export const KaligtasanPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 1. HOTLINES TAB */}
+      {/* 1. HOTLINES TAB (Cardless Flat Table Rows) */}
       {activeTab === 'hotlines' && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between px-1">
-            <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-              Note: These verified emergency contact numbers operate nationwide under the Republic of the Philippines.
-            </span>
+        <div className="space-y-2">
+          <div className="px-1 text-[12px] text-ios-lightMuted dark:text-ios-darkMuted">
+            Verified emergency contact numbers operating 24/7 nationwide under the Republic of the Philippines.
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="w-full divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
             {hotlines.map(hotline => {
               const cleanNumber = hotline.hotlineNumber?.replace(/[^0-9]/g, '') || '';
               return (
                 <div
                   key={hotline.id}
-                  className="bg-ios-lightSurface dark:bg-ios-darkSurface p-4 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col justify-between"
+                  className="py-3.5 px-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors"
                 >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <span className="text-xs font-bold text-ios-navy dark:text-blue-400">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[12px] font-bold tracking-wide uppercase text-ios-navy dark:text-blue-400">
                         {hotline.agencyAcronym || hotline.agency}
                       </span>
                       {hotline.isNationalHotline && (
                         <Badge variant="verified">24/7 National</Badge>
                       )}
                     </div>
-                    <h3 className="text-sm font-bold text-ios-lightText dark:text-ios-darkText mb-1">
+                    <h3 className="text-[16px] font-bold text-ios-lightText dark:text-ios-darkText leading-snug">
                       {hotline.title}
                     </h3>
-                    <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted leading-relaxed mb-3 line-clamp-2">
+                    <p className="text-[13px] text-ios-lightMuted dark:text-ios-darkMuted leading-relaxed mt-0.5 line-clamp-2">
                       {hotline.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-ios-lightBorder/80 dark:border-ios-darkBorder/80 flex items-center justify-between gap-2">
-                    <span className="text-xs font-mono font-bold text-ios-lightText dark:text-ios-darkText">
+                  <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-1 sm:pt-0">
+                    <span className="text-[15px] font-mono font-bold text-red-600 dark:text-red-400">
                       {hotline.hotlineNumber}
                     </span>
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleCopyNumber(hotline.id, hotline.hotlineNumber || '')}
-                        className="px-2.5 py-1.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary hover:bg-slate-200 dark:hover:bg-slate-700/60 text-xs font-medium text-ios-lightText dark:text-ios-darkText flex items-center gap-1 transition-colors"
+                        className="px-2.5 py-1.5 rounded-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary hover:bg-slate-200 dark:hover:bg-slate-700 text-[12px] font-medium text-ios-lightText dark:text-ios-darkText flex items-center gap-1 transition-colors"
                         title="Copy hotline number"
                       >
                         {copiedId === hotline.id ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -118,7 +116,7 @@ export const KaligtasanPage: React.FC = () => {
                       </button>
                       <a
                         href={`tel:${cleanNumber}`}
-                        className="px-3 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-ios-sm ios-active"
+                        className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[13px] font-bold flex items-center gap-1.5 shadow-2xs ios-active"
                       >
                         <PhoneCall className="w-3.5 h-3.5" />
                         Call
@@ -132,36 +130,38 @@ export const KaligtasanPage: React.FC = () => {
         </div>
       )}
 
-      {/* 2. DISASTER GUIDES TAB */}
+      {/* 2. DISASTER GUIDES TAB (Cardless Flat Rows) */}
       {activeTab === 'guides' && (
-        <div className="space-y-4">
+        <div className="w-full divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
           {disasterGuides.map(guide => (
             <div
               key={guide.id}
-              className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm"
+              className="py-4 px-1"
             >
-              <div className="flex items-center justify-between mb-2">
-                <Badge variant="verified">{guide.agencyAcronym || guide.agency}</Badge>
-                <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted font-medium">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[12px] font-bold uppercase text-ios-navy dark:text-blue-400">
+                  {guide.agencyAcronym || guide.agency}
+                </span>
+                <span className="text-[12px] text-ios-lightMuted dark:text-ios-darkMuted font-medium">
                   {guide.operatingHours}
                 </span>
               </div>
-              <h3 className="text-base font-bold text-ios-lightText dark:text-ios-darkText mb-1.5">
+              <h3 className="text-[16px] font-bold text-ios-lightText dark:text-ios-darkText mb-1">
                 {guide.title}
               </h3>
-              <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mb-4">
+              <p className="text-[13px] text-ios-lightMuted dark:text-ios-darkMuted mb-3 leading-relaxed">
                 {guide.description}
               </p>
 
               {guide.actionProtocol && (
-                <div className="bg-ios-lightSecondary dark:bg-ios-darkSecondary p-4 rounded-ios-lg space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-ios-navy dark:text-blue-400">
+                <div className="p-3.5 rounded-lg bg-ios-lightSecondary/70 dark:bg-ios-darkSecondary/70 space-y-2 border border-ios-lightBorder/60 dark:border-ios-darkBorder/60">
+                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-ios-navy dark:text-blue-400">
                     Precautionary Protocols & Action Steps:
                   </h4>
-                  <ul className="space-y-1.5 text-xs text-ios-lightText dark:text-ios-darkText">
+                  <ul className="space-y-1.5 text-[13px] text-ios-lightText dark:text-ios-darkText">
                     {guide.actionProtocol.map((proto, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="w-4 h-4 rounded-full bg-ios-navy text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="w-4 h-4 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                           {idx + 1}
                         </span>
                         <span className="flex-1">{proto}</span>
@@ -175,32 +175,32 @@ export const KaligtasanPage: React.FC = () => {
         </div>
       )}
 
-      {/* 3. FIRST AID PROTOCOLS TAB */}
+      {/* 3. FIRST AID PROTOCOLS TAB (Cardless Flat Rows) */}
       {activeTab === 'firstaid' && (
-        <div className="space-y-4">
+        <div className="w-full divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
           {firstAidGuides.map(fa => (
             <div
               key={fa.id}
-              className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm"
+              className="py-4 px-1"
             >
-              <div className="flex items-center gap-2 mb-2">
-                <HeartPulse className="w-5 h-5 text-red-500" />
-                <h3 className="text-base font-bold text-ios-lightText dark:text-ios-darkText">
+              <div className="flex items-center gap-2 mb-1">
+                <HeartPulse className="w-4 h-4 text-red-500" />
+                <h3 className="text-[16px] font-bold text-ios-lightText dark:text-ios-darkText">
                   {fa.title}
                 </h3>
               </div>
-              <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mb-4">
+              <p className="text-[13px] text-ios-lightMuted dark:text-ios-darkMuted mb-3 leading-relaxed">
                 {fa.description}
               </p>
 
               {fa.actionProtocol && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {fa.actionProtocol.map((step, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 text-xs"
+                      className="p-3 rounded-lg bg-ios-lightSecondary/60 dark:bg-ios-darkSecondary/60 border border-ios-lightBorder/60 dark:border-ios-darkBorder/60 text-[13px]"
                     >
-                      <span className="font-bold text-red-600 dark:text-red-400 block mb-1">
+                      <span className="font-bold text-red-600 dark:text-red-400 block mb-0.5 text-[12px]">
                         Step #{idx + 1}
                       </span>
                       <p className="text-ios-lightText dark:text-ios-darkText leading-relaxed">
@@ -215,40 +215,40 @@ export const KaligtasanPage: React.FC = () => {
         </div>
       )}
 
-      {/* 4. EVACUATION CENTERS TAB */}
+      {/* 4. EVACUATION CENTERS TAB (Cardless Flat Rows) */}
       {activeTab === 'evac' && (
-        <div className="space-y-4">
-          <div className="p-3.5 rounded-ios-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/60 flex items-start gap-2.5 text-xs text-amber-900 dark:text-amber-200">
+        <div className="space-y-3">
+          <div className="p-3 rounded-lg border-l-4 border-amber-500 bg-amber-50/60 dark:bg-amber-950/20 text-[12px] text-amber-900 dark:text-amber-200 flex items-start gap-2">
             <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold">Prototype Demonstration Notice:</span> The evacuation center listings below are sample fixtures for demonstration. During an actual emergency or typhoon, contact your local Barangay Disaster Risk Reduction and Management Council (BDRRMC) for officially designated shelters in your area.
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="w-full divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
             {SAMPLE_EVACUATION_CENTERS.map(evac => (
               <div
                 key={evac.id}
-                className="bg-ios-lightSurface dark:bg-ios-darkSurface p-4 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                className="py-3.5 px-1 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold text-ios-navy dark:text-blue-400">
+                    <span className="text-[12px] font-bold text-ios-navy dark:text-blue-400">
                       {evac.lgu}, {evac.province}
                     </span>
                     <Badge variant="outline">Capacity: {evac.capacityPersons} persons</Badge>
                   </div>
-                  <h4 className="text-sm font-bold text-ios-lightText dark:text-ios-darkText">
+                  <h4 className="text-[15px] font-bold text-ios-lightText dark:text-ios-darkText">
                     {evac.name}
                   </h4>
-                  <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-ios-lightMuted" /> {evac.address}
+                  <p className="text-[13px] text-ios-lightMuted dark:text-ios-darkMuted flex items-center gap-1 mt-0.5">
+                    <MapPin className="w-3.5 h-3.5 text-ios-lightMuted shrink-0" /> {evac.address}
                   </p>
-                  <div className="flex flex-wrap gap-1 mt-2">
+                  <div className="flex flex-wrap gap-1 mt-1.5">
                     {evac.amenities.map(a => (
                       <span
                         key={a}
-                        className="text-[10px] bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted px-2 py-0.5 rounded-full"
+                        className="text-[11px] bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted px-2 py-0.5 rounded-full"
                       >
                         {a}
                       </span>
@@ -256,11 +256,11 @@ export const KaligtasanPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="text-right shrink-0 w-full sm:w-auto">
-                  <span className="text-xs text-ios-lightMuted block mb-1">
+                <div className="text-right shrink-0 w-full sm:w-auto pt-1 sm:pt-0">
+                  <span className="text-[11px] text-ios-lightMuted block mb-0.5">
                     Local Disaster Hotline:
                   </span>
-                  <span className="text-xs font-mono font-bold text-ios-lightText dark:text-ios-darkText block">
+                  <span className="text-[14px] font-mono font-bold text-ios-lightText dark:text-ios-darkText block">
                     {evac.contactNumber}
                   </span>
                 </div>
