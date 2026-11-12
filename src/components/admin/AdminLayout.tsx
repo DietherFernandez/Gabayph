@@ -180,7 +180,7 @@ export const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50/50 dark:bg-slate-950 text-ios-lightText dark:text-ios-darkText antialiased selection:bg-ios-navy selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F2F2F7] dark:bg-[#000000] text-black dark:text-white antialiased selection:bg-[#007AFF] selection:text-white">
       {/* 1. Dedicated Admin Top Header */}
       <AdminHeader
         onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}

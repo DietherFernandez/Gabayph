@@ -42,79 +42,69 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
-        <div className="max-w-[1600px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
+      <header className="sticky top-0 z-40 w-full bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-b border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] transition-colors">
+        <div className="max-w-[1600px] mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2 sm:gap-4">
           {/* Left section: Hamburger (Mobile) + GabayPH Admin Branding */}
-          <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             {/* Mobile Drawer Trigger Button */}
             <button
               onClick={onOpenMobileDrawer}
-              className="lg:hidden p-2 rounded-ios-lg text-ios-lightMuted dark:text-ios-darkMuted hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-1.5 rounded-[8px] text-[#8E8E93] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label="Open Admin Navigation Menu"
             >
-              <Menu className="w-5 h-5 text-ios-navy dark:text-blue-400" />
+              <Menu className="w-5 h-5 text-black dark:text-white" />
             </button>
 
             {/* GabayPH Logo & Admin Identification */}
             <div
               onClick={() => navigate('/admin')}
-              className="flex items-center gap-2.5 cursor-pointer group shrink-0"
+              className="flex items-center gap-2 cursor-pointer group shrink-0"
               title="GabayPH Admin Home"
             >
-              <div className="w-9 h-9 rounded-ios-lg bg-ios-navy text-white flex items-center justify-center font-black shadow-ios-sm group-hover:scale-105 transition-transform">
-                <Shield className="w-5 h-5 text-amber-400" />
+              <div className="w-8 h-8 rounded-[8px] bg-[#007AFF] text-white flex items-center justify-center font-bold shadow-2xs group-hover:scale-105 transition-transform">
+                <Shield className="w-4 h-4 text-white" />
               </div>
               <div className="hidden xs:block">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-bold tracking-tight text-ios-lightText dark:text-ios-darkText">
-                    Gabay<span className="text-amber-500">PH</span>
+                  <span className="text-[13px] font-bold tracking-tight text-black dark:text-white">
+                    GabayPH
                   </span>
-                  <span className="text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">
-                    Admin Operations
+                  <span className="text-[10px] font-bold tracking-wide uppercase px-1.5 py-0.2 rounded bg-[rgba(0,122,255,0.12)] text-[#007AFF]">
+                    Admin
                   </span>
                 </div>
-                <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted leading-none">
-                  Official Public Services & Records Workspace
-                </p>
               </div>
             </div>
 
-            {/* Emergency Hotline Ticker / Identity Indicator */}
-            <div className="hidden md:flex items-center gap-2 pl-4 border-l border-ios-lightBorder dark:border-ios-darkBorder">
+            {/* Emergency Hotline Indicator */}
+            <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)]">
               <button
+                type="button"
                 onClick={() => setIsHotlineModalOpen(true)}
-                className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors text-xs font-semibold"
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-[11px] font-medium text-[#8E8E93] hover:text-black dark:hover:text-white transition-colors cursor-pointer"
                 title="View National Emergency Hotlines"
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
-                </span>
-                <PhoneCall className="w-3.5 h-3.5" />
-                <span>Hotlines:</span>
-                <span className="font-bold underline decoration-dotted">911</span>
-                <span className="text-slate-300 dark:text-slate-700">|</span>
-                <span>Assistance:</span>
-                <span className="font-bold underline decoration-dotted">8888</span>
+                <PhoneCall className="w-3 h-3 text-[#FF3B30]" />
+                <span>Hotlines: 911 | 8888</span>
               </button>
             </div>
           </div>
 
           {/* Right section: Search + Notifs + Theme + Role Switcher */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Search Shortcut */}
             <button
               onClick={() => {
                 if (onSearchClick) onSearchClick();
                 else navigate('/admin/services');
               }}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-ios-lg text-ios-lightMuted dark:text-ios-darkMuted hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent sm:border-ios-lightBorder sm:dark:border-ios-darkBorder flex items-center gap-2 text-xs transition-colors"
+              className="h-8 px-2.5 rounded-[8px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] hover:bg-[rgba(118,118,128,0.18)] flex items-center gap-1.5 text-[12px] text-[#8E8E93] hover:text-black dark:hover:text-white transition-colors cursor-pointer"
               title="Search records"
               aria-label="Quick search admin records"
             >
-              <Search className="w-4 h-4 text-ios-lightMuted" />
-              <span className="hidden xl:inline text-xs font-medium">Quick search...</span>
-              <kbd className="hidden xl:inline-block text-[10px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-500 px-1 rounded border border-slate-200 dark:border-slate-700">
+              <Search className="w-3.5 h-3.5" />
+              <span className="hidden xl:inline text-[12px]">Quick search...</span>
+              <kbd className="hidden xl:inline-block text-[10px] font-mono bg-black/5 dark:bg-white/10 px-1 rounded">
                 ⌘K
               </kbd>
             </button>
@@ -180,30 +170,30 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
 
             {/* Theme Toggle Button */}
             <button
+              type="button"
               onClick={toggleTheme}
-              className="p-2 rounded-ios-lg text-ios-lightMuted dark:text-ios-darkMuted hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
               aria-label="Toggle Theme"
               title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
             >
               {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun className="w-4 h-4 text-yellow-500" />
               ) : (
-                <Moon className="w-4 h-4 text-ios-navy" />
+                <Moon className="w-4 h-4 text-slate-700" />
               )}
             </button>
 
             {/* Role Switcher: Return to Citizen View */}
-            <Button
-              size="sm"
-              variant="outline"
+            <button
+              type="button"
               onClick={handleReturnToCitizen}
-              className="flex items-center gap-1.5 text-xs font-bold border-ios-navy/30 dark:border-blue-400/30 text-ios-navy dark:text-blue-300 hover:bg-ios-navy hover:text-white dark:hover:bg-blue-600 shadow-none px-2.5 sm:px-3"
+              className="h-8 px-2.5 sm:px-3 rounded-[8px] bg-[rgba(0,122,255,0.1)] hover:bg-[#007AFF] text-[#007AFF] hover:text-white text-[12px] font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
               title="Switch role and return to Citizen Public Portal"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Return to Citizen View</span>
+              <span className="hidden sm:inline">Citizen View</span>
               <span className="sm:hidden">Citizen</span>
-            </Button>
+            </button>
           </div>
         </div>
       </header>

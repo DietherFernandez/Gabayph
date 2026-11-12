@@ -19,7 +19,6 @@ import {
   ArrowLeft,
   Plus
 } from 'lucide-react';
-import { Button } from '../common/Button';
 import { AdminNavCounts } from './AdminSidebar';
 
 interface NavItem {
@@ -198,59 +197,57 @@ export const AdminMobileDrawer: React.FC<AdminMobileDrawerProps> = ({
       />
 
       {/* Drawer Panel */}
-      <div className="relative w-80 max-w-[85vw] bg-white dark:bg-slate-900 h-full flex flex-col shadow-2xl z-10 transition-transform animate-in slide-in-from-left duration-200 border-r border-ios-lightBorder dark:border-ios-darkBorder">
+      <div className="relative w-72 max-w-[85vw] bg-white dark:bg-[#1C1C1E] h-full flex flex-col shadow-2xl z-10 transition-transform animate-in slide-in-from-left duration-200 border-r border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)]">
         {/* Drawer Header */}
-        <div className="p-4 border-b border-ios-lightBorder dark:border-ios-darkBorder flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-ios-lg bg-ios-navy text-amber-400 flex items-center justify-center font-bold">
-              <Shield className="w-4 h-4" />
+        <div className="p-3.5 border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-[8px] bg-[#007AFF] text-white flex items-center justify-center font-bold shadow-2xs">
+              <Shield className="w-4 h-4 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-sm text-ios-lightText dark:text-ios-darkText">
+                <span className="font-bold text-[13px] text-black dark:text-white">
                   GabayPH
                 </span>
-                <span className="text-[9px] font-bold uppercase px-1 py-0.5 rounded bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                <span className="text-[10px] font-bold uppercase px-1.5 py-0.2 rounded bg-[rgba(0,122,255,0.12)] text-[#007AFF]">
                   Admin
                 </span>
               </div>
-              <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted">
-                Operations Workspace
-              </p>
             </div>
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 transition-colors"
+            className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[#8E8E93] transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Admin Profile */}
-        <div className="p-3.5 border-b border-ios-lightBorder dark:border-ios-darkBorder bg-white dark:bg-slate-900 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-ios-navy text-amber-400 font-bold flex items-center justify-center text-xs shadow-ios-sm">
+        <div className="p-3 border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-[#007AFF] text-white font-bold flex items-center justify-center text-[12px] shadow-2xs">
             MS
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1">
-              <span className="text-xs font-bold text-ios-lightText dark:text-ios-darkText truncate">
+              <span className="text-[13px] font-semibold text-black dark:text-white truncate">
                 Maria Santos
               </span>
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#007AFF] shrink-0" />
             </div>
-            <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted truncate">
-              Senior Operations Administrator
+            <p className="text-[11px] text-[#8E8E93] truncate">
+              Senior Operations Admin
             </p>
           </div>
         </div>
 
         {/* Navigation Items List */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-4 text-xs">
+        <div className="flex-1 overflow-y-auto p-2.5 space-y-3.5 text-xs no-scrollbar">
           {navGroups.map(group => (
-            <div key={group.group} className="space-y-1">
-              <div className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
+            <div key={group.group} className="space-y-0.5">
+              <div className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93]">
                 {group.group}
               </div>
               <div className="space-y-0.5">
@@ -259,15 +256,16 @@ export const AdminMobileDrawer: React.FC<AdminMobileDrawerProps> = ({
                   return (
                     <button
                       key={item.id}
+                      type="button"
                       onClick={() => handleNavClick(item.path)}
-                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-ios-lg text-xs font-semibold transition-all ${
+                      className={`w-full h-8 flex items-center justify-between px-2.5 rounded-[8px] text-[13px] font-medium transition-colors cursor-pointer select-none ${
                         active
-                          ? 'bg-ios-navy text-white shadow-sm dark:bg-blue-600'
-                          : 'text-ios-lightText dark:text-ios-darkText hover:bg-slate-100 dark:hover:bg-slate-800'
+                          ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
+                          : 'text-black dark:text-[#EBEBF5]/90 hover:bg-black/5 dark:hover:bg-white/5'
                       }`}
                     >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <span className={active ? 'text-white' : 'text-ios-lightMuted dark:text-ios-darkMuted'}>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className={active ? 'text-white' : 'text-[#8E8E93]'}>
                           {item.icon}
                         </span>
                         <span className="truncate">{item.label}</span>
@@ -275,14 +273,14 @@ export const AdminMobileDrawer: React.FC<AdminMobileDrawerProps> = ({
 
                       {typeof item.count === 'number' && (
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center ${
+                          className={`text-[11px] font-semibold px-1.5 py-0.2 rounded-full min-w-[18px] text-center ${
                             active
                               ? 'bg-white/20 text-white'
                               : item.highlight === 'urgent' && item.count > 0
-                              ? 'bg-amber-100 text-amber-700'
+                              ? 'bg-[rgba(255,149,0,0.15)] text-[#FF9500]'
                               : item.highlight === 'success' && item.count > 0
-                              ? 'bg-emerald-100 text-emerald-700'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                              ? 'bg-[rgba(52,199,89,0.15)] text-[#34C759]'
+                              : 'bg-black/5 dark:bg-white/10 text-[#8E8E93]'
                           }`}
                         >
                           {item.count}
@@ -297,31 +295,29 @@ export const AdminMobileDrawer: React.FC<AdminMobileDrawerProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-3 border-t border-ios-lightBorder dark:border-ios-darkBorder space-y-2 bg-slate-50/50 dark:bg-slate-800/20">
+        <div className="p-3 border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] space-y-2">
           {onOpenCreateRecord && (
-            <Button
-              size="sm"
-              variant="primary"
+            <button
+              type="button"
               onClick={() => {
                 onClose();
                 onOpenCreateRecord();
               }}
-              className="w-full flex items-center justify-center gap-2 text-xs py-2 font-bold"
+              className="w-full h-9 rounded-[10px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[13px] font-semibold flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3.5 h-3.5 stroke-[2.2]" />
               <span>Create Record</span>
-            </Button>
+            </button>
           )}
 
-          <Button
-            size="sm"
-            variant="outline"
+          <button
+            type="button"
             onClick={handleReturnToCitizen}
-            className="w-full flex items-center justify-center gap-2 text-xs border-ios-navy/30 text-ios-navy dark:text-blue-300 py-2 font-bold"
+            className="w-full h-9 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] active:scale-[0.98] text-black dark:text-white text-[13px] font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Return to Citizen View</span>
-          </Button>
+          </button>
         </div>
       </div>
     </div>
