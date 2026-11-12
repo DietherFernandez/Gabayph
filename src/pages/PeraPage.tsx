@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { MockStorage } from '../data/mockStorage';
-import { DollarSign, Bookmark, Search, CheckCircle2 } from 'lucide-react';
+import { Bookmark, Search, CheckCircle2 } from 'lucide-react';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
+import { PesoSign } from '../components/common/PesoSign';
 import { EmptyState } from '../components/common/EmptyState';
 import { InlineFilterBar, FilterGroup } from '../components/common/InlineFilterBar';
 import { useToast } from '../context/ToastContext';
@@ -117,7 +118,7 @@ export const PeraPage: React.FC = () => {
                 <GroupedListItem
                   key={ast.id}
                   onClick={() => navigate(`/item/${ast.id}`)}
-                  leadingIcon={<DollarSign className="w-5 h-5 stroke-[2]" />}
+                  leadingIcon={<PesoSign className="w-5 h-5 stroke-[2.2]" />}
                   title={ast.title}
                   subtitle={`${ast.agencyAcronym || ast.agency} • ${ast.assistanceType}`}
                   metadata={
@@ -151,7 +152,7 @@ export const PeraPage: React.FC = () => {
           </GroupedList>
         ) : (
           <EmptyState
-            icon={<DollarSign className="w-10 h-10 opacity-50" />}
+            icon={<PesoSign className="w-10 h-10 opacity-50 stroke-[2.2]" />}
             title="Walang tugma na resulta"
             description="Subukan ang ibang salita o alisin ang mga filter."
             actionLabel="I-clear ang Filters"

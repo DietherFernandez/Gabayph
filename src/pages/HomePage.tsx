@@ -5,8 +5,7 @@ import {
   Search,
   Briefcase,
   FileText,
-  DollarSign,
-  HeartHandshake,
+    HeartHandshake,
   GraduationCap,
   ShieldAlert,
   ChevronRight,
@@ -17,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '../components/common/Badge';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
+import { PesoSign } from '../components/common/PesoSign';
 import { useToast } from '../context/ToastContext';
 
 export const HomePage: React.FC = () => {
@@ -53,7 +53,7 @@ export const HomePage: React.FC = () => {
       name: 'Pera',
       subtitle: 'Financial Assistance & Aid',
       count: '5+ Assistance Programs',
-      icon: <DollarSign className="w-5 h-5" />,
+      icon: <PesoSign className="w-5 h-5 stroke-[2.2]" />,
       color: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300',
       path: '/pera'
     },
@@ -343,7 +343,7 @@ export const HomePage: React.FC = () => {
               <GroupedListItem
                 key={ast.id}
                 onClick={() => navigate(`/item/${ast.id}`)}
-                leadingIcon={<DollarSign className="w-4 h-4" />}
+                leadingIcon={<PesoSign className="w-4 h-4 stroke-[2.2]" />}
                 title={ast.title}
                 subtitle={`${ast.agencyAcronym || ast.agency} • ${ast.assistanceType}`}
                 metadata={

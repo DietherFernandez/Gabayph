@@ -1,3 +1,4 @@
+import { PesoSign } from '../../components/common/PesoSign';
 import React, { useState, useMemo } from 'react';
 import { FinancialAssistanceItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
@@ -5,8 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import { useConfirm } from '../../context/ConfirmContext';
 import { IOSSelect } from '../../components/common/IOSSelect';
 import {
-  DollarSign,
-  Search,
+    Search,
   Plus,
   Edit3,
   Trash2,
@@ -130,7 +130,7 @@ export const AdminAssistanceView: React.FC<AdminAssistanceViewProps> = ({
         </div>
         {filteredItems.length === 0 ? (
           <div className="p-8 text-center text-xs text-ios-lightMuted space-y-2">
-            <DollarSign className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
+            <PesoSign className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
             <p className="font-semibold text-ios-lightText dark:text-ios-darkText">No financial aid programs found</p>
             <p>Try modifying your search or resetting type filter.</p>
           </div>

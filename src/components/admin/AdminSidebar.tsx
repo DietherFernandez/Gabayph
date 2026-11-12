@@ -1,11 +1,11 @@
+import { PesoSign } from '../common/PesoSign';
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import {
   LayoutDashboard,
   FileText,
   Briefcase,
-  DollarSign,
-  GraduationCap,
+    GraduationCap,
   HeartHandshake,
   ShieldAlert,
   Bell,
@@ -92,7 +92,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           id: 'assistance',
           label: 'Financial Assistance',
           path: '/admin/assistance',
-          icon: <DollarSign className="w-4 h-4 shrink-0" />,
+          icon: <PesoSign className="w-4 h-4 shrink-0" />,
           count: counts.assistance
         },
         {

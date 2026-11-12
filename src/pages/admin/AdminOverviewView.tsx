@@ -1,11 +1,11 @@
+import { PesoSign } from '../../components/common/PesoSign';
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { MockStorage } from '../../data/mockStorage';
 import {
   FileText,
   Briefcase,
-  DollarSign,
-  GraduationCap,
+    GraduationCap,
   AlertTriangle,
   CheckCircle2,
   Plus,
@@ -126,7 +126,7 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         >
           <div className="flex items-center justify-between text-ios-lightMuted">
             <span className="text-[10px] font-bold uppercase tracking-wider">Financial Aid</span>
-            <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <PesoSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div className="text-2xl font-bold text-ios-lightText dark:text-ios-darkText mt-1">
             {counts.assistance}
