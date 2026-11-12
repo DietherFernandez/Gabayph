@@ -26,7 +26,7 @@ export const SerbisyoPage: React.FC = () => {
       id: 'category',
       label: 'Category',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Government IDs', value: 'identity' },
         { label: 'Civil Registry', value: 'civil_registry' },
         { label: 'Clearances', value: 'clearance' },
@@ -39,7 +39,7 @@ export const SerbisyoPage: React.FC = () => {
       id: 'fees',
       label: 'Fees',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Libre (Free Only)', value: 'free' },
         { label: 'Standard Fees', value: 'paid' }
       ]

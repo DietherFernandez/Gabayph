@@ -110,7 +110,7 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
               {activeGroup.options.map(option => {
                 const isOptionActive =
                   selectedValues[activeGroup.id] === option.value ||
-                  (!selectedValues[activeGroup.id] && (option.value === 'all' || option.value === 'lahat'));
+                  (!selectedValues[activeGroup.id] && (option.value === 'all' || option.value === 'all'));
 
                 return (
                   <button

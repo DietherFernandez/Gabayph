@@ -24,7 +24,7 @@ export const AralPage: React.FC = () => {
       id: 'level',
       label: 'Antas ng Pag-aaral',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Tertiary / College', value: 'tertiary' },
         { label: 'Technical-Vocational / TVET', value: 'tvet' },
         { label: 'Secondary / High School', value: 'secondary' },
@@ -35,7 +35,7 @@ export const AralPage: React.FC = () => {
       id: 'type',
       label: 'Uri',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Scholarship Grant', value: 'scholarship' },
         { label: 'Free Skills Training', value: 'training' },
         { label: 'Student Financial Aid', value: 'financial_aid' }

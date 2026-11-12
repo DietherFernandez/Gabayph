@@ -23,7 +23,7 @@ export const BayanihanPage: React.FC = () => {
       id: 'type',
       label: 'Uri ng Programa',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Volunteer Work', value: 'volunteer' },
         { label: 'Donation Drive', value: 'donation' },
         { label: 'Community Action', value: 'community' }

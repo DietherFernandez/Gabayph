@@ -26,7 +26,7 @@ export const TrabahoPage: React.FC = () => {
       id: 'employment',
       label: 'Employment',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Plantilla / Permanent', value: 'government' },
         { label: 'Contract of Service', value: 'contractual' },
         { label: 'Full-Time NGO', value: 'full-time' }
@@ -36,7 +36,7 @@ export const TrabahoPage: React.FC = () => {
       id: 'sector',
       label: 'Sector',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Public Sector', value: 'public' },
         { label: 'NGO / Humanitarian', value: 'ngo' },
         { label: 'Private Sector', value: 'private' }

@@ -24,7 +24,7 @@ export const PeraPage: React.FC = () => {
       id: 'type',
       label: 'Uri ng Ayuda',
       options: [
-        { label: 'Lahat', value: 'all' },
+        { label: 'All', value: 'all' },
         { label: 'Cash Grant', value: 'cash_grant' },
         { label: 'Emergency Aid', value: 'emergency_aid' },
         { label: 'Livelihood Assistance', value: 'livelihood' },

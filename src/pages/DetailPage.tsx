@@ -135,15 +135,15 @@ export const DetailPage: React.FC = () => {
           </span>
         </div>
 
-        <h1 className="text-[24px] sm:text-[28px] font-bold text-black dark:text-white leading-tight mb-2 tracking-tight">
+        <h1 className="text-[20px] sm:text-[24px] font-bold text-black dark:text-white leading-tight mb-2 tracking-tight">
           {item.title}
         </h1>
 
-        <p className="text-[15px] font-medium text-[#8E8E93] mb-3">
+        <p className="text-[14px] font-medium text-[#8E8E93] mb-3">
           {item.agency} {item.agencyAcronym ? `(${item.agencyAcronym})` : ''}
         </p>
 
-        <p className="text-[15px] text-black/85 dark:text-white/85 leading-relaxed">
+        <p className="text-[14px] text-black/85 dark:text-white/85 leading-relaxed">
           {item.description}
         </p>
       </div>
@@ -278,7 +278,7 @@ export const DetailPage: React.FC = () => {
                 <span className="w-5 h-5 rounded-full bg-[#34C759]/12 text-[#34C759] flex items-center justify-center shrink-0 text-[12px] font-bold mt-0.5">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </span>
-                <span className="text-[15px] text-black dark:text-white leading-relaxed">{req}</span>
+                <span className="text-[14px] text-black dark:text-white leading-relaxed">{req}</span>
               </div>
             ))}
           </div>
@@ -300,7 +300,7 @@ export const DetailPage: React.FC = () => {
                 <div className="w-6 h-6 rounded-full bg-[#007AFF] text-white text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
                   {idx + 1}
                 </div>
-                <p className="flex-1 text-[15px] text-black dark:text-white leading-relaxed border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] pb-2.5">
+                <p className="flex-1 text-[14px] text-black dark:text-white leading-relaxed border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] pb-2.5">
                   {step}
                 </p>
               </div>
@@ -323,7 +323,7 @@ export const DetailPage: React.FC = () => {
                 className="py-3 w-full text-left flex items-center justify-between gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors select-none cursor-pointer"
               >
                 <div>
-                  <h4 className="text-[15px] font-semibold text-black dark:text-white line-clamp-1">
+                  <h4 className="text-[14px] font-semibold text-black dark:text-white line-clamp-1">
                     {rel.title}
                   </h4>
                   <p className="text-[13px] text-[#8E8E93] mt-0.5">
@@ -331,7 +331,7 @@ export const DetailPage: React.FC = () => {
                   </p>
                 </div>
                 <span className="text-[14px] text-[#007AFF] font-medium shrink-0">
-                  Tingnan ›
+                  View ›
                 </span>
               </button>
             ))}
@@ -347,7 +347,7 @@ export const DetailPage: React.FC = () => {
               href={item.officialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 h-12 rounded-[12px] bg-[#007AFF] hover:bg-blue-600 text-white font-semibold text-[15px] flex items-center justify-center gap-2 shadow-ios-sm ios-active"
+              className="flex-1 h-12 rounded-[12px] bg-[#007AFF] hover:bg-blue-600 text-white font-semibold text-[14px] flex items-center justify-center gap-2 shadow-ios-sm ios-active"
             >
               <span>Visit Official Government Portal</span>
               <ExternalLink className="w-4 h-4 stroke-[2.2]" />
@@ -355,14 +355,14 @@ export const DetailPage: React.FC = () => {
           ) : byh ? (
             <button
               onClick={() => openVolunteerModal({ id: byh.id, title: byh.title })}
-              className="flex-1 h-12 rounded-[12px] bg-[#34C759] hover:bg-green-600 text-white font-semibold text-[15px] flex items-center justify-center shadow-ios-sm ios-active"
+              className="flex-1 h-12 rounded-[12px] bg-[#34C759] hover:bg-green-600 text-white font-semibold text-[14px] flex items-center justify-center shadow-ios-sm ios-active"
             >
               Volunteer for this Program
             </button>
           ) : safe && safe.hotlineNumber ? (
             <a
               href={`tel:${safe.hotlineNumber.replace(/[^0-9]/g, '')}`}
-              className="flex-1 h-12 rounded-[12px] bg-[#FF3B30] hover:bg-red-700 text-white font-semibold text-[15px] flex items-center justify-center gap-2 shadow-ios-sm ios-active"
+              className="flex-1 h-12 rounded-[12px] bg-[#FF3B30] hover:bg-red-700 text-white font-semibold text-[14px] flex items-center justify-center gap-2 shadow-ios-sm ios-active"
             >
               <PhoneCall className="w-4 h-4 stroke-[2.2]" />
               <span>Call Hotlines ({safe.hotlineNumber})</span>
@@ -370,7 +370,7 @@ export const DetailPage: React.FC = () => {
           ) : (
             <button
               onClick={() => showToast('Information is verified against official records', 'info')}
-              className="flex-1 h-12 rounded-[12px] bg-[#007AFF] text-white font-semibold text-[15px] flex items-center justify-center ios-active"
+              className="flex-1 h-12 rounded-[12px] bg-[#007AFF] text-white font-semibold text-[14px] flex items-center justify-center ios-active"
             >
               Verified Government Record
             </button>

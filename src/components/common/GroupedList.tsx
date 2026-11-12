@@ -19,24 +19,24 @@ export const GroupedList: React.FC<GroupedListProps> = ({
   return (
     <div className={`w-full ${className}`}>
       {(title || action) && (
-        <div className="flex items-end justify-between mb-2.5 px-0.5 pb-1 border-b border-ios-lightBorder/60 dark:border-ios-darkBorder/60">
+        <div className="flex items-end justify-between mb-2 px-0.5 pb-1 border-b border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)]">
           <div className="min-w-0 flex-1">
             {title && (
-              <h3 className="text-[13px] sm:text-[14px] font-bold tracking-wider uppercase text-ios-navy dark:text-blue-400">
+              <h3 className="text-[12px] font-bold tracking-wider uppercase text-ios-navy dark:text-blue-400">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-[12px] sm:text-[13px] text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 truncate">
+              <p className="text-[12px] text-[#8E8E93] mt-0.5 truncate">
                 {subtitle}
               </p>
             )}
           </div>
-          {action && <div className="shrink-0 ml-3">{action}</div>}
+          {action && <div className="shrink-0 ml-3 text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF]">{action}</div>}
         </div>
       )}
-      {/* Cardless Flat iOS Inset Separator Table */}
-      <div className="w-full divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
+      {/* Flat iOS Inset Separator Table */}
+      <div className="w-full divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)]">
         {children}
       </div>
     </div>
@@ -77,39 +77,39 @@ export const GroupedListItem: React.FC<GroupedListItemProps> = ({
           onClick?.();
         }
       }}
-      className={`flex items-center justify-between gap-3 py-3 px-1 transition-colors ${
+      className={`flex items-center justify-between gap-2.5 py-2.5 px-0.5 transition-colors select-none ${
         isClickable
-          ? 'cursor-pointer hover:bg-slate-50/70 dark:hover:bg-slate-800/40 active:bg-slate-100/80 dark:active:bg-slate-800/80'
+          ? 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10'
           : ''
       } ${className}`}
     >
-      <div className="flex items-center gap-3 min-w-0 flex-1">
+      <div className="flex items-center gap-2.5 min-w-0 flex-1">
         {leadingIcon && (
-          <div className="w-8 h-8 rounded-lg bg-ios-lightSecondary/80 dark:bg-ios-darkSecondary flex items-center justify-center shrink-0 text-ios-navy dark:text-blue-400">
+          <div className="w-7 h-7 rounded-[7px] bg-[rgba(118,118,128,0.08)] dark:bg-[rgba(118,118,128,0.18)] flex items-center justify-center shrink-0 text-[#007AFF] dark:text-[#0A84FF]">
             {leadingIcon}
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <div className="text-[15px] font-semibold text-ios-lightText dark:text-ios-darkText line-clamp-2 leading-snug break-words">
+          <div className="text-[14px] font-semibold text-black dark:text-white line-clamp-2 leading-snug break-words">
             {title}
           </div>
           {subtitle && (
-            <div className="text-[13px] text-ios-lightMuted dark:text-ios-darkMuted line-clamp-1 mt-0.5">
+            <div className="text-[12px] text-[#8E8E93] line-clamp-1 mt-0.5">
               {subtitle}
             </div>
           )}
           {metadata && (
-            <div className="text-[12px] text-ios-lightMuted dark:text-ios-darkMuted mt-1 flex flex-wrap items-center gap-2">
+            <div className="text-[11px] text-[#8E8E93] mt-0.5 flex flex-wrap items-center gap-1.5">
               {metadata}
             </div>
           )}
         </div>
       </div>
 
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-1.5 shrink-0">
         {trailing}
         {isClickable && showChevron && (
-          <ChevronRight className="w-4 h-4 text-ios-lightMuted dark:text-ios-darkMuted opacity-50" />
+          <ChevronRight className="w-3.5 h-3.5 text-[#8E8E93] opacity-50" />
         )}
       </div>
     </div>
