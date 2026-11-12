@@ -7,9 +7,17 @@ import {
   RotateCcw,
   Download,
   Database,
-  ArrowLeft
+  ArrowLeft,
+  FileText,
+  Briefcase,
+  GraduationCap,
+  HeartHandshake,
+  ShieldAlert,
+  Bell,
+  AlertTriangle,
+  Sparkles
 } from 'lucide-react';
-import { Button } from '../../components/common/Button';
+import { PesoSign } from '../../components/common/PesoSign';
 import { useConfirm } from '../../context/ConfirmContext';
 
 export const AdminSettingsView: React.FC = () => {
@@ -70,132 +78,237 @@ export const AdminSettingsView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl animate-in fade-in duration-150 text-xs">
-      {/* Header */}
-      <div>
-        <h1 className="text-lg sm:text-xl font-bold text-ios-lightText dark:text-ios-darkText">
-          Administrative Settings & Prototype Data Management
-        </h1>
-        <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-          Platform configurations, local prototype client storage, operator access details, and mock fixture controls.
-        </p>
-      </div>
-
-      {/* Operator Session Card */}
-      <div className="p-5 rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-ios-navy dark:text-blue-400" />
-          Active Administrator Identity
-        </h2>
-
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-ios-lg bg-slate-50 dark:bg-slate-800/50 border border-ios-lightBorder dark:border-ios-darkBorder">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-ios-navy text-amber-400 font-bold flex items-center justify-center text-sm shadow-ios-sm">
-              MS
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-sm text-ios-lightText dark:text-ios-darkText">
-                  Maria Santos
-                </span>
-                <span className="text-[10px] font-bold uppercase px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300">
-                  Senior Operations Admin
-                </span>
-              </div>
-              <p className="text-[11px] text-ios-lightMuted mt-0.5">
-                maria.santos@gabay.gov.ph • Gov Operator ID: ADM-2026-PH
-              </p>
-              <div className="flex items-center gap-1.5 text-[10px] text-emerald-600 font-medium mt-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span>Full CRUD & Moderation Permissions Granted</span>
-              </div>
-            </div>
+    <div className="space-y-6 max-w-4xl animate-in fade-in duration-150">
+      {/* 1. View Header Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[rgba(0,122,255,0.12)] text-[#007AFF] font-mono">
+              System Configuration
+            </span>
+            <span className="text-[12px] text-[#8E8E93] flex items-center gap-1.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34C759]" />
+              Active Administrator Session
+            </span>
           </div>
+          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Administrative Settings & Storage
+          </h1>
+          <p className="text-[13px] text-[#8E8E93]">
+            Platform configurations, local prototype storage, operator credentials, and fixture controls
+          </p>
+        </div>
 
-          <Button
-            size="sm"
-            variant="outline"
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
             onClick={() => {
               setRole('citizen');
               navigate('/');
               showToast('Returned to Citizen View.', 'info');
             }}
-            className="text-xs shrink-0 flex items-center gap-1 font-bold"
+            className="h-9 px-3.5 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer flex items-center gap-1.5"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Switch to Citizen View</span>
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Client-Side Prototype Database Volume */}
-      <div className="p-5 rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted flex items-center gap-1.5">
-            <Database className="w-4 h-4 text-emerald-500" />
-            Local Prototype Storage Metrics
-          </h2>
-          <Button size="sm" variant="secondary" onClick={handleBackupExport} className="font-bold flex items-center gap-1.5">
-            <Download className="w-3.5 h-3.5" />
-            <span>Backup Database (JSON)</span>
-          </Button>
-        </div>
+      {/* 2. Operator Session Profile Card (Apple ID Style) */}
+      <div className="space-y-2">
+        <h2 className="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] px-1 flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#007AFF]" />
+          <span>Active Administrator Identity</span>
+        </h2>
 
-        <p className="text-ios-lightMuted leading-relaxed">
-          The prototype runs on localized mock persistence (`localStorage`), enabling complete offline responsiveness without requiring an external database backend.
-        </p>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Services Directory</span>
-            <div className="text-lg font-bold text-ios-navy dark:text-blue-400 mt-0.5">{services.length} items</div>
-          </div>
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Careers & Jobs</span>
-            <div className="text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5">{jobs.length} items</div>
-          </div>
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Financial Aid</span>
-            <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{assistance.length} items</div>
-          </div>
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Education Programs</span>
-            <div className="text-lg font-bold text-purple-600 dark:text-purple-400 mt-0.5">{education.length} items</div>
-          </div>
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Public Bulletins</span>
-            <div className="text-lg font-bold text-amber-600 dark:text-amber-400 mt-0.5">{bulletins.length} items</div>
-          </div>
-          <div className="p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
-            <span className="text-[10px] uppercase font-bold text-ios-lightMuted">Citizen Inaccuracies</span>
-            <div className="text-lg font-bold text-red-600 dark:text-red-400 mt-0.5">{reports.length} reports</div>
+        <div className="p-4 sm:p-5 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-full bg-[#007AFF] text-white font-bold flex items-center justify-center text-[15px] shadow-2xs shrink-0">
+              MS
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-[15px] text-black dark:text-white">
+                  Maria Santos
+                </span>
+                <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-[rgba(0,122,255,0.12)] text-[#007AFF] font-mono">
+                  Senior Operations Admin
+                </span>
+              </div>
+              <p className="text-[12px] text-[#8E8E93] mt-0.5">
+                maria.santos@gabay.gov.ph • Operator ID: <span className="font-mono">ADM-2026-PH</span>
+              </p>
+              <div className="flex items-center gap-1.5 text-[11px] text-[#34C759] font-medium mt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#34C759]" />
+                <span>Full Directory CRUD & Public Moderation Authority Granted</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Dangerous Operations: Reset Mock Data */}
-      <div className="p-5 rounded-ios-xl bg-red-50/60 dark:bg-red-950/20 border border-red-200 dark:border-red-900/60 space-y-3">
-        <div className="flex items-center gap-2">
-          <RotateCcw className="w-4 h-4 text-red-600 dark:text-red-400" />
-          <h2 className="text-xs font-bold uppercase tracking-wider text-red-800 dark:text-red-300">
-            Factory Data Reset
+      {/* 3. Local Prototype Database Volume */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between px-1">
+          <h2 className="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] flex items-center gap-1.5">
+            <Database className="w-3.5 h-3.5 text-[#34C759]" />
+            <span>Local Storage Volume & Fixtures</span>
           </h2>
-        </div>
-
-        <p className="text-red-900/80 dark:text-red-300/80 leading-relaxed">
-          Resetting will clear all locally created, edited, and deleted records from your browser's client storage and restore the original verified government fixtures.
-        </p>
-
-        <div className="pt-2 flex justify-end">
-          <Button
-            size="sm"
-            variant="destructive"
-            onClick={handleTriggerReset}
-            className="font-bold flex items-center gap-1.5"
+          <button
+            type="button"
+            onClick={handleBackupExport}
+            className="h-7 px-3 rounded-[8px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[12px] font-semibold flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset All Prototype Data</span>
-          </Button>
+            <Download className="w-3 h-3 stroke-[2.2]" />
+            <span>Backup Database (JSON)</span>
+          </button>
+        </div>
+
+        <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] overflow-hidden">
+          <div className="p-4 sm:p-4.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
+            <p className="text-[13px] text-[#8E8E93] leading-relaxed">
+              The prototype operates with localized mock persistence (<code className="font-mono text-black dark:text-white px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[12px]">localStorage</code>), providing instant zero-latency responses without requiring external database servers.
+            </p>
+          </div>
+
+          <div className="divide-y sm:divide-y-0 sm:divide-x divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] grid grid-cols-2 sm:grid-cols-3">
+            {/* Services */}
+            <div className="p-3.5 sm:p-4 hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Public Services</span>
+                <FileText className="w-3.5 h-3.5 text-[#007AFF]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {services.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Directory Items</span>
+            </div>
+
+            {/* Jobs */}
+            <div className="p-3.5 sm:p-4 hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Careers & Jobs</span>
+                <Briefcase className="w-3.5 h-3.5 text-[#007AFF]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {jobs.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Plantilla Openings</span>
+            </div>
+
+            {/* Financial Aid */}
+            <div className="p-3.5 sm:p-4 hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Financial Aid</span>
+                <PesoSign className="w-3.5 h-3.5 text-[#34C759]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {assistance.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Aid Programs</span>
+            </div>
+
+            {/* Education */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Education</span>
+                <GraduationCap className="w-3.5 h-3.5 text-[#AF52DE]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {education.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Scholarships & TVET</span>
+            </div>
+
+            {/* Bayanihan */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Bayanihan</span>
+                <HeartHandshake className="w-3.5 h-3.5 text-[#34C759]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {bayanihan.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Volunteer Drives</span>
+            </div>
+
+            {/* Safety */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Safety Hotlines</span>
+                <ShieldAlert className="w-3.5 h-3.5 text-[#FF3B30]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {safety.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Emergency Guides</span>
+            </div>
+
+            {/* Bulletins */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Public Bulletins</span>
+                <Bell className="w-3.5 h-3.5 text-[#FF9500]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {bulletins.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Official Notices</span>
+            </div>
+
+            {/* Reports */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Citizen Reports</span>
+                <AlertTriangle className="w-3.5 h-3.5 text-[#FF3B30]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {reports.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Feedback Audits</span>
+            </div>
+
+            {/* Suggestions */}
+            <div className="p-3.5 sm:p-4 border-t sm:border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+              <div className="flex items-center justify-between text-[#8E8E93]">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Suggestions</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#34C759]" />
+              </div>
+              <div className="text-[20px] font-bold text-black dark:text-white mt-1 leading-tight">
+                {suggestions.length}
+              </div>
+              <span className="text-[11px] text-[#8E8E93] block mt-0.5">Crowdsourced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Factory Data Reset (Danger Zone) */}
+      <div className="space-y-2 pt-2">
+        <h2 className="text-[11px] font-bold uppercase tracking-wider text-[#FF3B30] px-1 flex items-center gap-1.5">
+          <RotateCcw className="w-3.5 h-3.5 text-[#FF3B30]" />
+          <span>Danger Zone: Prototype Data State</span>
+        </h2>
+
+        <div className="p-4 sm:p-5 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(255,59,48,0.25)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-0.5">
+            <h3 className="font-semibold text-[14px] text-black dark:text-white">
+              Restore Factory Fixtures
+            </h3>
+            <p className="text-[13px] text-[#8E8E93] leading-relaxed max-w-xl">
+              Permanently clear all locally created, edited, and deleted records from browser client storage and restore the original verified government fixtures.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleTriggerReset}
+            className="h-8 px-3.5 rounded-[8px] bg-[rgba(255,59,48,0.12)] hover:bg-[rgba(255,59,48,0.2)] text-[#FF3B30] text-[12px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          >
+            <RotateCcw className="w-3 h-3 stroke-[2.2]" />
+            <span>Reset Everything</span>
+          </button>
         </div>
       </div>
     </div>

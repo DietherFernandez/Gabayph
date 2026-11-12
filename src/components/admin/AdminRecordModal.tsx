@@ -3,7 +3,6 @@ import { BaseItem, CategoryType, AnnouncementItem, ServiceItem, JobItem, Financi
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
 import { Modal } from '../common/Modal';
-import { Button } from '../common/Button';
 import { TextInput, Textarea } from '../common/Input';
 import { IOSSelect } from '../common/IOSSelect';
 
@@ -277,7 +276,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+    <form onSubmit={handleSubmit} className="space-y-4 text-[13px]">
       {/* Category Picker */}
       <IOSSelect
         label="Record Category"
@@ -336,9 +335,9 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
         placeholder="Key service objectives, who can apply, and citizen instructions..."
       />
 
-      {/* Category-Specific Form Fields */}
+      {/* Category-Specific Form Fields Inset Group */}
       {category === 'serbisyo' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <TextInput
             label="Processing Fees"
             value={fees}
@@ -355,7 +354,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'trabaho' && (
-        <div className="space-y-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="space-y-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <TextInput
               label="Salary Range / Schedule"
@@ -389,7 +388,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'pera' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <TextInput
             label="Amount or Coverage"
             value={amountOrCoverage}
@@ -406,7 +405,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'aral' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <TextInput
             label="Academic Level"
             value={educationLevel}
@@ -423,7 +422,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'bayanihan' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <TextInput
             label="Volunteer Target Count"
             type="number"
@@ -441,7 +440,7 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'kaligtasan' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-ios-lg bg-slate-50 dark:bg-slate-800/40 border border-ios-lightBorder dark:border-ios-darkBorder">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.3)]">
           <TextInput
             label="Emergency Hotline Number"
             value={hotlineNumber}
@@ -458,21 +457,21 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       )}
 
       {category === 'announcements' && (
-        <div className="space-y-3 p-3 rounded-ios-lg bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50">
+        <div className="space-y-3 p-3.5 rounded-[12px] bg-[rgba(255,149,0,0.06)] dark:bg-[rgba(255,149,0,0.1)] border border-[rgba(255,149,0,0.2)]">
           <TextInput
             label="Affected Geographical Areas"
             value={affectedAreas}
             onChange={e => setAffectedAreas(e.target.value)}
             placeholder="e.g. NCR, Region III, Region IV-A"
           />
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={isUrgent}
               onChange={e => setIsUrgent(e.target.checked)}
-              className="rounded border-slate-300 text-red-600 focus:ring-red-500 h-4 w-4"
+              className="rounded accent-[#FF3B30] h-4 w-4 cursor-pointer"
             />
-            <span className="font-bold text-red-700 dark:text-red-400">
+            <span className="font-semibold text-[13px] text-[#FF3B30]">
               Mark as URGENT Advisory (Public Safety / Emergency Priority)
             </span>
           </label>
@@ -489,13 +488,20 @@ const RecordFormInner: React.FC<RecordFormInnerProps> = ({
       />
 
       {/* Modal Actions */}
-      <div className="flex items-center justify-end gap-2 pt-3 border-t border-ios-lightBorder dark:border-ios-darkBorder">
-        <Button type="button" variant="secondary" onClick={onClose}>
+      <div className="flex items-center justify-end gap-2 pt-3 border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
+        <button
+          type="button"
+          onClick={onClose}
+          className="h-9 px-4 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer"
+        >
           Cancel
-        </Button>
-        <Button type="submit" variant="primary">
+        </button>
+        <button
+          type="submit"
+          className="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[13px] font-semibold shadow-2xs transition-all cursor-pointer"
+        >
           {initialItem ? 'Save Changes' : 'Publish Record'}
-        </Button>
+        </button>
       </div>
     </form>
   );

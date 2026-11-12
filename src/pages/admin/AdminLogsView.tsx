@@ -10,7 +10,6 @@ import {
   User,
   RefreshCw
 } from 'lucide-react';
-import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { IOSSelect } from '../../components/common/IOSSelect';
 
@@ -57,45 +56,59 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
 
   return (
     <div className="space-y-5 animate-in fade-in duration-150">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* 1. View Header Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg sm:text-xl font-bold text-ios-lightText dark:text-ios-darkText">
-              System Audit Trail & Operations History
-            </h1>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">
-              {logs.length} logged events
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[rgba(0,122,255,0.12)] text-[#007AFF] font-mono">
+              Security & Compliance
+            </span>
+            <span className="text-[12px] text-[#8E8E93] flex items-center gap-1.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34C759]" />
+              {logs.length} Audit Events Logged
             </span>
           </div>
-          <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Immutable audit logging for all record additions, updates, deletions, citizen report resolutions, and admin logins.
+          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            System Audit Trail & Operations Log
+          </h1>
+          <p className="text-[13px] text-[#8E8E93]">
+            Immutable logging for all record creations, edits, deletions, moderation reviews, and logins
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <Button size="sm" variant="outline" onClick={refreshList} title="Refresh audit log">
+          <button
+            type="button"
+            onClick={refreshList}
+            title="Refresh audit log"
+            className="h-9 px-3 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer flex items-center gap-1.5"
+          >
             <RefreshCw className="w-3.5 h-3.5" />
-          </Button>
-          <Button size="sm" variant="secondary" onClick={handleExportJSON} className="font-bold flex items-center gap-1.5">
+            <span className="hidden sm:inline">Refresh</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleExportJSON}
+            className="h-9 px-3.5 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
             <Download className="w-3.5 h-3.5" />
             <span>Export Trail (JSON)</span>
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Audit Log Table with Integrated Management Toolbar */}
-      <div className="rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm overflow-hidden">
+      {/* 2. Cohesive Cardless Inset Table Container */}
+      <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] overflow-hidden">
         {/* Integrated Management Toolbar */}
-        <div className="p-3 bg-slate-50/60 dark:bg-slate-800/40 border-b border-ios-lightBorder dark:border-ios-darkBorder flex flex-col md:flex-row items-center gap-3">
+        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] flex flex-col md:flex-row items-center gap-2.5">
           <div className="relative flex-1 w-full">
-            <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#8E8E93] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search action description, operator name, or entity ID..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
+              className="w-full h-8 pl-8 pr-3 text-[13px] rounded-[8px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none focus:ring-1 focus:ring-[#007AFF]"
             />
           </div>
 
@@ -130,47 +143,50 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
             />
           </div>
         </div>
+
         {filteredLogs.length === 0 ? (
-          <div className="p-8 text-center text-xs text-ios-lightMuted space-y-2">
-            <History className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
-            <p className="font-semibold text-ios-lightText dark:text-ios-darkText">No audit events match your search</p>
-            <p>Try resetting the status or entity filters.</p>
+          <div className="p-10 text-center text-[13px] text-[#8E8E93] space-y-2">
+            <History className="w-8 h-8 mx-auto text-[#8E8E93]/60" />
+            <p className="font-semibold text-black dark:text-white">No audit events match your search</p>
+            <p className="text-[12px]">Try resetting the severity or entity filters.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-ios-lightMuted uppercase text-[10px] font-bold border-b border-ios-lightBorder dark:border-ios-darkBorder">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
                   <th className="p-3.5">Timestamp</th>
-                  <th className="p-3.5">Operator / Actor</th>
-                  <th className="p-3.5">Action Description</th>
-                  <th className="p-3.5">Entity Type & ID</th>
+                  <th className="p-3.5">Operator</th>
+                  <th className="p-3.5">Action Event</th>
+                  <th className="p-3.5">Target Entity</th>
                   <th className="p-3.5 text-right">Severity</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-ios-lightBorder dark:divide-ios-darkBorder">
+              <tbody className="divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] text-[13px]">
                 {filteredLogs.map(log => (
-                  <tr key={log.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="p-3.5 whitespace-nowrap text-slate-500 flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{log.timestamp}</span>
+                  <tr key={log.id} className="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <td className="p-3.5 whitespace-nowrap text-[#8E8E93]">
+                      <div className="flex items-center gap-1.5 font-mono text-[12px]">
+                        <Clock className="w-3.5 h-3.5 text-[#8E8E93]" />
+                        <span>{log.timestamp}</span>
+                      </div>
                     </td>
                     <td className="p-3.5 whitespace-nowrap">
-                      <div className="flex items-center gap-1.5 font-bold text-ios-lightText dark:text-ios-darkText">
-                        <User className="w-3.5 h-3.5 text-ios-navy dark:text-blue-400" />
+                      <div className="flex items-center gap-1.5 font-medium text-black dark:text-white">
+                        <User className="w-3.5 h-3.5 text-[#007AFF]" />
                         <span>{log.user}</span>
                       </div>
                     </td>
                     <td className="p-3.5 max-w-md">
-                      <span className="font-medium text-ios-lightText dark:text-ios-darkText">
+                      <span className="font-medium text-black dark:text-white">
                         {log.action}
                       </span>
                     </td>
                     <td className="p-3.5 whitespace-nowrap">
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">
+                      <span className="font-semibold text-black/80 dark:text-white/80">
                         {log.entityType}
                       </span>
-                      <span className="text-[10px] text-slate-400 block font-mono">
+                      <span className="text-[11px] text-[#8E8E93] block font-mono">
                         {log.entityId}
                       </span>
                     </td>
