@@ -66,71 +66,93 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-ios-darkSurface/95 backdrop-blur-md border-b border-ios-lightBorder dark:border-ios-darkBorder transition-colors">
-      {/* Top Emergency Hotline Ribbon */}
-      <div className="bg-ios-navy text-white text-[11px] py-1 px-3 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+      {/* Top Emergency Hotline Ribbon (Smooth Marquee Ticker) */}
+      <div className="bg-ios-navy text-white text-[11px] py-1 px-3 sm:px-6 overflow-hidden select-none">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          {/* Static Pinned 911 Indicator */}
+          <div className="flex items-center gap-1.5 shrink-0 z-10 bg-ios-navy pr-2">
             <span className="flex h-2 w-2 relative shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
-            <span className="font-semibold tracking-wide shrink-0">
-              <span className="hidden sm:inline">National Emergency </span>Hotlines:
-            </span>
             <a
               href="tel:911"
-              className="inline-flex items-center gap-1 font-bold text-yellow-300 hover:underline shrink-0"
+              className="inline-flex items-center gap-1 font-bold text-yellow-300 hover:underline"
               title="Call National Emergency 911"
             >
               <PhoneCall className="w-3 h-3" />
               <span>911</span>
-              <span className="hidden xs:inline">(Emergency)</span>
+              <span className="px-1 py-0.2 rounded bg-red-600 text-white text-[9px] font-bold">TOLL-FREE</span>
             </a>
-            <span className="hidden sm:inline text-white/50">|</span>
-            <a
-              href="tel:8888"
-              className="hidden sm:inline-flex items-center gap-1 text-white/90 hover:underline shrink-0"
-              title="Call 8888 Citizens' Complaint Center"
-            >
-              8888 (Citizens' Complaint)
-            </a>
+            <span className="text-white/40">|</span>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <div className="hidden sm:flex items-center gap-1.5 text-white/80 text-[10px]">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="hidden md:inline">Official Philippine Public Information Directory</span>
-              <span className="md:hidden">GabayPH Portal</span>
-            </div>
+          {/* Marquee Ticker Track */}
+          <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0">
+            <div className="animate-marquee inline-flex items-center gap-6 text-[11px] font-medium text-white/90">
+              {/* Loop Chunk 1 */}
+              <span className="inline-flex items-center gap-4">
+                <span>🚨 <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
+                <span className="text-white/30">•</span>
+                <span>⚖️ <strong>Citizens' Complaint Center:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
+                <span className="text-white/30">•</span>
+                <span>🚑 <strong>Philippine Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
+                <span className="text-white/30">•</span>
+                <span>🧠 <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
+                <span className="text-white/30">•</span>
+                <span>🛑 <strong>Anti-Trafficking Hotline:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
+                <span className="text-white/30">•</span>
+                <span>🚒 <strong>BFP Fire Protection:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911 / (02) 8426-0219</a></span>
+                <span className="text-white/30">•</span>
+                <span>🌊 <strong>NDRRMC Disaster Hotline:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
+              </span>
 
-            {/* Prototype Role Switcher */}
-            <div className="flex items-center bg-white/10 rounded-full p-0.5 border border-white/20">
-              <button
-                type="button"
-                onClick={() => setRole('citizen')}
-                className={`px-2 py-0.5 text-[10px] rounded-full font-medium transition-all ${
-                  role === 'citizen'
-                    ? 'bg-white text-ios-navy font-bold shadow-sm'
-                    : 'text-white/80 hover:text-white'
-                }`}
-              >
-                Citizen
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setRole('admin');
-                  navigate('/admin');
-                }}
-                className={`px-2 py-0.5 text-[10px] rounded-full font-medium transition-all ${
-                  role === 'admin'
-                    ? 'bg-amber-400 text-slate-900 font-bold shadow-sm'
-                    : 'text-white/80 hover:text-white'
-                }`}
-              >
-                Admin
-              </button>
+              {/* Loop Chunk 2 for Seamless Infinite Scroll */}
+              <span className="inline-flex items-center gap-4">
+                <span>🚨 <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
+                <span className="text-white/30">•</span>
+                <span>⚖️ <strong>Citizens' Complaint Center:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
+                <span className="text-white/30">•</span>
+                <span>🚑 <strong>Philippine Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
+                <span className="text-white/30">•</span>
+                <span>🧠 <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
+                <span className="text-white/30">•</span>
+                <span>🛑 <strong>Anti-Trafficking Hotline:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
+                <span className="text-white/30">•</span>
+                <span>🚒 <strong>BFP Fire Protection:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911 / (02) 8426-0219</a></span>
+                <span className="text-white/30">•</span>
+                <span>🌊 <strong>NDRRMC Disaster Hotline:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
+              </span>
             </div>
+          </div>
+
+          {/* Prototype Role Switcher */}
+          <div className="hidden sm:flex items-center bg-white/10 rounded-full p-0.5 border border-white/20 shrink-0 z-10 bg-ios-navy pl-1">
+            <button
+              type="button"
+              onClick={() => setRole('citizen')}
+              className={`px-2 py-0.5 text-[10px] rounded-full font-medium transition-all ${
+                role === 'citizen'
+                  ? 'bg-white text-ios-navy font-bold shadow-sm'
+                  : 'text-white/80 hover:text-white'
+              }`}
+            >
+              Citizen
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setRole('admin');
+                navigate('/admin');
+              }}
+              className={`px-2 py-0.5 text-[10px] rounded-full font-medium transition-all ${
+                role === 'admin'
+                  ? 'bg-amber-400 text-slate-900 font-bold shadow-sm'
+                  : 'text-white/80 hover:text-white'
+              }`}
+            >
+              Admin
+            </button>
           </div>
         </div>
       </div>
