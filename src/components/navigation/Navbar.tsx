@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppContext';
 import {
   Search,
@@ -10,8 +10,6 @@ import {
   ShieldCheck,
   User,
   Shield,
-  Menu,
-  X
 } from 'lucide-react';
 import { Button } from '../common/Button';
 
@@ -31,7 +29,6 @@ export const Navbar: React.FC = () => {
     user
   } = useApp();
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { label: 'Home', path: '/' },
@@ -264,76 +261,11 @@ export const Navbar: React.FC = () => {
             </Button>
           )}
 
-          {/* Mobile Menu Hamburger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText"
-            aria-label="Toggle mobile menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-ios-lightBorder dark:border-ios-darkBorder bg-ios-lightSurface dark:bg-ios-darkSurface px-4 py-3 animate-in slide-in-from-top-2">
-          <div className="grid grid-cols-2 gap-2 mb-3">
-            {navLinks.map(link => (
-              <button
-                key={link.path}
-                onClick={() => {
-                  navigate(link.path);
-                  setMobileMenuOpen(false);
-                }}
-                className={`px-3 py-2 text-left rounded-ios-lg text-xs font-medium transition-colors ${
-                  currentPath === link.path
-                    ? 'bg-ios-navy text-white font-semibold'
-                    : 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightText dark:text-ios-darkText'
-                }`}
-              >
-                <span>{link.label}</span>
-                {link.sublabel && (
-                  <span className="block text-[10px] opacity-70">
-                    {link.sublabel}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
 
-          <div className="pt-2 border-t border-ios-lightBorder dark:border-ios-darkBorder flex items-center justify-between">
-            <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted font-medium">
-              Demo Role:
-            </span>
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => {
-                  setRole('citizen');
-                  setMobileMenuOpen(false);
-                }}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium ${
-                  role === 'citizen' ? 'bg-ios-navy text-white' : 'bg-slate-200 dark:bg-slate-800'
-                }`}
-              >
-                Citizen
-              </button>
-              <button
-                onClick={() => {
-                  setRole('admin');
-                  navigate('/admin');
-                  setMobileMenuOpen(false);
-                }}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium ${
-                  role === 'admin' ? 'bg-amber-500 text-black font-semibold' : 'bg-slate-200 dark:bg-slate-800'
-                }`}
-              >
-                Admin Panel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 };
