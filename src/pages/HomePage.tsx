@@ -13,7 +13,6 @@ import {
   Bookmark,
   PhoneCall,
   Clock,
-  Sparkles,
   AlertCircle
 } from 'lucide-react';
 import { Badge } from '../components/common/Badge';
@@ -91,19 +90,14 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
       {/* Editorial Hero & Search Bar */}
-      <section className="bg-gradient-to-b from-ios-navy/5 to-transparent dark:from-blue-950/20 pt-6 pb-2 rounded-2xl">
+      <section className="bg-gradient-to-b from-ios-navy/5 to-transparent dark:from-blue-950/20 pt-4 pb-2 rounded-2xl">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ios-navy/10 dark:bg-blue-900/30 text-ios-navy dark:text-blue-300 text-xs font-semibold mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-ios-navy dark:text-yellow-400" />
-            <span>Your Comprehensive Philippine Public Services Directory</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ios-lightText dark:text-ios-darkText mb-2.5">
+          <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-ios-lightText dark:text-ios-darkText mb-2">
             Fast, Verified, and Clear Philippine Government Information
           </h1>
 
-          <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted max-w-xl mx-auto mb-5 leading-relaxed">
-            Discover verified requirements for government IDs, plantilla civil service careers, emergency cash assistance, national scholarships, and 24/7 emergency hotlines.
+          <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted max-w-xl mx-auto mb-3.5 sm:mb-5 leading-relaxed">
+            Discover verified requirements for government IDs, civil service careers, cash assistance, scholarships, and 24/7 emergency hotlines.
           </p>
 
           {/* iOS Compact Search Field Trigger */}
@@ -123,7 +117,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Quick Search Chips */}
-          <div className="flex items-center justify-start sm:justify-center gap-1.5 mt-3 text-xs overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <div className="flex items-center justify-start sm:justify-center gap-1.5 mt-2.5 sm:mt-3 text-xs overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted shrink-0 font-medium mr-1">
               Popular:
             </span>
@@ -148,18 +142,18 @@ export const HomePage: React.FC = () => {
 
       {/* 6 Core Categories Grid */}
       <section>
-        <div className="flex items-center justify-between mb-3 px-1">
-          <div>
+        <div className="flex items-center justify-between gap-2 mb-3 px-1">
+          <div className="min-w-0 flex-1">
             <h2 className="text-sm sm:text-base font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
               Six Core Categories
             </h2>
-            <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
+            <p className="text-[11px] sm:text-xs text-ios-lightMuted dark:text-ios-darkMuted truncate">
               Select a sector to explore public services, requirements, and guides
             </p>
           </div>
           <button
             onClick={() => navigate('/serbisyo')}
-            className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1"
+            className="text-xs font-semibold text-ios-navy dark:text-blue-400 hover:underline flex items-center gap-1 shrink-0 whitespace-nowrap"
           >
             Full Directory <ChevronRight className="w-3.5 h-3.5" />
           </button>
