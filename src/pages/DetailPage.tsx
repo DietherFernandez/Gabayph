@@ -205,6 +205,31 @@ export const DetailPage: React.FC = () => {
           </>
         )}
 
+                {byh && (
+          <>
+            <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="text-[#8E8E93] text-[13px]">Program Type</span>
+              <span className="font-semibold text-black dark:text-white capitalize text-left sm:text-right">{byh.programType}</span>
+            </div>
+            <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="text-[#8E8E93] text-[13px]">Host Organization</span>
+              <span className="font-semibold text-black dark:text-white text-left sm:text-right">{byh.organization}</span>
+            </div>
+            <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="text-[#8E8E93] text-[13px]">Target Beneficiaries</span>
+              <span className="font-semibold text-black dark:text-white text-left sm:text-right">{byh.targetBeneficiaries}</span>
+            </div>
+            <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="text-[#8E8E93] text-[13px]">Location / Coverage</span>
+              <span className="font-semibold text-black dark:text-white text-left sm:text-right">{byh.location}</span>
+            </div>
+            <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <span className="text-[#8E8E93] text-[13px]">Program Schedule</span>
+              <span className="font-semibold text-black dark:text-white text-left sm:text-right">{byh.dates}</span>
+            </div>
+          </>
+        )}
+
         {edu && (
           <>
             <div className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
