@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { MockStorage } from '../data/mockStorage';
-import { GraduationCap, Bookmark } from 'lucide-react';
-import { SearchField, Select } from '../components/common/Input';
-import { Badge } from '../components/common/Badge';
+import { GraduationCap, Bookmark, Search, Clock, CheckCircle2 } from 'lucide-react';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
+import { InlineFilterBar, FilterGroup } from '../components/common/InlineFilterBar';
 import { useToast } from '../context/ToastContext';
 
 export const AralPage: React.FC = () => {
@@ -13,83 +12,119 @@ export const AralPage: React.FC = () => {
   const { showToast } = useToast();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [levelFilter, setLevelFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({
+    level: 'all',
+    type: 'all'
+  });
 
   const educationList = useMemo(() => MockStorage.getEducation(), []);
 
+  const filterGroups: FilterGroup[] = [
+    {
+      id: 'level',
+      label: 'Antas ng Pag-aaral',
+      options: [
+        { label: 'Lahat', value: 'all' },
+        { label: 'Tertiary / College', value: 'tertiary' },
+        { label: 'Technical-Vocational / TVET', value: 'tvet' },
+        { label: 'Secondary / High School', value: 'secondary' },
+        { label: 'Post-Graduate', value: 'postgraduate' }
+      ]
+    },
+    {
+      id: 'type',
+      label: 'Uri',
+      options: [
+        { label: 'Lahat', value: 'all' },
+        { label: 'Scholarship Grant', value: 'scholarship' },
+        { label: 'Free Skills Training', value: 'training' },
+        { label: 'Student Financial Aid', value: 'financial_aid' }
+      ]
+    }
+  ];
+
+  const handleSelectFilter = (groupId: string, val: string) => {
+    setFilterValues(prev => ({ ...prev, [groupId]: val }));
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setFilterValues({ level: 'all', type: 'all' });
+  };
+
+  const hasActiveFilters = Boolean(
+    searchQuery.trim() !== '' ||
+    (filterValues.level && filterValues.level !== 'all') ||
+    (filterValues.type && filterValues.type !== 'all')
+  );
+
   const filteredList = useMemo(() => {
     return educationList.filter(item => {
+      const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.agency.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (item.agencyAcronym && item.agencyAcronym.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase());
+        !q ||
+        item.title.toLowerCase().includes(q) ||
+        item.agency.toLowerCase().includes(q) ||
+        (item.agencyAcronym && item.agencyAcronym.toLowerCase().includes(q)) ||
+        item.description.toLowerCase().includes(q);
 
-      const matchesLevel = levelFilter === 'all' || item.educationalLevel === levelFilter || item.educationalLevel === 'all';
-      const matchesType = typeFilter === 'all' || item.educationType === typeFilter;
+      const matchesLevel =
+        filterValues.level === 'all' || item.educationalLevel === filterValues.level || item.educationalLevel === 'all';
+
+      const matchesType =
+        filterValues.type === 'all' || item.educationType === filterValues.type;
 
       return matchesSearch && matchesLevel && matchesType;
     });
-  }, [educationList, searchQuery, levelFilter, typeFilter]);
+  }, [educationList, searchQuery, filterValues]);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Editorial Category Header */}
-      <div className="px-1 pt-1">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1">
-          <GraduationCap className="w-4 h-4" />
-          <span>Education & Scholarships Directory</span>
-        </div>
-        <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          ARAL: Scholarships, TVET & Free Skills Training
+    <div className="space-y-6 animate-in fade-in duration-200 max-w-4xl mx-auto px-4 sm:px-6">
+      {/* 1. Header Block with Large Title, Search, and InlineFilterBar */}
+      <div className="pt-2">
+        <h1 className="text-[28px] sm:text-[34px] font-bold tracking-tight text-black dark:text-white leading-[1.2] mb-1.5">
+          Aral
         </h1>
-        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl leading-relaxed">
-          Discover verified scholarships from DOST-SEI, CHED Tulong Dunong, free technical-vocational courses from TESDA, and digital upskilling programs from DICT.
+        <p className="text-[15px] text-[#8E8E93] leading-relaxed mb-4">
+          Government Scholarships, Free Skills Training & TVET Courses
         </p>
 
-        {/* Search & Filters */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-3">
-          <div className="sm:col-span-6">
-            <SearchField
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Search scholarships or agencies (e.g. DOST, CHED, TESDA)..."
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <Select
-              value={levelFilter}
-              onChange={e => setLevelFilter(e.target.value)}
-              options={[
-                { value: 'all', label: 'All Educational Levels' },
-                { value: 'tertiary', label: 'College / Tertiary (BS / BA)' },
-                { value: 'vocational', label: 'Vocational Technical (TVET)' },
-                { value: 'secondary', label: 'Senior High School' }
-              ]}
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <Select
-              value={typeFilter}
-              onChange={e => setTypeFilter(e.target.value)}
-              options={[
-                { value: 'all', label: 'All Program Types' },
-                { value: 'scholarship', label: 'Scholarship Grants' },
-                { value: 'tvet', label: 'Free Technical TVET' },
-                { value: 'free_course', label: 'Free Online Courses' }
-              ]}
-            />
-          </div>
+        {/* 2. iOS Search Field */}
+        <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] h-11 px-3.5 rounded-[10px] mb-2.5">
+          <Search className="w-[18px] h-[18px] text-[#8E8E93] shrink-0 stroke-[2.2]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search scholarships, TVET courses, agencies (e.g. DOST, CHED, TESDA)..."
+            className="w-full bg-transparent text-[16px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="text-[13px] text-[#8E8E93] hover:text-black dark:hover:text-white px-1"
+            >
+              Clear
+            </button>
+          )}
         </div>
+
+        {/* 3. InlineFilterBar */}
+        <InlineFilterBar
+          groups={filterGroups}
+          selectedValues={filterValues}
+          onSelect={handleSelectFilter}
+          onReset={handleResetFilters}
+          hasActiveFilters={hasActiveFilters}
+        />
       </div>
 
-      {/* Grouped List */}
+      {/* 4. Results List Header & Inset Grouped List */}
       <div>
         {filteredList.length > 0 ? (
           <GroupedList
-            title={`Educational Opportunities (${filteredList.length})`}
-            subtitle="Click a scholarship to review monthly stipends, allowances, and requirement checklists"
+            title={`${filteredList.length} EDUCATIONAL OPPORTUNITIES`}
+            subtitle="Click an opportunity to view eligibility, allowances, and deadlines"
           >
             {filteredList.map(item => {
               const saved = isSaved(item.id);
@@ -97,27 +132,17 @@ export const AralPage: React.FC = () => {
                 <GroupedListItem
                   key={item.id}
                   onClick={() => navigate(`/item/${item.id}`)}
-                  leadingIcon={<GraduationCap className="w-4 h-4" />}
-                  title={
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span>{item.title}</span>
-                      <Badge category="aral" size="sm">
-                        {item.educationalLevel}
-                      </Badge>
-                      <span className="text-[10px] text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-1.5 py-0.2 rounded font-medium">
-                        {item.educationType}
-                      </span>
-                    </div>
-                  }
-                  subtitle={`${item.agency} (${item.agencyAcronym})`}
+                  leadingIcon={<GraduationCap className="w-5 h-5 stroke-[2]" />}
+                  title={item.title}
+                  subtitle={`${item.agencyAcronym || item.agency} • ${item.educationalLevel}`}
                   metadata={
                     <>
-                      <span className="text-red-600 dark:text-red-400 font-semibold">
-                        Deadline: {item.deadline}
+                      <span className="text-[#FF9500] font-medium flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" /> Deadline: {item.deadline}
                       </span>
                       <span>•</span>
-                      <span className="truncate max-w-[280px]">
-                        {item.benefits[0]}
+                      <span className="flex items-center gap-1 text-[13px] text-[#34C759] font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Verified: {item.lastVerified}
                       </span>
                     </>
                   }
@@ -127,16 +152,12 @@ export const AralPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(item.id);
-                        showToast(state ? 'Scholarship saved to bookmarks!' : 'Removed from bookmarks.', 'info');
+                        showToast(state ? 'Saved scholarship to bookmarks' : 'Removed from bookmarks', 'info');
                       }}
-                      className={`p-2 rounded-full transition-colors ${
-                        saved
-                          ? 'text-ios-navy dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40'
-                          : 'text-ios-lightMuted hover:text-ios-lightText'
-                      }`}
+                      className="p-2 text-[#8E8E93] hover:text-[#007AFF] transition-colors"
                       aria-label="Bookmark scholarship"
                     >
-                      <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
+                      <Bookmark className={`w-4 h-4 transition-transform active:scale-125 ${saved ? 'fill-[#007AFF] text-[#007AFF]' : ''}`} />
                     </button>
                   }
                 />
@@ -145,17 +166,20 @@ export const AralPage: React.FC = () => {
           </GroupedList>
         ) : (
           <EmptyState
-            icon={<GraduationCap className="w-8 h-8" />}
-            title="No Educational Opportunities Found"
-            description={`No educational opportunities matched your search query "${searchQuery}".`}
-            actionLabel="Reset Search"
-            onAction={() => {
-              setSearchQuery('');
-              setLevelFilter('all');
-              setTypeFilter('all');
-            }}
+            icon={<GraduationCap className="w-10 h-10 opacity-50" />}
+            title="Walang tugma na resulta"
+            description="Subukan ang ibang salita o alisin ang mga filter."
+            actionLabel="I-clear ang Filters"
+            onAction={handleResetFilters}
           />
         )}
+      </div>
+
+      {/* 5. Footnote Verification Row */}
+      <div className="pt-2 pb-6 text-center">
+        <p className="text-[13px] text-[#8E8E93]">
+          All scholarship requirements and deadlines are verified directly with CHED, DOST, and TESDA portals.
+        </p>
       </div>
     </div>
   );

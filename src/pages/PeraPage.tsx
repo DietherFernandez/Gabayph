@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { MockStorage } from '../data/mockStorage';
-import { DollarSign, Bookmark } from 'lucide-react';
-import { SearchField, Select } from '../components/common/Input';
-import { Badge } from '../components/common/Badge';
+import { DollarSign, Bookmark, Search, CheckCircle2 } from 'lucide-react';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
+import { InlineFilterBar, FilterGroup } from '../components/common/InlineFilterBar';
 import { useToast } from '../context/ToastContext';
 
 export const PeraPage: React.FC = () => {
@@ -13,70 +12,104 @@ export const PeraPage: React.FC = () => {
   const { showToast } = useToast();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [assistanceType, setAssistanceType] = useState<string>('all');
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({
+    type: 'all'
+  });
 
   const assistance = useMemo(() => MockStorage.getAssistance(), []);
 
+  const filterGroups: FilterGroup[] = [
+    {
+      id: 'type',
+      label: 'Uri ng Ayuda',
+      options: [
+        { label: 'Lahat', value: 'all' },
+        { label: 'Cash Grant', value: 'cash_grant' },
+        { label: 'Emergency Aid', value: 'emergency_aid' },
+        { label: 'Livelihood Assistance', value: 'livelihood' },
+        { label: 'Social Pension', value: 'pension' }
+      ]
+    }
+  ];
+
+  const handleSelectFilter = (groupId: string, val: string) => {
+    setFilterValues(prev => ({ ...prev, [groupId]: val }));
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setFilterValues({ type: 'all' });
+  };
+
+  const hasActiveFilters = Boolean(
+    searchQuery.trim() !== '' ||
+    (filterValues.type && filterValues.type !== 'all')
+  );
+
   const filteredAssistance = useMemo(() => {
     return assistance.filter(ast => {
+      const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
-        ast.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ast.agency.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (ast.agencyAcronym && ast.agencyAcronym.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        ast.description.toLowerCase().includes(searchQuery.toLowerCase());
+        !q ||
+        ast.title.toLowerCase().includes(q) ||
+        ast.agency.toLowerCase().includes(q) ||
+        (ast.agencyAcronym && ast.agencyAcronym.toLowerCase().includes(q)) ||
+        ast.description.toLowerCase().includes(q);
 
-      const matchesType = assistanceType === 'all' || ast.assistanceType === assistanceType;
+      const matchesType =
+        filterValues.type === 'all' || ast.assistanceType === filterValues.type;
 
       return matchesSearch && matchesType;
     });
-  }, [assistance, searchQuery, assistanceType]);
+  }, [assistance, searchQuery, filterValues]);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Editorial Category Header */}
-      <div className="px-1 pt-1">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">
-          <DollarSign className="w-4 h-4" />
-          <span>Financial Assistance & Subsidies Directory</span>
-        </div>
-        <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-          PERA: Government Financial Aid, Subsidies & Grants
+    <div className="space-y-6 animate-in fade-in duration-200 max-w-4xl mx-auto px-4 sm:px-6">
+      {/* 1. Header Block with Large Title, Search, and InlineFilterBar */}
+      <div className="pt-2">
+        <h1 className="text-[28px] sm:text-[34px] font-bold tracking-tight text-black dark:text-white leading-[1.2] mb-1.5">
+          Pera
         </h1>
-        <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-1 max-w-2xl leading-relaxed">
-          Access verified assistance programs from DSWD, DOLE, SSS, and NCSC including AICS medical crisis assistance, TUPAD cash-for-work, 4Ps, and senior citizen social pensions.
+        <p className="text-[15px] text-[#8E8E93] leading-relaxed mb-4">
+          Financial Assistance, Subsidies & Social Protection Grants
         </p>
 
-        {/* Search & Filter */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-12 gap-3">
-          <div className="sm:col-span-8">
-            <SearchField
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Search programs (e.g. AICS, TUPAD, Calamity Loan, 4Ps)..."
-            />
-          </div>
-          <div className="sm:col-span-4">
-            <Select
-              value={assistanceType}
-              onChange={e => setAssistanceType(e.target.value)}
-              options={[
-                { value: 'all', label: 'All Assistance Types' },
-                { value: 'emergency_aid', label: 'Emergency Aid (Crisis / Medical)' },
-                { value: 'cash_grant', label: 'Cash Grants (4Ps, TUPAD)' },
-                { value: 'loan', label: 'Low-Interest Government Loans' },
-                { value: 'pension', label: 'Social Pension' }
-              ]}
-            />
-          </div>
+        {/* 2. iOS Search Field */}
+        <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] h-11 px-3.5 rounded-[10px] mb-2.5">
+          <Search className="w-[18px] h-[18px] text-[#8E8E93] shrink-0 stroke-[2.2]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search cash grants, assistance, agencies (e.g. DSWD AICS, 4Ps)..."
+            className="w-full bg-transparent text-[16px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="text-[13px] text-[#8E8E93] hover:text-black dark:hover:text-white px-1"
+            >
+              Clear
+            </button>
+          )}
         </div>
+
+        {/* 3. InlineFilterBar */}
+        <InlineFilterBar
+          groups={filterGroups}
+          selectedValues={filterValues}
+          onSelect={handleSelectFilter}
+          onReset={handleResetFilters}
+          hasActiveFilters={hasActiveFilters}
+        />
       </div>
 
-      {/* Program List */}
+      {/* 4. Results List Header & Inset Grouped List */}
       <div>
         {filteredAssistance.length > 0 ? (
           <GroupedList
-            title={`Assistance Programs (${filteredAssistance.length})`}
-            subtitle="Click a program to review eligibility criteria, guidelines, and required documentary checklist"
+            title={`${filteredAssistance.length} ASSISTANCE PROGRAMS`}
+            subtitle="Click a program to review eligibility and disbursement procedures"
           >
             {filteredAssistance.map(ast => {
               const saved = isSaved(ast.id);
@@ -84,20 +117,17 @@ export const PeraPage: React.FC = () => {
                 <GroupedListItem
                   key={ast.id}
                   onClick={() => navigate(`/item/${ast.id}`)}
-                  leadingIcon={<DollarSign className="w-4 h-4" />}
-                  title={
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span>{ast.title}</span>
-                      <Badge category="pera" size="sm">
-                        {ast.assistanceType.replace('_', ' ')}
-                      </Badge>
-                    </div>
-                  }
-                  subtitle={`${ast.agency} (${ast.agencyAcronym}) • ${ast.disbursementMode}`}
+                  leadingIcon={<DollarSign className="w-5 h-5 stroke-[2]" />}
+                  title={ast.title}
+                  subtitle={`${ast.agencyAcronym || ast.agency} • ${ast.assistanceType}`}
                   metadata={
                     <>
-                      <span className="font-semibold text-emerald-700 dark:text-emerald-400">
-                        Coverage: {ast.amountOrCoverage}
+                      <span className="font-semibold text-[#34C759]">
+                        {ast.amountOrCoverage.split(';')[0]}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1 text-[13px] text-[#34C759] font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Verified
                       </span>
                     </>
                   }
@@ -107,16 +137,12 @@ export const PeraPage: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         const state = toggleSave(ast.id);
-                        showToast(state ? 'Saved program to bookmarks!' : 'Removed program from bookmarks.', 'info');
+                        showToast(state ? 'Saved program to bookmarks' : 'Removed from bookmarks', 'info');
                       }}
-                      className={`p-2 rounded-full transition-colors ${
-                        saved
-                          ? 'text-ios-navy dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40'
-                          : 'text-ios-lightMuted hover:text-ios-lightText'
-                      }`}
+                      className="p-2 text-[#8E8E93] hover:text-[#007AFF] transition-colors"
                       aria-label="Bookmark program"
                     >
-                      <Bookmark className={`w-4 h-4 ${saved ? 'fill-current' : ''}`} />
+                      <Bookmark className={`w-4 h-4 transition-transform active:scale-125 ${saved ? 'fill-[#007AFF] text-[#007AFF]' : ''}`} />
                     </button>
                   }
                 />
@@ -125,16 +151,20 @@ export const PeraPage: React.FC = () => {
           </GroupedList>
         ) : (
           <EmptyState
-            icon={<DollarSign className="w-8 h-8" />}
-            title="No Assistance Programs Found"
-            description={`No financial assistance programs matched your search query "${searchQuery}".`}
-            actionLabel="Reset Search"
-            onAction={() => {
-              setSearchQuery('');
-              setAssistanceType('all');
-            }}
+            icon={<DollarSign className="w-10 h-10 opacity-50" />}
+            title="Walang tugma na resulta"
+            description="Subukan ang ibang salita o alisin ang mga filter."
+            actionLabel="I-clear ang Filters"
+            onAction={handleResetFilters}
           />
         )}
+      </div>
+
+      {/* 5. Footnote Verification Row */}
+      <div className="pt-2 pb-6 text-center">
+        <p className="text-[13px] text-[#8E8E93]">
+          All social assistance figures are sourced from official DSWD and DOLE administrative orders.
+        </p>
       </div>
     </div>
   );
