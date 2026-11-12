@@ -1,50 +1,40 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import {
-  User,
   Camera,
-  Mail,
-  Phone,
-  MapPin,
-  Moon,
-  Sun,
+  CheckCircle2,
   LogOut,
   Save,
-  CheckCircle2
+  Moon,
+  Sun
 } from 'lucide-react';
-import { TextInput } from '../components/common/Input';
-import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { useToast } from '../context/ToastContext';
 import { useConfirm } from '../context/ConfirmContext';
 
 export const ProfilePage: React.FC = () => {
-  const { user, updateUser, logout, theme, toggleTheme, role, navigate } = useApp();
+  const { user, updateUser, theme, toggleTheme, logout, navigate } = useApp();
   const { showToast } = useToast();
   const { confirmAction } = useConfirm();
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [phone, setPhone] = useState(user.phone);
-  const [city, setCity] = useState(user.city);
-  const [province, setProvince] = useState(user.province);
-  const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl);
+  const [phone, setPhone] = useState(user.phone || '');
+  const [city, setCity] = useState(user.city || '');
+  const [province, setProvince] = useState(user.province || '');
+  const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl || '');
 
-  const [notifEnabled, setNotifEnabled] = useState(user.notificationsEnabled);
-  const [emergencyAlerts, setEmergencyAlerts] = useState(user.emergencyAlertsEnabled);
-
+  const [notifEnabled, setNotifEnabled] = useState(true);
+  const [emergencyAlerts, setEmergencyAlerts] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Handle local image file preview
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const result = reader.result as string;
-        setAvatarUrl(result);
-        updateUser({ avatarUrl: result });
-        showToast('Profile photo preview updated!', 'success');
+        setAvatarUrl(reader.result as string);
+        showToast('Profile photo updated', 'success');
       };
       reader.readAsDataURL(file);
     }
@@ -54,188 +44,195 @@ export const ProfilePage: React.FC = () => {
     e.preventDefault();
     setSaving(true);
     setTimeout(() => {
-      setSaving(false);
       updateUser({
         name,
         email,
         phone,
         city,
         province,
-        avatarUrl,
-        notificationsEnabled: notifEnabled,
-        emergencyAlertsEnabled: emergencyAlerts
+        avatarUrl
       });
-      showToast('Profile settings saved successfully!', 'success');
-    }, 500);
+      setSaving(false);
+      showToast('Profile changes saved successfully', 'success');
+    }, 400);
   };
 
   const handleLogout = () => {
     confirmAction({
       title: 'Sign Out?',
-      message: 'Are you sure you want to sign out of your citizen account? Unsaved changes will be discarded.',
+      message: 'Are you sure you want to sign out of your citizen profile?',
       confirmLabel: 'Sign Out',
       isDestructive: true,
       onConfirm: () => {
         logout();
-        showToast('Successfully signed out of your account.', 'info');
+        showToast('Signed out successfully', 'info');
         navigate('/');
       }
     });
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
-      {/* Profile Header Card */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-          {/* Avatar with upload trigger */}
-          <div className="relative group shrink-0">
-            <div className="w-20 h-20 rounded-full overflow-hidden bg-ios-navy text-white flex items-center justify-center font-bold text-2xl ring-4 ring-ios-lightSecondary dark:ring-ios-darkSecondary shadow-ios">
-              {avatarUrl ? (
-                <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
-              ) : (
-                name.charAt(0)
-              )}
-            </div>
-            <label
-              htmlFor="avatar-upload"
-              className="absolute bottom-0 right-0 p-1.5 rounded-full bg-ios-navy hover:bg-ios-navyLight text-white shadow-ios-sm cursor-pointer transition-transform group-hover:scale-110"
-              title="Upload new profile photo"
-            >
-              <Camera className="w-3.5 h-3.5" />
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                onChange={handlePhotoUpload}
-                className="hidden"
-              />
-            </label>
+    <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in duration-200 px-4 sm:px-6 pt-1 pb-20">
+      {/* 1. Profile Header (Centered, Clean iOS Apple ID Style) */}
+      <div className="flex flex-col items-center text-center pt-2">
+        <div className="relative group mb-2.5">
+          <div className="w-18 h-18 rounded-full overflow-hidden bg-[#007AFF] text-white flex items-center justify-center font-bold text-2xl shadow-ios-sm">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
+            ) : (
+              name.charAt(0)
+            )}
           </div>
-
-          <div className="flex-1 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-              <h1 className="text-xl font-bold text-ios-lightText dark:text-ios-darkText">
-                {name}
-              </h1>
-              <Badge variant="verified">
-                <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Verified Citizen
-              </Badge>
-            </div>
-            <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mb-2">
-              {email} • {city}, {province}
-            </p>
-            <div className="flex items-center justify-center sm:justify-start gap-2">
-              <span className="text-[11px] font-medium bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted px-2.5 py-0.5 rounded-full">
-                Role: <strong className="text-ios-lightText dark:text-ios-darkText uppercase">{role}</strong>
-              </span>
-            </div>
-          </div>
+          <label
+            htmlFor="avatar-upload"
+            className="absolute bottom-0 right-0 p-1.5 rounded-full bg-[#007AFF] text-white shadow-ios-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+            title="Upload photo"
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="hidden"
+            />
+          </label>
         </div>
+
+        <div className="flex items-center gap-1.5 mb-1">
+          <h1 className="text-[20px] font-bold text-black dark:text-white leading-tight">
+            {name}
+          </h1>
+          <Badge variant="verified">
+            <CheckCircle2 className="w-3 h-3 text-[#34C759]" /> Verified Citizen
+          </Badge>
+        </div>
+
+        <p className="text-[13px] text-[#8E8E93]">
+          {email} • {city || 'Quezon City'}, {province || 'Metro Manila'}
+        </p>
       </div>
 
-      {/* Edit Personal Information Form */}
+      {/* 2. Personal Information Inset Grouped Form */}
       <form onSubmit={handleSaveProfile} className="space-y-6">
-        <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
+        <div>
+          <h2 className="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] mb-2 px-1">
             Personal Information
           </h2>
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[16px] overflow-hidden border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] text-[14px]">
+            <div className="flex items-center px-4 py-2.5">
+              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Full Name</span>
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+              />
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <TextInput
-              label="Full Name"
-              required
-              value={name}
-              onChange={e => setName(e.target.value)}
-              leadingIcon={<User className="w-4 h-4" />}
-            />
-            <TextInput
-              label="Email Address"
-              type="email"
-              required
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              leadingIcon={<Mail className="w-4 h-4" />}
-            />
-            <TextInput
-              label="Mobile Number"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              leadingIcon={<Phone className="w-4 h-4" />}
-            />
-            <TextInput
-              label="City / Municipality"
-              value={city}
-              onChange={e => setCity(e.target.value)}
-              leadingIcon={<MapPin className="w-4 h-4" />}
-            />
+            <div className="flex items-center px-4 py-2.5">
+              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Email Address</span>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-center px-4 py-2.5">
+              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Mobile Number</span>
+              <input
+                type="tel"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+                placeholder="0917 000 0000"
+                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-center px-4 py-2.5">
+              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">City / Municipality</span>
+              <input
+                type="text"
+                value={city}
+                onChange={e => setCity(e.target.value)}
+                placeholder="Quezon City, Manila..."
+                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-center px-4 py-2.5">
+              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Province / Region</span>
+              <input
+                type="text"
+                value={province}
+                onChange={e => setProvince(e.target.value)}
+                placeholder="Metro Manila, Cebu..."
+                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+              />
+            </div>
           </div>
-
-          <TextInput
-            label="Province / Region"
-            value={province}
-            onChange={e => setProvince(e.target.value)}
-            placeholder="Metro Manila, Cebu, Davao del Sur..."
-          />
         </div>
 
-        {/* Preferences & Settings */}
-        <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-6 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
-            Preferences & Alert Settings
+        {/* 3. Preferences & Alert Settings */}
+        <div>
+          <h2 className="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] mb-2 px-1">
+            Preferences & Alerts
           </h2>
-
-          <div className="divide-y divide-ios-lightBorder/80 dark:divide-ios-darkBorder/80">
-            {/* Notification toggle */}
-            <div className="flex items-center justify-between py-3">
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[16px] overflow-hidden border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] text-[14px]">
+            {/* In-App Notifications Switch */}
+            <div className="flex items-center justify-between px-4 py-3">
               <div>
-                <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
+                <span className="text-[14px] font-medium text-black dark:text-white block">
                   In-App Notifications
                 </span>
-                <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-                  Receive notifications regarding service updates and deadline reminders
+                <span className="text-[12px] text-[#8E8E93]">
+                  Receive updates regarding service procedures and deadlines
                 </span>
               </div>
               <input
                 type="checkbox"
                 checked={notifEnabled}
                 onChange={e => setNotifEnabled(e.target.checked)}
-                className="w-5 h-5 rounded text-ios-navy focus:ring-ios-navy cursor-pointer"
+                className="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF] cursor-pointer"
               />
             </div>
 
-            {/* Emergency alerts toggle */}
-            <div className="flex items-center justify-between py-3">
+            {/* Emergency Alerts Switch */}
+            <div className="flex items-center justify-between px-4 py-3">
               <div>
-                <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
+                <span className="text-[14px] font-medium text-black dark:text-white block">
                   Emergency & Disaster Advisories
                 </span>
-                <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
-                  Priority broadcast alerts and bulletins from NDRRMC and PAGASA
+                <span className="text-[12px] text-[#8E8E93]">
+                  Priority emergency alerts from NDRRMC and PAGASA
                 </span>
               </div>
               <input
                 type="checkbox"
                 checked={emergencyAlerts}
                 onChange={e => setEmergencyAlerts(e.target.checked)}
-                className="w-5 h-5 rounded text-ios-navy focus:ring-ios-navy cursor-pointer"
+                className="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF] cursor-pointer"
               />
             </div>
 
             {/* Dark Mode toggle */}
-            <div className="flex items-center justify-between py-3">
+            <div className="flex items-center justify-between px-4 py-3">
               <div>
-                <span className="text-sm font-semibold text-ios-lightText dark:text-ios-darkText block">
-                  Interface Theme (Dark Mode)
+                <span className="text-[14px] font-medium text-black dark:text-white block">
+                  Interface Theme
                 </span>
-                <span className="text-xs text-ios-lightMuted dark:text-ios-darkMuted">
+                <span className="text-[12px] text-[#8E8E93]">
                   Currently in {theme === 'dark' ? 'Dark' : 'Light'} Mode
                 </span>
               </div>
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-2 rounded-ios-lg bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightText dark:text-ios-darkText border border-ios-lightBorder dark:border-ios-darkBorder"
+                className="p-1.5 rounded-[8px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 {theme === 'dark' ? <Moon className="w-4 h-4 text-blue-400" /> : <Sun className="w-4 h-4 text-yellow-500" />}
               </button>
@@ -243,25 +240,25 @@ export const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Save button & Actions */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-          <Button
+        {/* 4. Action Buttons */}
+        <div className="space-y-2.5 pt-1">
+          <button
             type="submit"
-            variant="primary"
-            loading={saving}
-            className="w-full sm:w-auto"
+            disabled={saving}
+            className="w-full h-11 rounded-[12px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white font-semibold text-[15px] flex items-center justify-center gap-1.5 shadow-ios-sm transition-all cursor-pointer"
           >
-            <Save className="w-4 h-4" /> Save Changes
-          </Button>
+            <Save className="w-4 h-4 stroke-[2.2]" />
+            <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+          </button>
 
-          <Button
+          <button
             type="button"
-            variant="outline"
             onClick={handleLogout}
-            className="w-full sm:w-auto text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900"
+            className="w-full h-11 rounded-[12px] bg-[rgba(255,59,48,0.1)] hover:bg-[rgba(255,59,48,0.18)] active:scale-[0.98] text-[#FF3B30] font-semibold text-[15px] flex items-center justify-center gap-1.5 transition-all cursor-pointer"
           >
-            <LogOut className="w-4 h-4" /> Sign Out
-          </Button>
+            <LogOut className="w-4 h-4 stroke-[2.2]" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </form>
     </div>

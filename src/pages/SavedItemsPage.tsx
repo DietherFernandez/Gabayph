@@ -2,9 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { MockStorage } from '../data/mockStorage';
 import { CategoryType } from '../types';
-import { Bookmark, Trash2, Layers } from 'lucide-react';
+import { Bookmark, Lock, Layers, MinusCircle } from 'lucide-react';
 import { Badge } from '../components/common/Badge';
-import { Button } from '../components/common/Button';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
 import { useToast } from '../context/ToastContext';
@@ -16,6 +15,7 @@ export const SavedItemsPage: React.FC = () => {
   const { confirmAction } = useConfirm();
 
   const [activeCategory, setActiveCategory] = useState<CategoryType | 'all'>('all');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const savedItems = useMemo(() => {
     const all = MockStorage.getAllItems();
@@ -29,65 +29,77 @@ export const SavedItemsPage: React.FC = () => {
 
   const handleClearAll = () => {
     confirmAction({
-      title: 'Clear All Bookmarks?',
-      message: 'Are you sure you want to remove all saved government services and records from your bookmarks?',
-      confirmLabel: 'Clear All',
+      title: 'Remove all saved bookmarks?',
+      message: 'Are you sure you want to delete all saved items from this device?',
+      confirmLabel: 'Delete All',
       isDestructive: true,
       onConfirm: () => {
         MockStorage.clearAllSavedItems();
-        showToast('Cleared all saved bookmarks.', 'info');
+        showToast('Cleared all saved items', 'info');
+        setIsEditMode(false);
       }
     });
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-5 animate-in fade-in duration-200 max-w-3xl mx-auto px-4 sm:px-6 pt-1">
+      {/* 1. Header: Large Title + Edit Button */}
+      <div className="flex items-center justify-between gap-3 pt-1">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ios-navy dark:text-blue-400 mb-1">
-            <Bookmark className="w-4 h-4 fill-current" />
-            <span>Your Personal Bookmarks</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-            Saved Public Services & Opportunities
+          <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Saved
           </h1>
-          <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Locally stored bookmarks for quick access to government IDs, job openings, and financial assistance.
+          <p className="text-[13px] text-[#8E8E93]">
+            Stored on this device only
           </p>
         </div>
 
         {savedItems.length > 0 && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleClearAll}
-            className="text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900 shrink-0"
-          >
-            <Trash2 className="w-3.5 h-3.5" /> Clear All
-          </Button>
+          <div className="flex items-center gap-2">
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={handleClearAll}
+                className="text-[13px] font-medium text-[#FF3B30] hover:underline px-1 py-0.5 select-none cursor-pointer"
+              >
+                Clear All
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsEditMode(!isEditMode)}
+              className="text-[14px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 select-none cursor-pointer"
+            >
+              {isEditMode ? 'Done' : 'Edit'}
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Category Filter Pills */}
+      {/* 2. Scrollable Category Pills with Counts (Compact & Subtle) */}
       {savedItems.length > 0 && (
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
           {(['all', 'serbisyo', 'trabaho', 'pera', 'bayanihan', 'aral', 'kaligtasan'] as const).map(cat => {
             const count = cat === 'all' ? savedItems.length : savedItems.filter(i => i.category === cat).length;
             if (cat !== 'all' && count === 0) return null;
 
+            const isSelected = activeCategory === cat;
+
             return (
               <button
                 key={cat}
+                type="button"
                 onClick={() => setActiveCategory(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                  activeCategory === cat
-                    ? 'bg-ios-navy text-white font-semibold shadow-sm'
-                    : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder hover:text-ios-lightText'
+                className={`h-7 px-3 rounded-full text-[12px] font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 select-none cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
+                    : 'bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white hover:bg-[rgba(118,118,128,0.2)]'
                 }`}
               >
                 <span className="capitalize">{cat === 'all' ? 'All' : cat}</span>
-                <span className="text-[10px] opacity-80 px-1 rounded-full bg-black/10 dark:bg-white/10">
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                  isSelected ? 'bg-white/20 text-white' : 'bg-black/10 dark:bg-white/10 text-[#8E8E93]'
+                }`}>
                   {count}
                 </span>
               </button>
@@ -96,55 +108,63 @@ export const SavedItemsPage: React.FC = () => {
         </div>
       )}
 
-      {/* Saved List */}
+      {/* 3. Inset Grouped List of Bookmarks */}
       <div>
         {filteredItems.length > 0 ? (
           <GroupedList
-            title={`Saved Bookmarks (${filteredItems.length})`}
-            subtitle="Click to view full details or remove using the trash action"
+            title={`${filteredItems.length} SAVED ITEMS`}
+            subtitle="Tap to view official details and requirements"
           >
             {filteredItems.map(item => (
               <GroupedListItem
                 key={item.id}
                 onClick={() => navigate(`/item/${item.id}`)}
-                leadingIcon={<Layers className="w-4 h-4" />}
+                leadingIcon={
+                  isEditMode ? (
+                    <button
+                      type="button"
+                      onClick={e => {
+                        e.stopPropagation();
+                        toggleSave(item.id);
+                        showToast('Removed from bookmarks', 'info');
+                      }}
+                      className="p-1 text-[#FF3B30] hover:scale-110 transition-transform"
+                      aria-label="Remove item"
+                    >
+                      <MinusCircle className="w-5 h-5 fill-[#FF3B30] text-white" />
+                    </button>
+                  ) : (
+                    <Layers className="w-4 h-4 stroke-[2]" />
+                  )
+                }
                 title={
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-1.5 flex-wrap">
                     <span>{item.title}</span>
                     <Badge category={item.category} size="sm">
                       {item.category}
                     </Badge>
                   </div>
                 }
-                subtitle={`${item.agency} (${item.agencyAcronym || ''})`}
+                subtitle={`${item.agency} ${item.agencyAcronym ? `(${item.agencyAcronym})` : ''}`}
                 metadata={<span className="line-clamp-1">{item.description}</span>}
-                trailing={
-                  <button
-                    type="button"
-                    onClick={e => {
-                      e.stopPropagation();
-                      toggleSave(item.id);
-                      showToast('Removed from bookmarks.', 'info');
-                    }}
-                    className="p-2 rounded-full text-ios-lightMuted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
-                    title="Remove bookmark"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                }
               />
             ))}
           </GroupedList>
         ) : (
           <EmptyState
-            icon={<Bookmark className="w-8 h-8" />}
-            title="No Saved Bookmarks"
-            description="Bookmark public services, job openings, or assistance programs to quickly revisit them anytime."
+            icon={<Bookmark className="w-10 h-10 opacity-50" />}
+            title="No saved items yet"
+            description="Bookmark services, jobs, or scholarships to quickly access them here anytime."
             actionLabel="Browse Directory"
             onAction={() => navigate('/serbisyo')}
           />
         )}
+      </div>
+
+      {/* 4. Footnote with Lock Icon */}
+      <div className="pt-2 pb-6 flex items-center justify-center gap-1.5 text-[12px] text-[#8E8E93]">
+        <Lock className="w-3.5 h-3.5" />
+        <span>Bookmarks are stored locally on your device.</span>
       </div>
     </div>
   );

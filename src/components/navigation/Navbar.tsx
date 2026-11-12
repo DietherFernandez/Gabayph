@@ -7,7 +7,6 @@ import {
   Sun,
   Moon,
   PhoneCall,
-  ShieldCheck,
   User,
   Shield,
   Menu,

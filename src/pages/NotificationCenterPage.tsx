@@ -2,8 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { MockStorage } from '../data/mockStorage';
 import { UserNotification } from '../types';
-import { Bell, CheckCheck, Trash2 } from 'lucide-react';
-import { Button } from '../components/common/Button';
+import { Bell } from 'lucide-react';
 import { GroupedList, GroupedListItem } from '../components/common/GroupedList';
 import { EmptyState } from '../components/common/EmptyState';
 import { useToast } from '../context/ToastContext';
@@ -28,7 +27,7 @@ export const NotificationCenterPage: React.FC = () => {
     MockStorage.markAllNotificationsAsRead();
     setNotifications(MockStorage.getNotifications());
     refreshNotifications();
-    showToast('Marked all notifications as read.', 'success');
+    showToast('Marked all notifications as read', 'success');
   };
 
   const handleClearAll = () => {
@@ -41,7 +40,7 @@ export const NotificationCenterPage: React.FC = () => {
         MockStorage.clearNotifications();
         setNotifications([]);
         refreshNotifications();
-        showToast('Cleared all notifications.', 'info');
+        showToast('Cleared all notifications', 'info');
       }
     });
   };
@@ -56,123 +55,118 @@ export const NotificationCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="bg-ios-lightSurface dark:bg-ios-darkSurface p-5 rounded-ios-xl border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-5 animate-in fade-in duration-200 max-w-3xl mx-auto px-4 sm:px-6 pt-1">
+      {/* 1. Header: Large Title + Mark All Read */}
+      <div className="flex items-center justify-between gap-3 pt-1">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ios-navy dark:text-blue-400 mb-1">
-            <Bell className="w-4 h-4" />
-            <span>Notification Center</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
-            Official Government Notifications & Bulletins
+          <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Notifications
           </h1>
-          <p className="text-xs sm:text-sm text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Stay informed with deadline reminders, urgent disaster advisories, and consular appointment openings.
+          <p className="text-[13px] text-[#8E8E93]">
+            Official government bulletins and advisories
           </p>
         </div>
 
         {notifications.length > 0 && (
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2">
             {unreadCount > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
+              <button
+                type="button"
                 onClick={handleMarkAllAsRead}
-                className="text-xs"
+                className="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 select-none cursor-pointer"
               >
-                <CheckCheck className="w-3.5 h-3.5" /> Mark All Read
-              </Button>
+                Mark All Read
+              </button>
             )}
-            <Button
-              variant="outline"
-              size="sm"
+            <button
+              type="button"
               onClick={handleClearAll}
-              className="text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 border-red-200 dark:border-red-900"
+              className="text-[13px] font-medium text-[#FF3B30] hover:underline px-1 py-0.5 select-none cursor-pointer"
+              title="Clear all notifications"
             >
-              <Trash2 className="w-3.5 h-3.5" /> Clear All
-            </Button>
+              Clear
+            </button>
           </div>
         )}
       </div>
 
-      {/* Filter Tabs */}
+      {/* 2. Filter Pills (All / Unread) */}
       {notifications.length > 0 && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
           <button
+            type="button"
             onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`h-7 px-3 rounded-full text-[12px] font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 select-none cursor-pointer ${
               filter === 'all'
-                ? 'bg-ios-navy text-white shadow-sm'
-                : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder'
+                ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
+                : 'bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white hover:bg-[rgba(118,118,128,0.2)]'
             }`}
           >
-            All ({notifications.length})
+            <span>All</span>
+            <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+              filter === 'all' ? 'bg-white/20 text-white' : 'bg-black/10 dark:bg-white/10 text-[#8E8E93]'
+            }`}>
+              {notifications.length}
+            </span>
           </button>
+
           <button
+            type="button"
             onClick={() => setFilter('unread')}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`h-7 px-3 rounded-full text-[12px] font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 select-none cursor-pointer ${
               filter === 'unread'
-                ? 'bg-ios-navy text-white shadow-sm'
-                : 'bg-ios-lightSurface dark:bg-ios-darkSurface text-ios-lightMuted border border-ios-lightBorder dark:border-ios-darkBorder'
+                ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
+                : 'bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white hover:bg-[rgba(118,118,128,0.2)]'
             }`}
           >
-            Unread ({unreadCount})
+            <span>Unread</span>
+            {unreadCount > 0 && (
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#FF3B30] text-white font-bold">
+                {unreadCount}
+              </span>
+            )}
           </button>
         </div>
       )}
 
-      {/* Notifications List */}
+      {/* 3. Inset Grouped Notification Feed */}
       <div>
         {filteredNotifs.length > 0 ? (
           <GroupedList
-            title={`Notification Feed (${filteredNotifs.length})`}
-            subtitle="Click a notification to navigate directly to the relevant service or advisory"
+            title={`${filteredNotifs.length} NOTIFICATIONS`}
+            subtitle="Tap a notification to navigate directly to the relevant program"
           >
             {filteredNotifs.map(notif => (
               <GroupedListItem
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif)}
-                leadingIcon={
-                  <div className="relative">
-                    <Bell className="w-4 h-4 text-ios-navy dark:text-blue-400" />
-                    {!notif.isRead && (
-                      <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500" />
-                    )}
-                  </div>
-                }
+                leadingIcon={<Bell className={`w-4 h-4 ${!notif.isRead ? 'text-[#007AFF]' : 'text-[#8E8E93]'}`} />}
                 title={
                   <div className="flex items-center gap-2">
-                    <span className={notif.isRead ? 'font-medium' : 'font-bold'}>
-                      {notif.title}
-                    </span>
+                    <span className={!notif.isRead ? 'font-bold' : 'font-normal'}>{notif.title}</span>
                     {!notif.isRead && (
-                      <span className="text-[10px] bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-300 font-bold px-1.5 py-0.2 rounded">
-                        NEW
-                      </span>
+                      <span className="w-2 h-2 rounded-full bg-[#007AFF] shrink-0" />
                     )}
                   </div>
                 }
                 subtitle={notif.message}
                 metadata={
-                  <>
+                  <div className="flex items-center gap-2 text-[11px] text-[#8E8E93]">
                     <span className="capitalize">{notif.category}</span>
                     <span>•</span>
                     <span>{notif.date}</span>
-                  </>
+                  </div>
                 }
               />
             ))}
           </GroupedList>
         ) : (
           <EmptyState
-            icon={<Bell className="w-8 h-8" />}
-            title="No Notifications"
-            description={
-              filter === 'unread'
-                ? 'You have no unread notifications.'
-                : 'No notifications currently stored in your notification center.'
-            }
+            icon={<Bell className="w-10 h-10 opacity-50" />}
+            title="No notifications"
+            description="You are completely caught up with all public directory updates and advisories."
+            actionLabel="Return Home"
+            onAction={() => navigate('/')}
           />
         )}
       </div>
