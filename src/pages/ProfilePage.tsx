@@ -72,11 +72,11 @@ export const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in duration-200 px-4 sm:px-6 pt-1 pb-20">
-      {/* 1. Profile Header (Centered, Clean iOS Apple ID Style) */}
+    <div className="max-w-xl mx-auto space-y-5 animate-in fade-in duration-200 px-4 sm:px-6 pt-1 pb-16">
+      {/* 1. Profile Header (Centered, Clean Compact iOS Apple ID Style) */}
       <div className="flex flex-col items-center text-center pt-2">
-        <div className="relative group mb-2.5">
-          <div className="w-18 h-18 rounded-full overflow-hidden bg-[#007AFF] text-white flex items-center justify-center font-bold text-2xl shadow-ios-sm">
+        <div className="relative w-[68px] h-[68px] sm:w-[76px] sm:h-[76px] mx-auto mb-2 shrink-0">
+          <div className="w-[68px] h-[68px] sm:w-[76px] sm:h-[76px] rounded-full overflow-hidden bg-[#007AFF] text-white flex items-center justify-center font-bold text-xl shadow-2xs">
             {avatarUrl ? (
               <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
             ) : (
@@ -85,10 +85,10 @@ export const ProfilePage: React.FC = () => {
           </div>
           <label
             htmlFor="avatar-upload"
-            className="absolute bottom-0 right-0 p-1.5 rounded-full bg-[#007AFF] text-white shadow-ios-sm cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+            className="absolute -bottom-0.5 -right-0.5 p-1 rounded-full bg-[#007AFF] text-white shadow-2xs cursor-pointer hover:scale-105 active:scale-95 transition-transform"
             title="Upload photo"
           >
-            <Camera className="w-3.5 h-3.5" />
+            <Camera className="w-3 h-3" />
             <input
               id="avatar-upload"
               type="file"
@@ -99,79 +99,79 @@ export const ProfilePage: React.FC = () => {
           </label>
         </div>
 
-        <div className="flex items-center gap-1.5 mb-1">
-          <h1 className="text-[20px] font-bold text-black dark:text-white leading-tight">
+        <div className="flex items-center justify-center gap-1.5 mb-0.5">
+          <h1 className="text-[17px] sm:text-[19px] font-bold text-black dark:text-white leading-tight">
             {name}
           </h1>
           <Badge variant="verified">
-            <CheckCircle2 className="w-3 h-3 text-[#34C759]" /> Verified Citizen
+            <CheckCircle2 className="w-3 h-3 text-[#34C759]" /> Verified
           </Badge>
         </div>
 
-        <p className="text-[13px] text-[#8E8E93]">
+        <p className="text-[12px] text-[#8E8E93]">
           {email} • {city || 'Quezon City'}, {province || 'Metro Manila'}
         </p>
       </div>
 
       {/* 2. Personal Information Inset Grouped Form */}
-      <form onSubmit={handleSaveProfile} className="space-y-6">
+      <form onSubmit={handleSaveProfile} className="space-y-5">
         <div>
           <h2 className="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] mb-2 px-1">
             Personal Information
           </h2>
           <div className="bg-white dark:bg-[#1C1C1E] rounded-[16px] overflow-hidden border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] text-[14px]">
             <div className="flex items-center px-4 py-2.5">
-              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Full Name</span>
+              <span className="w-28 sm:w-36 text-[13px] text-[#8E8E93] shrink-0">Full Name</span>
               <input
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-black dark:text-white text-[13px] sm:text-[14px] font-medium focus:outline-none"
               />
             </div>
 
             <div className="flex items-center px-4 py-2.5">
-              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Email Address</span>
+              <span className="w-28 sm:w-36 text-[13px] text-[#8E8E93] shrink-0">Email Address</span>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-black dark:text-white text-[13px] sm:text-[14px] font-medium focus:outline-none"
               />
             </div>
 
             <div className="flex items-center px-4 py-2.5">
-              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Mobile Number</span>
+              <span className="w-28 sm:w-36 text-[13px] text-[#8E8E93] shrink-0">Mobile Number</span>
               <input
                 type="tel"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="0917 000 0000"
-                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-black dark:text-white text-[13px] sm:text-[14px] font-medium focus:outline-none"
               />
             </div>
 
             <div className="flex items-center px-4 py-2.5">
-              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">City / Municipality</span>
+              <span className="w-28 sm:w-36 text-[13px] text-[#8E8E93] shrink-0">City / Town</span>
               <input
                 type="text"
                 value={city}
                 onChange={e => setCity(e.target.value)}
                 placeholder="Quezon City, Manila..."
-                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-black dark:text-white text-[13px] sm:text-[14px] font-medium focus:outline-none"
               />
             </div>
 
             <div className="flex items-center px-4 py-2.5">
-              <span className="w-32 text-[13px] text-[#8E8E93] shrink-0">Province / Region</span>
+              <span className="w-28 sm:w-36 text-[13px] text-[#8E8E93] shrink-0">Province</span>
               <input
                 type="text"
                 value={province}
                 onChange={e => setProvince(e.target.value)}
                 placeholder="Metro Manila, Cebu..."
-                className="w-full bg-transparent text-black dark:text-white text-[14px] font-medium focus:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-black dark:text-white text-[13px] sm:text-[14px] font-medium focus:outline-none"
               />
             </div>
           </div>
