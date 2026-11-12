@@ -163,42 +163,39 @@ export const HomePage: React.FC = () => {
             <button
               key={cat.id}
               onClick={() => navigate(cat.path)}
-              className="flex flex-col items-center sm:items-start p-2.5 sm:p-3 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.98] transition-all text-center sm:text-left group ios-active"
+              className="flex flex-col items-center sm:items-start p-2 sm:p-2.5 rounded-xl hover:bg-slate-100/70 dark:hover:bg-slate-800/50 active:scale-[0.97] transition-all text-center sm:text-left group ios-active"
             >
-              <div className={`w-8 h-8 rounded-ios-lg ${cat.color} flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform`}>
+              <div className={`w-10 h-10 rounded-xl ${cat.color} flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform shadow-2xs`}>
                 {cat.icon}
               </div>
-              <h3 className="text-xs sm:text-sm font-bold text-ios-lightText dark:text-ios-darkText leading-tight truncate w-full">
+              <h3 className="text-[13px] sm:text-[14px] font-bold text-ios-lightText dark:text-ios-darkText leading-tight truncate w-full">
                 {cat.name}
               </h3>
-              <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 line-clamp-1 hidden sm:block">
-                {cat.subtitle}
-              </p>
-              <span className="text-[10px] font-medium text-ios-navy dark:text-blue-400 mt-1">
-                {cat.count.split('+')[0] || ''}+ Active
+              <span className="text-[11px] font-medium text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
+                {cat.count.split('+')[0] || ''}+ items
               </span>
             </button>
           ))}
         </div>
       </section>
 
-      {/* Emergency Hotlines Strip (Kaligtasan Focus) */}
-      <section className="bg-red-50/80 dark:bg-red-950/30 border border-red-200/70 dark:border-red-900/40 rounded-ios-xl p-3 sm:p-3.5">
+      {/* Emergency Hotlines Strip (Cardless Official Callout) */}
+      <section className="py-2 px-3 border-y border-red-200 dark:border-red-900/50 bg-red-50/40 dark:bg-red-950/20">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="p-2 rounded-full bg-red-600 text-white shrink-0 shadow-sm">
+            <span className="p-1.5 rounded-full bg-red-600 text-white shrink-0">
               <PhoneCall className="w-3.5 h-3.5" />
             </span>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="text-xs sm:text-sm font-bold text-red-950 dark:text-red-200 leading-tight">
+                <h3 className="text-[14px] font-bold text-red-950 dark:text-red-200 leading-tight">
                   24/7 National Emergency Hotlines
                 </h3>
-                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-red-600 text-white uppercase tracking-wider">
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-red-600 text-white uppercase tracking-wider">
                   Toll-Free
                 </span>
               </div>
-              <p className="text-[11px] text-red-800/80 dark:text-red-300/80 truncate mt-0.5">
+              <p className="text-[12px] text-red-800/80 dark:text-red-300/80 truncate mt-0.5">
                 Police, BFP Fire, Red Cross 143, Citizens' 8888, & NDRRMC
               </p>
             </div>
@@ -207,14 +204,14 @@ export const HomePage: React.FC = () => {
           <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 pt-0.5 sm:pt-0">
             <a
               href="tel:911"
-              className="flex-1 sm:flex-none px-3.5 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm ios-active"
+              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs ios-active"
             >
               <PhoneCall className="w-3 h-3" />
               <span>Call 911</span>
             </a>
             <button
               onClick={() => navigate('/kaligtasan')}
-              className="flex-1 sm:flex-none px-3 py-1.5 rounded-ios-lg bg-white dark:bg-slate-900 border border-red-200 dark:border-red-900/40 text-red-700 dark:text-red-300 font-semibold text-xs hover:bg-red-50 flex items-center justify-center gap-1 transition-colors"
+              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/60 text-red-700 dark:text-red-300 font-semibold text-xs hover:bg-red-50 flex items-center justify-center gap-1 transition-colors"
             >
               <span>All Hotlines</span>
               <ChevronRight className="w-3 h-3" />
