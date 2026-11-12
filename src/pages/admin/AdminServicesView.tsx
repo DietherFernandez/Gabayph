@@ -12,9 +12,9 @@ import {
   Trash2,
   ExternalLink,
   CheckCircle2,
-  RefreshCw
+  RefreshCw,
+  Globe
 } from 'lucide-react';
-import { Button } from '../../components/common/Button';
 
 interface AdminServicesViewProps {
   onOpenCreate: () => void;
@@ -76,45 +76,59 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
 
   return (
     <div className="space-y-5 animate-in fade-in duration-150">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* 1. View Header Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg sm:text-xl font-bold text-ios-lightText dark:text-ios-darkText">
-              Public Services Directory Management
-            </h1>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold">
-              {services.length} records
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[rgba(0,122,255,0.12)] text-[#007AFF] font-mono">
+              Directory Management
+            </span>
+            <span className="text-[12px] text-[#8E8E93] flex items-center gap-1.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34C759]" />
+              {services.length} Verified Records
             </span>
           </div>
-          <p className="text-xs text-ios-lightMuted dark:text-ios-darkMuted mt-0.5">
-            Manage official Citizen's Charter procedures, requirements, fees, and government agency portals.
+          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Public Services Directory
+          </h1>
+          <p className="text-[13px] text-[#8E8E93]">
+            Citizen's Charter procedures, requirements, fees, and official agency portals
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <Button size="sm" variant="outline" onClick={refreshList} title="Refresh records list">
+          <button
+            type="button"
+            onClick={refreshList}
+            title="Refresh records list"
+            className="h-9 px-3 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer flex items-center gap-1.5"
+          >
             <RefreshCw className="w-3.5 h-3.5" />
-          </Button>
-          <Button size="sm" variant="primary" onClick={onOpenCreate} className="font-bold">
-            <Plus className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Refresh</span>
+          </button>
+          <button
+            type="button"
+            onClick={onOpenCreate}
+            className="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[13px] font-semibold flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+          >
+            <Plus className="w-4 h-4 stroke-[2.2]" />
             <span>Add Public Service</span>
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Directory Records Table with Integrated Management Toolbar */}
-      <div className="rounded-ios-xl bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder shadow-ios-sm overflow-hidden">
+      {/* 2. Cohesive Cardless Inset Table Container */}
+      <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] overflow-hidden">
         {/* Integrated Management Toolbar */}
-        <div className="p-3 bg-slate-50/60 dark:bg-slate-800/40 border-b border-ios-lightBorder dark:border-ios-darkBorder flex flex-col md:flex-row items-center gap-3">
+        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] flex flex-col md:flex-row items-center gap-2.5">
           <div className="relative flex-1 w-full">
-            <Search className="w-4 h-4 text-ios-lightMuted absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#8E8E93] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search service title, government agency, or keyword..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-ios-lg bg-white dark:bg-slate-900 border border-ios-lightBorder dark:border-ios-darkBorder text-ios-lightText dark:text-ios-darkText focus:outline-none focus:ring-2 focus:ring-ios-navy"
+              className="w-full h-8 pl-8 pr-3 text-[13px] rounded-[8px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none focus:ring-1 focus:ring-[#007AFF]"
             />
           </div>
 
@@ -142,101 +156,106 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
               options={[
                 { value: 'all', label: 'All Fee Schedules' },
                 { value: 'free', label: 'Free Only (₱0)' },
-                { value: 'paid', label: 'Standard Processing Fee' },
+                { value: 'paid', label: 'Processing Fee Required' },
               ]}
             />
           </div>
         </div>
+
         {filteredServices.length === 0 ? (
-          <div className="p-8 text-center text-xs text-ios-lightMuted space-y-2">
-            <FileText className="w-8 h-8 mx-auto text-slate-300 dark:text-slate-600" />
-            <p className="font-semibold text-ios-lightText dark:text-ios-darkText">No matching services found</p>
-            <p>Try modifying your search term or clearing the type filters.</p>
+          <div className="p-10 text-center text-[13px] text-[#8E8E93] space-y-2">
+            <FileText className="w-8 h-8 mx-auto text-[#8E8E93]/60" />
+            <p className="font-semibold text-black dark:text-white">No matching services found</p>
+            <p className="text-[12px]">Try modifying your search term or clearing the type filters.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-ios-lightMuted uppercase text-[10px] font-bold border-b border-ios-lightBorder dark:border-ios-darkBorder">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
-                  <th className="p-3.5">Service Title & Description</th>
+                  <th className="p-3.5">Service Details</th>
                   <th className="p-3.5">Agency</th>
-                  <th className="p-3.5">Fees & Time</th>
-                  <th className="p-3.5">Verification</th>
+                  <th className="p-3.5">Fees & Turnaround</th>
+                  <th className="p-3.5">Charter Status</th>
                   <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-ios-lightBorder dark:divide-ios-darkBorder">
+              <tbody className="divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] text-[13px]">
                 {filteredServices.map(srv => (
-                  <tr key={srv.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+                  <tr key={srv.id} className="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                     <td className="p-3.5 max-w-sm">
-                      <div className="font-bold text-ios-lightText dark:text-ios-darkText">
+                      <div className="font-semibold text-black dark:text-white leading-tight">
                         {srv.title}
                       </div>
-                      <p className="text-[11px] text-ios-lightMuted line-clamp-1 mt-0.5">
+                      <p className="text-[12px] text-[#8E8E93] line-clamp-1 mt-0.5">
                         {srv.description}
                       </p>
-                      <div className="flex items-center gap-2 mt-1.5">
-                        <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                      <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">
                           {srv.serviceType?.replace('_', ' ')}
                         </span>
                         {srv.onlineServiceAvailable && (
-                          <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                            Online Portal
+                          <span className="text-[10px] font-bold text-[#34C759] flex items-center gap-0.5">
+                            <Globe className="w-2.5 h-2.5" /> Online Portal
                           </span>
                         )}
                       </div>
                     </td>
                     <td className="p-3.5 whitespace-nowrap">
-                      <span className="font-semibold text-ios-navy dark:text-blue-400">
+                      <span className="font-semibold text-[#007AFF]">
                         {srv.agencyAcronym || srv.agency}
                       </span>
-                      <p className="text-[10px] text-ios-lightMuted max-w-[150px] truncate">
+                      <p className="text-[11px] text-[#8E8E93] max-w-[160px] truncate mt-0.5">
                         {srv.agency}
                       </p>
                     </td>
                     <td className="p-3.5 whitespace-nowrap">
-                      <div className="font-medium text-ios-lightText dark:text-ios-darkText">
+                      <div className="font-medium text-black dark:text-white">
                         {srv.fees}
                       </div>
-                      <div className="text-[11px] text-ios-lightMuted mt-0.5">
+                      <div className="text-[11px] text-[#8E8E93] mt-0.5">
                         {srv.processingTime}
                       </div>
                     </td>
                     <td className="p-3.5 whitespace-nowrap">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                      <span className="text-[#34C759] font-medium text-[12px] flex items-center gap-1">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Verified</span>
                       </span>
-                      <span className="text-[10px] text-ios-lightMuted block">
+                      <span className="text-[11px] text-[#8E8E93] block mt-0.5">
                         {srv.lastVerified}
                       </span>
                     </td>
-                    <td className="p-3.5 text-right whitespace-nowrap space-x-1">
-                      {srv.officialUrl && (
-                        <a
-                          href={srv.officialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block p-1.5 text-ios-lightMuted hover:text-ios-navy rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                          title="Open official agency portal"
+                    <td className="p-3.5 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-1">
+                        {srv.officialUrl && (
+                          <a
+                            href={srv.officialUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-[6px] text-[#8E8E93] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                            title="Open official agency portal"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => onOpenEdit(srv)}
+                          className="p-1.5 rounded-[6px] text-[#8E8E93] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                          title="Edit service record"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                      <button
-                        onClick={() => onOpenEdit(srv)}
-                        className="p-1.5 text-ios-lightMuted hover:text-ios-navy dark:hover:text-blue-400 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                        title="Edit service record"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(srv.id, srv.title)}
-                        className="p-1.5 text-ios-lightMuted hover:text-red-500 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                        title="Delete service record"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                          <Edit3 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(srv.id, srv.title)}
+                          className="p-1.5 rounded-[6px] text-[#8E8E93] hover:text-[#FF3B30] hover:bg-[rgba(255,59,48,0.1)] transition-colors cursor-pointer"
+                          title="Delete service record"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
