@@ -13,7 +13,14 @@ import {
   Menu,
   X,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  Siren,
+  Scale,
+  Cross,
+  HeartPulse,
+  ShieldAlert,
+  Flame,
+  Waves
 } from 'lucide-react';
 import { Button } from '../common/Button';
 
@@ -92,36 +99,36 @@ export const Navbar: React.FC = () => {
             <div className="animate-marquee inline-flex items-center gap-6 text-[11px] font-medium text-white/90">
               {/* Loop Chunk 1 */}
               <span className="inline-flex items-center gap-4">
-                <span>🚨 <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
+                <span className="inline-flex items-center gap-1.5"><Siren className="w-3.5 h-3.5 text-red-400 shrink-0 stroke-[2.2]" /> <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
                 <span className="text-white/30">•</span>
-                <span>⚖️ <strong>Citizens' Complaint Center:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
+                <span className="inline-flex items-center gap-1.5"><Scale className="w-3.5 h-3.5 text-blue-300 shrink-0 stroke-[2.2]" /> <strong>Citizens' Complaint:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
                 <span className="text-white/30">•</span>
-                <span>🚑 <strong>Philippine Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
+                <span className="inline-flex items-center gap-1.5"><Cross className="w-3.5 h-3.5 text-red-400 shrink-0 stroke-[2.2]" /> <strong>Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
                 <span className="text-white/30">•</span>
-                <span>🧠 <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
+                <span className="inline-flex items-center gap-1.5"><HeartPulse className="w-3.5 h-3.5 text-emerald-400 shrink-0 stroke-[2.2]" /> <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
                 <span className="text-white/30">•</span>
-                <span>🛑 <strong>Anti-Trafficking Hotline:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
+                <span className="inline-flex items-center gap-1.5"><ShieldAlert className="w-3.5 h-3.5 text-amber-300 shrink-0 stroke-[2.2]" /> <strong>Anti-Trafficking:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
                 <span className="text-white/30">•</span>
-                <span>🚒 <strong>BFP Fire Protection:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911 / (02) 8426-0219</a></span>
+                <span className="inline-flex items-center gap-1.5"><Flame className="w-3.5 h-3.5 text-orange-400 shrink-0 stroke-[2.2]" /> <strong>BFP Fire:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
                 <span className="text-white/30">•</span>
-                <span>🌊 <strong>NDRRMC Disaster Hotline:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
+                <span className="inline-flex items-center gap-1.5"><Waves className="w-3.5 h-3.5 text-cyan-300 shrink-0 stroke-[2.2]" /> <strong>NDRRMC Disaster:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
               </span>
 
               {/* Loop Chunk 2 for Seamless Infinite Scroll */}
               <span className="inline-flex items-center gap-4">
-                <span>🚨 <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
+                <span className="inline-flex items-center gap-1.5"><Siren className="w-3.5 h-3.5 text-red-400 shrink-0 stroke-[2.2]" /> <strong>National Emergency:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
                 <span className="text-white/30">•</span>
-                <span>⚖️ <strong>Citizens' Complaint Center:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
+                <span className="inline-flex items-center gap-1.5"><Scale className="w-3.5 h-3.5 text-blue-300 shrink-0 stroke-[2.2]" /> <strong>Citizens' Complaint:</strong> <a href="tel:8888" className="text-white font-bold hover:underline">8888</a></span>
                 <span className="text-white/30">•</span>
-                <span>🚑 <strong>Philippine Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
+                <span className="inline-flex items-center gap-1.5"><Cross className="w-3.5 h-3.5 text-red-400 shrink-0 stroke-[2.2]" /> <strong>Red Cross:</strong> <a href="tel:143" className="text-yellow-300 font-bold hover:underline">143</a></span>
                 <span className="text-white/30">•</span>
-                <span>🧠 <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
+                <span className="inline-flex items-center gap-1.5"><HeartPulse className="w-3.5 h-3.5 text-emerald-400 shrink-0 stroke-[2.2]" /> <strong>Mental Health Crisis:</strong> <a href="tel:1553" className="text-white font-bold hover:underline">1553</a></span>
                 <span className="text-white/30">•</span>
-                <span>🛑 <strong>Anti-Trafficking Hotline:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
+                <span className="inline-flex items-center gap-1.5"><ShieldAlert className="w-3.5 h-3.5 text-amber-300 shrink-0 stroke-[2.2]" /> <strong>Anti-Trafficking:</strong> <a href="tel:1343" className="text-white font-bold hover:underline">1343</a></span>
                 <span className="text-white/30">•</span>
-                <span>🚒 <strong>BFP Fire Protection:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911 / (02) 8426-0219</a></span>
+                <span className="inline-flex items-center gap-1.5"><Flame className="w-3.5 h-3.5 text-orange-400 shrink-0 stroke-[2.2]" /> <strong>BFP Fire:</strong> <a href="tel:911" className="text-yellow-300 font-bold hover:underline">911</a></span>
                 <span className="text-white/30">•</span>
-                <span>🌊 <strong>NDRRMC Disaster Hotline:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
+                <span className="inline-flex items-center gap-1.5"><Waves className="w-3.5 h-3.5 text-cyan-300 shrink-0 stroke-[2.2]" /> <strong>NDRRMC Disaster:</strong> <a href="tel:0289111406" className="text-white font-bold hover:underline">(02) 8911-1406</a></span>
               </span>
             </div>
           </div>
