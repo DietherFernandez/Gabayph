@@ -132,7 +132,7 @@ export const Navbar: React.FC = () => {
                 <span className="font-bold text-base text-ios-navy dark:text-blue-400 tracking-tight leading-none">
                   GabayPH
                 </span>
-                <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 rounded bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted dark:text-ios-darkMuted border border-ios-lightBorder dark:border-ios-darkBorder">
+                <span className="hidden sm:inline-flex text-[10px] uppercase font-semibold px-1.5 py-0.2 rounded bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-lightMuted dark:text-ios-darkMuted border border-ios-lightBorder dark:border-ios-darkBorder">
                   Public Directory
                 </span>
               </div>

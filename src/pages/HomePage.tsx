@@ -28,7 +28,6 @@ export const HomePage: React.FC = () => {
   const assistance = MockStorage.getAssistance().slice(0, 3);
   const education = MockStorage.getEducation().slice(0, 3);
   const announcements = MockStorage.getAnnouncements().slice(0, 3);
-  const emergencyHotlines = MockStorage.getSafety().filter(s => s.isNationalHotline).slice(0, 3);
 
   const categories = [
     {
@@ -90,7 +89,7 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
       {/* Editorial Hero & Search Bar */}
-      <section className="bg-gradient-to-b from-ios-navy/5 to-transparent dark:from-blue-950/20 pt-4 pb-2 rounded-2xl">
+      <section className="pt-2 sm:pt-4 pb-1">
         <div className="max-w-3xl mx-auto text-center px-4">
           <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-ios-lightText dark:text-ios-darkText mb-2">
             Fast, Verified, and Clear Philippine Government Information
@@ -142,7 +141,7 @@ export const HomePage: React.FC = () => {
 
       {/* 6 Core Categories Grid */}
       <section>
-        <div className="flex items-center justify-between gap-2 mb-3 px-1">
+        <div className="flex items-center justify-between gap-2 mb-2.5 px-1">
           <div className="min-w-0 flex-1">
             <h2 className="text-sm sm:text-base font-bold text-ios-lightText dark:text-ios-darkText tracking-tight">
               Six Core Categories
@@ -159,24 +158,24 @@ export const HomePage: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => navigate(cat.path)}
-              className="flex flex-col items-start p-3 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.98] transition-all text-left group ios-active"
+              className="flex flex-col items-center sm:items-start p-2.5 sm:p-3 rounded-ios-xl bg-ios-lightSurface dark:bg-ios-darkSurface border border-ios-lightBorder/80 dark:border-ios-darkBorder/80 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.98] transition-all text-center sm:text-left group ios-active"
             >
-              <div className={`w-8 h-8 rounded-ios-lg ${cat.color} flex items-center justify-center mb-2 group-hover:scale-105 transition-transform`}>
+              <div className={`w-8 h-8 rounded-ios-lg ${cat.color} flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform`}>
                 {cat.icon}
               </div>
-              <h3 className="text-xs sm:text-sm font-bold text-ios-lightText dark:text-ios-darkText leading-tight">
+              <h3 className="text-xs sm:text-sm font-bold text-ios-lightText dark:text-ios-darkText leading-tight truncate w-full">
                 {cat.name}
               </h3>
-              <p className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 line-clamp-1">
+              <p className="text-[10px] text-ios-lightMuted dark:text-ios-darkMuted mt-0.5 line-clamp-1 hidden sm:block">
                 {cat.subtitle}
               </p>
-              <span className="text-[10px] font-medium text-ios-navy dark:text-blue-400 mt-1.5">
-                {cat.count}
+              <span className="text-[10px] font-medium text-ios-navy dark:text-blue-400 mt-1">
+                {cat.count.split('+')[0] || ''}+ Active
               </span>
             </button>
           ))}
@@ -184,53 +183,43 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Emergency Hotlines Strip (Kaligtasan Focus) */}
-      <section className="bg-red-50/70 dark:bg-red-950/20 border border-red-200/60 dark:border-red-900/40 rounded-ios-xl p-3.5 sm:p-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-full bg-red-500 text-white">
-              <PhoneCall className="w-4 h-4" />
+      <section className="bg-red-50/80 dark:bg-red-950/30 border border-red-200/70 dark:border-red-900/40 rounded-ios-xl p-3 sm:p-3.5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="p-2 rounded-full bg-red-600 text-white shrink-0 shadow-sm">
+              <PhoneCall className="w-3.5 h-3.5" />
             </span>
-            <div>
-              <h3 className="text-sm font-bold text-red-900 dark:text-red-200">
-                National Emergency Hotlines
-              </h3>
-              <p className="text-xs text-red-700/80 dark:text-red-300/80">
-                Toll-free 24/7 verified emergency numbers active nationwide
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <h3 className="text-xs sm:text-sm font-bold text-red-950 dark:text-red-200 leading-tight">
+                  24/7 National Emergency Hotlines
+                </h3>
+                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-red-600 text-white uppercase tracking-wider">
+                  Toll-Free
+                </span>
+              </div>
+              <p className="text-[11px] text-red-800/80 dark:text-red-300/80 truncate mt-0.5">
+                Police, BFP Fire, Red Cross 143, Citizens' 8888, & NDRRMC
               </p>
             </div>
           </div>
-          <button
-            onClick={() => navigate('/kaligtasan')}
-            className="text-xs font-semibold text-red-700 dark:text-red-300 hover:underline flex items-center gap-1"
-          >
-            View All Hotlines & Safety Guides <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
 
-        {/* Cohesive List Container with Hairline Separators instead of Nested Cards */}
-        <div className="divide-y divide-red-100 dark:divide-red-900/30 bg-white/90 dark:bg-slate-900/90 rounded-ios-lg border border-red-100 dark:border-red-900/30 overflow-hidden">
-          {emergencyHotlines.map(hotline => (
-            <div
-              key={hotline.id}
-              className="p-3 flex items-center justify-between gap-3 hover:bg-red-50/40 dark:hover:bg-red-950/20 transition-colors"
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 pt-0.5 sm:pt-0">
+            <a
+              href="tel:911"
+              className="flex-1 sm:flex-none px-3.5 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm ios-active"
             >
-              <div className="min-w-0 flex-1">
-                <span className="text-xs font-bold text-ios-lightText dark:text-ios-darkText block truncate">
-                  {hotline.title}
-                </span>
-                <span className="text-[11px] text-ios-lightMuted dark:text-ios-darkMuted truncate block">
-                  {hotline.agencyAcronym || hotline.agency}
-                </span>
-              </div>
-              <a
-                href={`tel:${hotline.hotlineNumber?.replace(/[^0-9]/g, '')}`}
-                className="px-3 py-1.5 rounded-ios-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm ios-active shrink-0"
-              >
-                <PhoneCall className="w-3 h-3" />
-                <span>{hotline.hotlineNumber}</span>
-              </a>
-            </div>
-          ))}
+              <PhoneCall className="w-3 h-3" />
+              <span>Call 911</span>
+            </a>
+            <button
+              onClick={() => navigate('/kaligtasan')}
+              className="flex-1 sm:flex-none px-3 py-1.5 rounded-ios-lg bg-white dark:bg-slate-900 border border-red-200 dark:border-red-900/40 text-red-700 dark:text-red-300 font-semibold text-xs hover:bg-red-50 flex items-center justify-center gap-1 transition-colors"
+            >
+              <span>All Hotlines</span>
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -238,7 +227,7 @@ export const HomePage: React.FC = () => {
       <section>
         <GroupedList
           title="Popular Government Services"
-          subtitle="Essential national IDs, civil registry documents, and clearances"
+          subtitle="Essential national IDs, civil registry, and clearances"
           action={
             <button
               onClick={() => navigate('/serbisyo')}
@@ -308,7 +297,7 @@ export const HomePage: React.FC = () => {
         <div>
           <GroupedList
             title="Open Government & Public Sector Jobs"
-            subtitle="Civil service plantilla positions and contractual roles"
+            subtitle="Plantilla civil service and contractual vacancies"
             action={
               <button
                 onClick={() => navigate('/trabaho')}
@@ -343,7 +332,7 @@ export const HomePage: React.FC = () => {
         <div>
           <GroupedList
             title="Financial Assistance & Emergency Subsidies"
-            subtitle="Social safety net assistance from DSWD, DOLE, and SSS"
+            subtitle="DSWD, DOLE, and SSS emergency cash aid"
             action={
               <button
                 onClick={() => navigate('/pera')}
@@ -379,7 +368,7 @@ export const HomePage: React.FC = () => {
         <div>
           <GroupedList
             title="Scholarships & Free Skills Training"
-            subtitle="Educational assistance and vocational TVET opportunities"
+            subtitle="DOST, CHED, and TESDA opportunities"
             action={
               <button
                 onClick={() => navigate('/aral')}
@@ -406,7 +395,7 @@ export const HomePage: React.FC = () => {
         <div>
           <GroupedList
             title="Latest Official Public Advisories"
-            subtitle="Public advisories regarding price freezes, deadlines, and alerts"
+            subtitle="Official government advisories and notices"
             action={
               <button
                 onClick={() => navigate('/announcements')}
