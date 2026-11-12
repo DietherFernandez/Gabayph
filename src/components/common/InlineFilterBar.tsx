@@ -39,9 +39,9 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
 
   return (
     <div className={`w-full ${className}`}>
-      {/* 1. Main Filter Toggles Row */}
-      <div className="flex items-center justify-between min-h-[36px] gap-2 pt-1">
-        <div className="flex items-center gap-2 flex-wrap">
+      {/* 1. Main Filter Toggles Row (Compact & Subtle) */}
+      <div className="flex items-center justify-between min-h-[28px] gap-2 pt-0.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {groups.map(group => {
             const currentValue = selectedValues[group.id];
             const isSelected = Boolean(currentValue && currentValue !== 'all' && currentValue !== 'lahat');
@@ -59,17 +59,17 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
                 onClick={() => toggleGroup(group.id)}
                 aria-expanded={isOpen}
                 aria-controls={`inline-filter-options-${group.id}`}
-                className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-[12px] text-[15px] font-medium transition-all select-none cursor-pointer ${
+                className={`inline-flex items-center gap-1 h-7 px-2 rounded-[6px] text-[13px] font-medium transition-all select-none cursor-pointer ${
                   isSelected
-                    ? 'bg-[#007AFF]/15 dark:bg-[#0A84FF]/25 text-[#007AFF] dark:text-[#0A84FF] font-semibold'
+                    ? 'bg-[#007AFF]/12 dark:bg-[#0A84FF]/20 text-[#007AFF] dark:text-[#0A84FF] font-semibold'
                     : isOpen
-                    ? 'bg-[rgba(118,118,128,0.18)] dark:bg-[rgba(118,118,128,0.3)] text-black dark:text-white'
+                    ? 'bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white'
                     : 'text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 <span>{displayLabel}</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 stroke-[2.6] ${
+                  className={`w-3 h-3 transition-transform duration-200 stroke-[2.2] ${
                     isOpen ? 'rotate-180' : ''
                   }`}
                 />
@@ -86,17 +86,17 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
               onReset();
               setOpenGroupId(null);
             }}
-            className="text-[15px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline px-2 py-1 shrink-0 ml-auto transition-opacity cursor-pointer select-none"
+            className="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 shrink-0 ml-auto transition-opacity cursor-pointer select-none"
           >
             I-reset
           </button>
         )}
       </div>
 
-      {/* 2. Accordion Option Pills Panel (Expands directly below without overlay) */}
+      {/* 2. Accordion Option Pills Panel (Compact & Subtle) */}
       <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-          openGroupId ? 'grid-rows-[1fr] mt-2.5' : 'grid-rows-[0fr]'
+        className={`grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          openGroupId ? 'grid-rows-[1fr] mt-1.5' : 'grid-rows-[0fr]'
         }`}
       >
         <div className="overflow-hidden">
@@ -105,7 +105,7 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
               id={`inline-filter-options-${activeGroup.id}`}
               role="radiogroup"
               aria-label={activeGroup.label}
-              className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"
+              className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5"
             >
               {activeGroup.options.map(option => {
                 const isOptionActive =
@@ -122,10 +122,10 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
                       onSelect(activeGroup.id, option.value);
                       setTimeout(() => setOpenGroupId(null), 180);
                     }}
-                    className={`h-9 px-4 rounded-full text-[14px] font-medium shrink-0 whitespace-nowrap transition-all select-none cursor-pointer ${
+                    className={`h-7 px-3 rounded-full text-[12px] font-medium shrink-0 whitespace-nowrap transition-all select-none cursor-pointer ${
                       isOptionActive
-                        ? 'bg-[#007AFF]/15 dark:bg-[#0A84FF]/25 text-[#007AFF] dark:text-[#0A84FF] font-semibold'
-                        : 'bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] text-black dark:text-white hover:bg-[rgba(118,118,128,0.2)]'
+                        ? 'bg-[#007AFF]/12 dark:bg-[#0A84FF]/20 text-[#007AFF] dark:text-[#0A84FF] font-semibold'
+                        : 'bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-black/85 dark:text-white/85 hover:bg-[rgba(118,118,128,0.16)]'
                     }`}
                   >
                     {option.label}
