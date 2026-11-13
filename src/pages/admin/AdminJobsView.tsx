@@ -34,10 +34,15 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedSector, setSelectedSector] = useState<string>('all');
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const refreshList = () => {
+    setIsRefreshing(true);
     setJobs(MockStorage.getJobs());
     onDataChanged();
+    window.dispatchEvent(new CustomEvent('gabayph_data_updated'));
+    showToast('Careers & job postings refreshed.', 'info');
+    setTimeout(() => setIsRefreshing(false), 500);
   };
 
   const handleDelete = (id: string, title: string) => {
@@ -109,19 +114,9 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
-              Careers & Job Postings
-            </h1>
-            <button
-              type="button"
-              onClick={refreshList}
-              title="Refresh positions list"
-              className="p-1 rounded-[6px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:rotate-180 transition-all cursor-pointer"
-            >
-              <RefreshCw className="w-4 h-4 stroke-[2.2]" />
-            </button>
-          </div>
+          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Careers & Job Postings
+          </h1>
 
           <p className="text-[13px] text-[#8E8E93] mt-0.5">
             Civil Service notices, agency career openings, and government plantilla vacancies
@@ -129,6 +124,16 @@ export const AdminJobsView: React.FC<AdminJobsViewProps> = ({
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={refreshList}
+            disabled={isRefreshing}
+            title="Refresh positions list"
+            className="h-9 px-3.5 rounded-[10px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] hover:bg-[rgba(118,118,128,0.18)] dark:hover:bg-[rgba(118,118,128,0.3)] text-black dark:text-white text-[13px] font-medium transition-all cursor-pointer flex items-center gap-2 active:scale-95 disabled:opacity-60"
+          >
+            <RefreshCw className={`w-4 h-4 stroke-[2.2] ${isRefreshing ? 'animate-spin text-[#007AFF]' : ''}`} />
+            <span>Refresh</span>
+          </button>
           <button
             type="button"
             onClick={onOpenCreate}

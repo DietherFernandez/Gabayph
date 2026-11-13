@@ -18,6 +18,8 @@ import { Badge } from '../../components/common/Badge';
 import { AdminNavCounts } from '../../components/admin/AdminSidebar';
 import { BaseItem } from '../../types';
 
+import { useToast } from '../../context/ToastContext';
+
 interface AdminOverviewViewProps {
   counts: AdminNavCounts;
   onOpenCreate: (category: any) => void;
@@ -32,12 +34,17 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
   onDataChanged
 }) => {
   const { navigate } = useApp();
+  const { showToast } = useToast();
   const [, setTick] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = () => {
+    setIsRefreshing(true);
     setTick(t => t + 1);
     window.dispatchEvent(new CustomEvent('gabayph_data_updated'));
     onDataChanged?.();
+    showToast('Dashboard overview metrics refreshed.', 'info');
+    setTimeout(() => setIsRefreshing(false), 500);
   };
 
   const reports = MockStorage.getReports();
@@ -63,19 +70,9 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
-              Dashboard Overview
-            </h1>
-            <button
-              type="button"
-              onClick={handleRefresh}
-              title="Refresh dashboard metrics"
-              className="p-1 rounded-[6px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:rotate-180 transition-all cursor-pointer"
-            >
-              <RefreshCw className="w-4 h-4 stroke-[2.2]" />
-            </button>
-          </div>
+          <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
+            Dashboard Overview
+          </h1>
 
           <p className="text-[13px] text-[#8E8E93] mt-0.5">
             Citizen's Charter compliance, directory records, and public feedback
@@ -83,6 +80,16 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            title="Refresh dashboard metrics"
+            className="h-9 px-3.5 rounded-[10px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] hover:bg-[rgba(118,118,128,0.18)] dark:hover:bg-[rgba(118,118,128,0.3)] text-black dark:text-white text-[13px] font-medium transition-all cursor-pointer flex items-center gap-2 active:scale-95 disabled:opacity-60"
+          >
+            <RefreshCw className={`w-4 h-4 stroke-[2.2] ${isRefreshing ? 'animate-spin text-[#007AFF]' : ''}`} />
+            <span>Refresh</span>
+          </button>
           <button
             type="button"
             onClick={() => onOpenCreate('serbisyo')}
