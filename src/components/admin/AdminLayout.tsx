@@ -90,6 +90,7 @@ export const AdminLayout: React.FC = () => {
           counts={counts}
           onOpenCreate={handleOpenCreate}
           onOpenEdit={handleOpenEdit}
+          onDataChanged={refreshCounts}
         />
       );
     }
@@ -175,6 +176,7 @@ export const AdminLayout: React.FC = () => {
         counts={counts}
         onOpenCreate={handleOpenCreate}
         onOpenEdit={handleOpenEdit}
+        onDataChanged={refreshCounts}
       />
     );
   };

@@ -3,7 +3,7 @@ import { BayanihanItem, VolunteerApplication } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
 import { useConfirm } from '../../context/ConfirmContext';
-import { IOSSelect } from '../../components/common/IOSSelect';
+import { InlineFilterBar, FilterGroup } from '../../components/common/InlineFilterBar';
 import {
   HeartHandshake,
   Search,
@@ -58,6 +58,20 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
     });
   };
 
+  const filterGroups: FilterGroup[] = [
+    {
+      id: 'type',
+      label: 'Drive Type',
+      options: [
+        { value: 'all', label: 'All Drive Types' },
+        { value: 'volunteer', label: 'Volunteer Mobilization' },
+        { value: 'disaster_relief', label: 'Disaster Relief Operations' },
+        { value: 'donation', label: 'Blood & Medical Donations' },
+        { value: 'community_pantry', label: 'Food Security / Community Pantry' },
+      ]
+    }
+  ];
+
   const filteredItems = useMemo(() => {
     return bayanihan.filter(item => {
       const matchSearch =
@@ -71,6 +85,8 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
       return matchSearch && matchType;
     });
   }, [bayanihan, searchQuery, selectedType]);
+
+  const hasActiveFilters = Boolean(selectedType !== 'all' || searchQuery.trim() !== '');
 
   return (
     <div className="space-y-5 animate-in fade-in duration-150">
@@ -86,24 +102,27 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
               {bayanihan.length} Volunteer Drives
             </span>
           </div>
-          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
-            Community Programs & Bayanihan
-          </h1>
-          <p className="text-[13px] text-[#8E8E93]">
+
+          <div className="flex items-center gap-2">
+            <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+              Community Programs & Bayanihan
+            </h1>
+            <button
+              type="button"
+              onClick={refreshList}
+              title="Refresh drives list"
+              className="p-1 rounded-[6px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:rotate-180 transition-all cursor-pointer"
+            >
+              <RefreshCw className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          </div>
+
+          <p className="text-[13px] text-[#8E8E93] mt-0.5">
             Volunteer drives, blood donation calls, community pantries, and disaster relief mobilizations
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={refreshList}
-            title="Refresh records list"
-            className="h-9 px-3 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer flex items-center gap-1.5"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Refresh</span>
-          </button>
           <button
             type="button"
             onClick={onOpenCreate}
@@ -117,34 +136,41 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
 
       {/* 2. Cohesive Cardless Inset Table Container */}
       <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] overflow-hidden">
-        {/* Integrated Management Toolbar */}
-        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] flex flex-col md:flex-row items-center gap-2.5">
-          <div className="relative flex-1 w-full">
-            <Search className="w-3.5 h-3.5 text-[#8E8E93] absolute left-3 top-1/2 -translate-y-1/2" />
+        {/* Integrated Management Toolbar (Compact & Subtle Search + Filter) */}
+        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] space-y-2">
+          {/* Search Pill Input */}
+          <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.08)] dark:bg-[rgba(118,118,128,0.18)] h-9 px-3 rounded-[10px]">
+            <Search className="w-4 h-4 text-[#8E8E93] shrink-0 stroke-[2.2]" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search drive title, lead organization, or location..."
-              className="w-full h-8 pl-8 pr-3 text-[13px] rounded-[8px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none focus:ring-1 focus:ring-[#007AFF]"
+              className="w-full bg-transparent text-[13px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="text-[11px] font-medium text-[#8E8E93] hover:text-black dark:hover:text-white px-1 cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
           </div>
 
-          <div className="w-full md:w-64">
-            <IOSSelect
-              value={selectedType}
-              onChange={setSelectedType}
-              size="sm"
-              className="w-full"
-              options={[
-                { value: 'all', label: 'All Drive Types' },
-                { value: 'volunteer', label: 'Volunteer Mobilization' },
-                { value: 'disaster_relief', label: 'Disaster Relief Operations' },
-                { value: 'donation', label: 'Blood & Medical Donations' },
-                { value: 'community_pantry', label: 'Food Security / Community Pantry' },
-              ]}
-            />
-          </div>
+          {/* Compact InlineFilterBar */}
+          <InlineFilterBar
+            groups={filterGroups}
+            selectedValues={{ type: selectedType }}
+            onSelect={(_groupId, val) => setSelectedType(val)}
+            onReset={() => {
+              setSelectedType('all');
+              setSearchQuery('');
+            }}
+            hasActiveFilters={hasActiveFilters}
+            resetLabel="Reset"
+          />
         </div>
 
         {filteredItems.length === 0 ? (
@@ -193,7 +219,7 @@ export const AdminBayanihanView: React.FC<AdminBayanihanViewProps> = ({
                         <span className="max-w-[160px] truncate">{item.location}</span>
                       </div>
                       <div className="flex items-center gap-1 text-[11px] text-[#8E8E93] mt-0.5">
-                        <Calendar className="w-3 h-3 text-[#8E8E93]" />
+                        <Calendar className="w-3.5 h-3.5 text-[#8E8E93]" />
                         <span>{item.dates}</span>
                       </div>
                     </td>

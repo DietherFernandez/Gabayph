@@ -1,5 +1,5 @@
 import { PesoSign } from '../../components/common/PesoSign';
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { MockStorage } from '../../data/mockStorage';
 import {
@@ -11,7 +11,8 @@ import {
   Plus,
   ArrowRight,
   Clock,
-  Sparkles
+  Sparkles,
+  RefreshCw
 } from 'lucide-react';
 import { Badge } from '../../components/common/Badge';
 import { AdminNavCounts } from '../../components/admin/AdminSidebar';
@@ -21,14 +22,24 @@ interface AdminOverviewViewProps {
   counts: AdminNavCounts;
   onOpenCreate: (category: any) => void;
   onOpenEdit: (item: BaseItem) => void;
+  onDataChanged?: () => void;
 }
 
 export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
   counts,
   onOpenCreate,
-  onOpenEdit
+  onOpenEdit,
+  onDataChanged
 }) => {
   const { navigate } = useApp();
+  const [, setTick] = useState(0);
+
+  const handleRefresh = () => {
+    setTick(t => t + 1);
+    window.dispatchEvent(new CustomEvent('gabayph_data_updated'));
+    onDataChanged?.();
+  };
+
   const reports = MockStorage.getReports();
   const suggestions = MockStorage.getSuggestions();
   const logs = MockStorage.getActivityLogs();
@@ -51,10 +62,22 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
               Active Session • Maria Santos
             </span>
           </div>
-          <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
-            Dashboard Overview
-          </h1>
-          <p className="text-[13px] text-[#8E8E93]">
+
+          <div className="flex items-center gap-2">
+            <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-black dark:text-white leading-tight">
+              Dashboard Overview
+            </h1>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              title="Refresh dashboard metrics"
+              className="p-1 rounded-[6px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:rotate-180 transition-all cursor-pointer"
+            >
+              <RefreshCw className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          </div>
+
+          <p className="text-[13px] text-[#8E8E93] mt-0.5">
             Citizen's Charter compliance, directory records, and public feedback
           </p>
         </div>

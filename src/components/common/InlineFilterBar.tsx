@@ -19,6 +19,7 @@ interface InlineFilterBarProps {
   onReset: () => void;
   hasActiveFilters: boolean;
   className?: string;
+  resetLabel?: string;
 }
 
 export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
@@ -27,7 +28,8 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
   onSelect,
   onReset,
   hasActiveFilters,
-  className = ''
+  className = '',
+  resetLabel
 }) => {
   const [openGroupId, setOpenGroupId] = React.useState<string | null>(null);
 
@@ -78,7 +80,7 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
           })}
         </div>
 
-        {/* I-reset Link (appears ONLY when any filter or query is active) */}
+        {/* Reset Link (appears ONLY when any filter or query is active) */}
         {hasActiveFilters && (
           <button
             type="button"
@@ -88,7 +90,7 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
             }}
             className="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 shrink-0 ml-auto transition-opacity cursor-pointer select-none"
           >
-            I-reset
+            {resetLabel || 'I-reset'}
           </button>
         )}
       </div>

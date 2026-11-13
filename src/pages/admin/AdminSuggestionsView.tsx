@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { ServiceSuggestion, ServiceItem } from '../../types';
 import { MockStorage } from '../../data/mockStorage';
 import { useToast } from '../../context/ToastContext';
+import { InlineFilterBar, FilterGroup } from '../../components/common/InlineFilterBar';
 import {
   CheckCircle2,
   Search,
@@ -36,10 +37,8 @@ export const AdminSuggestionsView: React.FC<AdminSuggestionsViewProps> = ({
   };
 
   const handleApproveAndPromote = (sug: ServiceSuggestion) => {
-    // 1. Mark suggestion as approved
     MockStorage.updateSuggestionStatus(sug.id, 'approved');
 
-    // 2. Automatically create new verified service in public directory
     const newService: ServiceItem = {
       id: `srv-promoted-${Date.now()}`,
       title: sug.serviceName,
@@ -65,6 +64,19 @@ export const AdminSuggestionsView: React.FC<AdminSuggestionsViewProps> = ({
     showToast(`Approved & promoted "${sug.serviceName}" to official Services Directory!`, 'success');
   };
 
+  const filterGroups: FilterGroup[] = [
+    {
+      id: 'status',
+      label: 'Submission Status',
+      options: [
+        { value: 'all', label: `All (${suggestions.length})` },
+        { value: 'pending', label: `Pending (${suggestions.filter(s => s.status === 'pending').length})` },
+        { value: 'approved', label: `Approved (${suggestions.filter(s => s.status === 'approved').length})` },
+        { value: 'rejected', label: `Rejected (${suggestions.filter(s => s.status === 'rejected').length})` },
+      ]
+    }
+  ];
+
   const filteredSuggestions = useMemo(() => {
     return suggestions.filter(sug => {
       const matchSearch =
@@ -78,6 +90,7 @@ export const AdminSuggestionsView: React.FC<AdminSuggestionsViewProps> = ({
   }, [suggestions, searchQuery, statusFilter]);
 
   const pendingCount = suggestions.filter(s => s.status === 'pending').length;
+  const hasActiveFilters = Boolean(statusFilter !== 'all' || searchQuery.trim() !== '');
 
   return (
     <div className="space-y-5 animate-in fade-in duration-150">
@@ -93,62 +106,64 @@ export const AdminSuggestionsView: React.FC<AdminSuggestionsViewProps> = ({
               {pendingCount > 0 ? `${pendingCount} Submissions Awaiting Review` : `${suggestions.length} Submissions Processed`}
             </span>
           </div>
-          <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
-            Service Suggestions Queue
-          </h1>
-          <p className="text-[13px] text-[#8E8E93]">
+
+          <div className="flex items-center gap-2">
+            <h1 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-black dark:text-white leading-tight">
+              Service Suggestions Queue
+            </h1>
+            <button
+              type="button"
+              onClick={refreshList}
+              title="Refresh suggestions list"
+              className="p-1 rounded-[6px] text-[#8E8E93] hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:rotate-180 transition-all cursor-pointer"
+            >
+              <RefreshCw className="w-4 h-4 stroke-[2.2]" />
+            </button>
+          </div>
+
+          <p className="text-[13px] text-[#8E8E93] mt-0.5">
             Review crowdsourced government services submitted by citizens for directory inclusion
           </p>
-        </div>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={refreshList}
-            title="Refresh suggestions list"
-            className="h-9 px-3 rounded-[10px] bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] hover:bg-[rgba(118,118,128,0.2)] text-black dark:text-white text-[13px] font-medium transition-colors cursor-pointer flex items-center gap-1.5"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Refresh</span>
-          </button>
         </div>
       </div>
 
       {/* 2. Cohesive Cardless Inset Queue Container */}
       <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] overflow-hidden">
-        {/* Integrated Management Toolbar */}
-        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] flex flex-col md:flex-row items-center gap-2.5">
-          <div className="relative flex-1 w-full">
-            <Search className="w-3.5 h-3.5 text-[#8E8E93] absolute left-3 top-1/2 -translate-y-1/2" />
+        {/* Integrated Management Toolbar (Compact & Subtle Search + Filter) */}
+        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] space-y-2">
+          {/* Search Pill Input */}
+          <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.08)] dark:bg-[rgba(118,118,128,0.18)] h-9 px-3 rounded-[10px]">
+            <Search className="w-4 h-4 text-[#8E8E93] shrink-0 stroke-[2.2]" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search suggestion name, government agency, or details..."
-              className="w-full h-8 pl-8 pr-3 text-[13px] rounded-[8px] bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none focus:ring-1 focus:ring-[#007AFF]"
+              className="w-full bg-transparent text-[13px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="text-[11px] font-medium text-[#8E8E93] hover:text-black dark:hover:text-white px-1 cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
           </div>
 
-          <div className="bg-[rgba(118,118,128,0.1)] dark:bg-[rgba(118,118,128,0.2)] p-0.5 rounded-[9px] flex items-center gap-0.5 w-full sm:w-auto overflow-x-auto shrink-0">
-            {(['all', 'pending', 'approved', 'rejected'] as const).map(tab => {
-              const active = statusFilter === tab;
-              const count = tab === 'all' ? suggestions.length : suggestions.filter(s => s.status === tab).length;
-              return (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => setStatusFilter(tab)}
-                  className={`h-7 px-3 rounded-[7px] text-[12px] font-medium capitalize whitespace-nowrap transition-all cursor-pointer ${
-                    active
-                      ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
-                      : 'text-black dark:text-[#EBEBF5]/90 hover:bg-black/5 dark:hover:bg-white/5'
-                  }`}
-                >
-                  {tab} ({count})
-                </button>
-              );
-            })}
-          </div>
+          {/* Compact InlineFilterBar */}
+          <InlineFilterBar
+            groups={filterGroups}
+            selectedValues={{ status: statusFilter }}
+            onSelect={(_groupId, val) => setStatusFilter(val)}
+            onReset={() => {
+              setStatusFilter('all');
+              setSearchQuery('');
+            }}
+            hasActiveFilters={hasActiveFilters}
+            resetLabel="Reset"
+          />
         </div>
 
         {/* Suggestions Queue List */}
