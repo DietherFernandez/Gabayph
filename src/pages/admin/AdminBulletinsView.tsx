@@ -46,7 +46,7 @@ export const AdminBulletinsView: React.FC<AdminBulletinsViewProps> = ({
       confirmLabel: 'Withdraw Bulletin',
       isDestructive: true,
       onConfirm: () => {
-        MockStorage.deleteAnnouncement(id);
+        MockStorage.deleteItem('announcements', id);
         refreshList();
         showToast(`Withdrawn bulletin advisory: ${title}`, 'info');
       }

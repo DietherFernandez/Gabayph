@@ -391,6 +391,10 @@ export const MockStorage = {
     window.dispatchEvent(new Event('gabayph_data_updated'));
   },
 
+  deleteAnnouncement: (id: string) => {
+    MockStorage.deleteItem('announcements', id);
+  },
+
   // Add Item (Admin)
   addItem: (item: BaseItem | AnnouncementItem) => {
     if ('sourceAgency' in item) {
