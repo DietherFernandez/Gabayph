@@ -49,7 +49,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             {/* Mobile Drawer Trigger Button */}
             <button
               onClick={onOpenMobileDrawer}
-              className="lg:hidden p-1.5 rounded-[8px] text-[#8E8E93] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              className="md:hidden p-1.5 rounded-[8px] text-[#8E8E93] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               aria-label="Open Admin Navigation Menu"
             >
               <Menu className="w-5 h-5 text-black dark:text-white" />

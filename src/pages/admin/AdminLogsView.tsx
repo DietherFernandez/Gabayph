@@ -183,8 +183,49 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
             <p className="text-[12px]">Try resetting the severity or entity filters.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <>
+            {/* Mobile View: High-density touch card list */}
+            <div className="md:hidden divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)]">
+              {filteredLogs.map(log => (
+                <div key={log.id} className="p-3.5 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 font-medium text-black dark:text-white text-[13px]">
+                      <User className="w-3.5 h-3.5 text-[#007AFF]" />
+                      <span>{log.user}</span>
+                    </div>
+                    <Badge
+                      variant={
+                        log.status === 'success'
+                          ? 'verified'
+                          : log.status === 'warning'
+                          ? 'urgent'
+                          : 'default'
+                      }
+                    >
+                      {log.status}
+                    </Badge>
+                  </div>
+
+                  <p className="text-[13px] text-black dark:text-white font-medium leading-snug">
+                    {log.action}
+                  </p>
+
+                  <div className="flex items-center justify-between text-[11px] text-[#8E8E93] pt-1 border-t border-[rgba(60,60,67,0.06)] dark:border-[rgba(84,84,88,0.2)]">
+                    <div className="flex items-center gap-1 font-mono">
+                      <Clock className="w-3 h-3" />
+                      <span>{log.timestamp}</span>
+                    </div>
+                    <span className="font-mono text-black/70 dark:text-white/70">
+                      {log.entityType}: {log.entityId}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tablet and Desktop View: Data Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
               <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
                   <th className="p-3.5">Timestamp</th>
@@ -240,7 +281,8 @@ export const AdminLogsView: React.FC<AdminLogsViewProps> = ({ onDataChanged }) =
               </tbody>
             </table>
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );

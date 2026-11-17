@@ -173,14 +173,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   };
 
   return (
-    <aside className="w-60 xl:w-64 shrink-0 hidden lg:flex flex-col bg-[#F9F9FB] dark:bg-[#121214] border-r border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] h-[calc(100vh-3.5rem)] sticky top-14 select-none transition-colors">
+    <aside className="w-16 lg:w-60 xl:w-64 shrink-0 hidden md:flex flex-col bg-[#F9F9FB] dark:bg-[#121214] border-r border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] h-[calc(100vh-3.5rem)] sticky top-14 select-none transition-all">
       {/* Top Admin Identity Row */}
-      <div className="p-3 border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#007AFF] text-white font-bold flex items-center justify-center text-[12px] shadow-2xs">
+      <div className="p-2.5 lg:p-3 border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
+        <div className="flex items-center justify-center lg:justify-start gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-[#007AFF] text-white font-bold flex items-center justify-center text-[12px] shadow-2xs shrink-0" title="Senior Operations Admin: Maria Santos">
             MS
           </div>
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 hidden lg:block">
             <div className="flex items-center gap-1">
               <span className="text-[13px] font-semibold text-black dark:text-white truncate">
                 Maria Santos
@@ -195,12 +195,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       </div>
 
       {/* Navigation Group Items List */}
-      <div className="flex-1 overflow-y-auto px-2 py-3 space-y-3.5 text-xs no-scrollbar">
+      <div className="flex-1 overflow-y-auto px-1.5 lg:px-2 py-3 space-y-3.5 text-xs no-scrollbar">
         {navGroups.map(group => (
           <div key={group.group} className="space-y-0.5">
-            <div className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93]">
+            <div className="hidden lg:block px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93]">
               {group.group}
             </div>
+            <div className="lg:hidden h-px bg-[rgba(60,60,67,0.08)] dark:bg-[rgba(84,84,88,0.2)] my-1.5 mx-1" />
             <div className="space-y-0.5">
               {group.items.map(item => {
                 const active = isCurrentActive(item.path);
@@ -209,7 +210,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                     key={item.id}
                     type="button"
                     onClick={() => navigate(item.path)}
-                    className={`w-full h-8 flex items-center justify-between px-2.5 rounded-[8px] text-[13px] font-medium transition-colors cursor-pointer select-none ${
+                    title={item.label}
+                    className={`w-full h-9 lg:h-8 flex items-center justify-center lg:justify-between px-0 lg:px-2.5 rounded-[8px] text-[13px] font-medium transition-colors cursor-pointer select-none relative ${
                       active
                         ? 'bg-[#007AFF] text-white font-semibold shadow-2xs'
                         : 'text-black dark:text-[#EBEBF5]/90 hover:bg-black/5 dark:hover:bg-white/5'
@@ -219,12 +221,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                       <span className={active ? 'text-white' : 'text-[#8E8E93]'}>
                         {item.icon}
                       </span>
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate hidden lg:inline">{item.label}</span>
                     </div>
 
+                    {/* Desktop Count Badge */}
                     {typeof item.count === 'number' && (
                       <span
-                        className={`text-[11px] font-semibold px-1.5 py-0.2 rounded-full min-w-[18px] text-center ${
+                        className={`hidden lg:inline-block text-[11px] font-semibold px-1.5 py-0.2 rounded-full min-w-[18px] text-center ${
                           active
                             ? 'bg-white/20 text-white'
                             : item.highlight === 'urgent' && item.count > 0
@@ -237,6 +240,19 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                         {item.count}
                       </span>
                     )}
+
+                    {/* Tablet Mini Badge Indicator */}
+                    {typeof item.count === 'number' && item.count > 0 && (
+                      <span
+                        className={`lg:hidden absolute top-1.5 right-1.5 w-2 h-2 rounded-full ${
+                          item.highlight === 'urgent'
+                            ? 'bg-[#FF9500]'
+                            : item.highlight === 'success'
+                            ? 'bg-[#34C759]'
+                            : 'bg-[#007AFF]'
+                        }`}
+                      />
+                    )}
                   </button>
                 );
               })}
@@ -246,20 +262,21 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       </div>
 
       {/* Sidebar Bottom Controls */}
-      <div className="p-3 border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] space-y-2">
+      <div className="p-2 lg:p-3 border-t border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] space-y-2">
         {onOpenCreateRecord && (
           <button
             type="button"
             onClick={onOpenCreateRecord}
-            className="w-full h-8 rounded-[8px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+            title="Create New Record"
+            className="w-full h-9 lg:h-8 rounded-[8px] bg-[#007AFF] hover:bg-blue-600 active:scale-[0.98] text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 shadow-2xs transition-all cursor-pointer"
           >
-            <Plus className="w-3.5 h-3.5 stroke-[2.2]" />
-            <span>Create New Record</span>
+            <Plus className="w-4 h-4 lg:w-3.5 lg:h-3.5 stroke-[2.2]" />
+            <span className="hidden lg:inline">Create New Record</span>
           </button>
         )}
 
-        <div className="flex items-center justify-between text-[11px] text-[#8E8E93] pt-0.5 px-1">
-          <span className="truncate">GabayPH v1.0.4</span>
+        <div className="flex items-center justify-center lg:justify-between text-[11px] text-[#8E8E93] pt-0.5 px-1">
+          <span className="truncate hidden lg:inline">GabayPH v1.0.4</span>
           {onResetData && (
             <button
               type="button"
@@ -267,8 +284,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
               className="text-[#FF3B30] hover:underline flex items-center gap-1 font-medium cursor-pointer"
               title="Reset Mock Fixtures"
             >
-              <RotateCcw className="w-3 h-3" />
-              <span>Reset</span>
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Reset</span>
             </button>
           )}
         </div>

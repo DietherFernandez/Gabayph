@@ -199,7 +199,7 @@ export const AdminLayout: React.FC = () => {
         />
 
         {/* Dedicated Main Admin Content Area */}
-        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl">
+        <main className="flex-1 min-w-0 p-3 sm:p-5 md:p-6 lg:p-8 overflow-y-auto max-w-7xl">
           {renderAdminView()}
         </main>
       </div>

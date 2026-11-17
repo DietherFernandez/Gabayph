@@ -13,7 +13,8 @@ import {
   ExternalLink,
   Clock,
   Copy,
-  RefreshCw
+  RefreshCw,
+  PhoneCall
 } from 'lucide-react';
 
 interface AdminSafetyViewProps {
@@ -247,8 +248,69 @@ export const AdminSafetyView: React.FC<AdminSafetyViewProps> = ({
             <p className="text-[12px]">Try modifying your search or resetting filters.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <>
+            {/* Mobile View: High-density touch card list */}
+            <div className="md:hidden divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)]">
+              {filteredItems.map(item => (
+                <div key={item.id} className="p-3.5 space-y-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-black dark:text-white text-[14px] leading-snug">
+                        {item.title}
+                      </div>
+                      <div className="text-[12px] text-[#007AFF] font-medium mt-0.5">
+                        {item.agencyAcronym || item.agency}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => copyHotline(item.hotlineNumber || '', item.title)}
+                        className="p-1.5 rounded-[8px] text-[#34C759] hover:bg-black/5 dark:hover:bg-white/10 bg-black/[0.04] dark:bg-white/[0.08]"
+                        title="Copy hotline"
+                      >
+                        <Copy className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onOpenEdit(item)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#007AFF] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Edit resource"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(item.id, item.title)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#FF3B30] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Delete resource"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="text-[12px] text-[#8E8E93] line-clamp-2 leading-relaxed">
+                    {item.description}
+                  </p>
+
+                  <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[rgba(60,60,67,0.06)] dark:border-[rgba(84,84,88,0.2)]">
+                    <div className="font-bold text-black dark:text-white font-mono flex items-center gap-1">
+                      <PhoneCall className="w-3 h-3 text-[#34C759]" />
+                      <span>{item.hotlineNumber || 'N/A'}</span>
+                    </div>
+                    <div className="text-[#8E8E93] flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      <span>{item.operatingHours}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tablet and Desktop View: Data Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
               <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
                   <th className="p-3.5">Resource Details</th>
@@ -344,7 +406,8 @@ export const AdminSafetyView: React.FC<AdminSafetyViewProps> = ({
               </tbody>
             </table>
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );

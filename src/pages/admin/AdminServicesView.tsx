@@ -201,8 +201,71 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
             <p className="text-[12px]">Try modifying your search term or clearing the type filters.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <>
+            {/* Mobile View: High-density touch card list */}
+            <div className="md:hidden divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)]">
+              {filteredServices.map(srv => (
+                <div key={srv.id} className="p-3.5 space-y-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-black dark:text-white text-[14px] leading-snug">
+                        {srv.title}
+                      </div>
+                      <div className="text-[12px] text-[#007AFF] font-medium mt-0.5">
+                        {srv.agencyAcronym || srv.agency}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {srv.officialUrl && (
+                        <a
+                          href={srv.officialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#007AFF] bg-black/[0.04] dark:bg-white/[0.08]"
+                          title="Open portal"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => onOpenEdit(srv)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#007AFF] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Edit record"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(srv.id, srv.title)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#FF3B30] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Delete record"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="text-[12px] text-[#8E8E93] line-clamp-2 leading-relaxed">
+                    {srv.description}
+                  </p>
+
+                  <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[rgba(60,60,67,0.06)] dark:border-[rgba(84,84,88,0.2)]">
+                    <div className="text-black dark:text-white font-medium">
+                      {srv.fees} • <span className="text-[#8E8E93]">{srv.processingTime}</span>
+                    </div>
+                    <span className="text-[#34C759] font-medium flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" />
+                      Verified
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tablet and Desktop View: Data Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
               <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
                   <th className="p-3.5">Service Details</th>
@@ -294,7 +357,8 @@ export const AdminServicesView: React.FC<AdminServicesViewProps> = ({
               </tbody>
             </table>
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );

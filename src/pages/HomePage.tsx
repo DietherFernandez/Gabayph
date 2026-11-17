@@ -158,7 +158,7 @@ export const HomePage: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
           {categories.map(cat => (
             <button
               key={cat.id}

@@ -189,7 +189,7 @@ export const AdminMobileDrawer: React.FC<AdminMobileDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden flex">
+    <div className="fixed inset-0 z-50 md:hidden flex">
       {/* Backdrop */}
       <div
         onClick={onClose}

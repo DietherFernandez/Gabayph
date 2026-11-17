@@ -196,8 +196,71 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
             <p className="text-[12px]">Try modifying your search or resetting filters.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <>
+            {/* Mobile View: High-density touch card list */}
+            <div className="md:hidden divide-y divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)]">
+              {filteredItems.map(item => (
+                <div key={item.id} className="p-3.5 space-y-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-black dark:text-white text-[14px] leading-snug">
+                        {item.title}
+                      </div>
+                      <div className="text-[12px] text-[#007AFF] font-medium mt-0.5">
+                        {item.agencyAcronym || item.agency}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {item.officialUrl && (
+                        <a
+                          href={item.officialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#007AFF] bg-black/[0.04] dark:bg-white/[0.08]"
+                          title="Open portal"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => onOpenEdit(item)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#007AFF] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Edit program"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(item.id, item.title)}
+                        className="p-1.5 rounded-[8px] text-[#8E8E93] hover:text-[#FF3B30] bg-black/[0.04] dark:bg-white/[0.08] cursor-pointer"
+                        title="Delete program"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="text-[12px] text-[#8E8E93] line-clamp-2 leading-relaxed">
+                    {item.description}
+                  </p>
+
+                  <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[rgba(60,60,67,0.06)] dark:border-[rgba(84,84,88,0.2)]">
+                    <div className="font-medium text-black dark:text-white capitalize">
+                      {item.educationalLevel} • <span className="text-[#34C759]">{item.benefits[0]}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-[#FF3B30] font-medium">
+                      <Calendar className="w-3 h-3" />
+                      {item.deadline}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tablet and Desktop View: Data Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
               <thead className="bg-black/[0.02] dark:bg-white/[0.03] text-[#8E8E93] uppercase text-[11px] font-semibold tracking-wider border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
                 <tr>
                   <th className="p-3.5">Scholarship & Program Details</th>
@@ -280,7 +343,8 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
               </tbody>
             </table>
           </div>
-        )}
+        </>
+      )}
       </div>
     </div>
   );

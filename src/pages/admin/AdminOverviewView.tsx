@@ -108,12 +108,12 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Cohesive Inset Segmented KPI Metrics Grid */}
-      <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] divide-y sm:divide-y-0 sm:divide-x divide-[rgba(60,60,67,0.1)] dark:divide-[rgba(84,84,88,0.3)] grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 overflow-hidden">
+      {/* 2. Cohesive Inset Segmented KPI Metrics Grid (Pixel-perfect responsive border grid) */}
+      <div className="rounded-[16px] bg-[rgba(60,60,67,0.12)] dark:bg-[rgba(84,84,88,0.35)] p-px grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-px overflow-hidden shadow-2xs">
         {/* Services */}
         <div
           onClick={() => navigate('/admin/services')}
-          className="p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
+          className="bg-white dark:bg-[#1C1C1E] p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
             <span className="text-[10px] font-bold uppercase tracking-wider">Services</span>
@@ -130,7 +130,7 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         {/* Jobs */}
         <div
           onClick={() => navigate('/admin/jobs')}
-          className="p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
+          className="bg-white dark:bg-[#1C1C1E] p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
             <span className="text-[10px] font-bold uppercase tracking-wider">Careers</span>
@@ -147,7 +147,7 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         {/* Financial Assistance */}
         <div
           onClick={() => navigate('/admin/assistance')}
-          className="p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
+          className="bg-white dark:bg-[#1C1C1E] p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
             <span className="text-[10px] font-bold uppercase tracking-wider">Financial Aid</span>
@@ -164,7 +164,7 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         {/* Education & TVET */}
         <div
           onClick={() => navigate('/admin/education')}
-          className="p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
+          className="bg-white dark:bg-[#1C1C1E] p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
             <span className="text-[10px] font-bold uppercase tracking-wider">Education</span>
@@ -183,8 +183,8 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
           onClick={() => navigate('/admin/reports')}
           className={`p-3.5 cursor-pointer transition-colors ${
             pendingReports.length > 0
-              ? 'bg-[rgba(255,149,0,0.06)] hover:bg-[rgba(255,149,0,0.1)]'
-              : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.03]'
+              ? 'bg-[#FFF9F2] dark:bg-[#2A2016] hover:bg-[#FFF3E5] dark:hover:bg-[#34271A]'
+              : 'bg-white dark:bg-[#1C1C1E] hover:bg-black/[0.02] dark:hover:bg-white/[0.03]'
           }`}
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
@@ -202,7 +202,7 @@ export const AdminOverviewView: React.FC<AdminOverviewViewProps> = ({
         {/* Suggestions */}
         <div
           onClick={() => navigate('/admin/suggestions')}
-          className="p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
+          className="bg-white dark:bg-[#1C1C1E] p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer transition-colors"
         >
           <div className="flex items-center justify-between text-[#8E8E93]">
             <span className="text-[10px] font-bold uppercase tracking-wider">Feedback</span>

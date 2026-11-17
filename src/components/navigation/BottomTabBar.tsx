@@ -11,6 +11,11 @@ import {
 export const BottomTabBar: React.FC = () => {
   const { currentPath, navigate, savedIds, role } = useApp();
 
+  // Hide bottom tab bar on detail push views so sticky action bar has dedicated space
+  if (currentPath.startsWith('/item/')) {
+    return null;
+  }
+
   const tabs = [
     {
       id: 'home',
@@ -50,7 +55,7 @@ export const BottomTabBar: React.FC = () => {
   ];
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border-t border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] safe-bottom transition-colors">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border-t border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] safe-bottom transition-colors">
       <nav className="flex items-center justify-around h-12 px-2" aria-label="Mobile Bottom Navigation">
         {tabs.map(tab => {
           // Exact route matching so /item/ doesn't trigger unrelated tab

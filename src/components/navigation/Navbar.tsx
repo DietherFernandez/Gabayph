@@ -191,15 +191,36 @@ export const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Main Navigation">
-          {navLinks.map(link => {
+        {/* Desktop & Tablet Navigation Links */}
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1" aria-label="Main Navigation">
+          {navLinks.slice(0, 4).map(link => {
             const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
             return (
               <button
                 key={link.path}
                 onClick={() => navigate(link.path)}
-                className={`px-2.5 py-1.5 text-xs font-medium rounded-ios-lg transition-colors flex items-center gap-1 ${
+                className={`px-2 lg:px-2.5 py-1.5 text-xs font-medium rounded-ios-lg transition-colors flex items-center gap-1 ${
+                  isActive
+                    ? 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-navy dark:text-blue-400 font-semibold'
+                    : 'text-ios-lightMuted dark:text-ios-darkMuted hover:text-ios-lightText dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5'
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.sublabel && (
+                  <span className="text-[10px] opacity-70 font-normal hidden xl:inline">
+                    ({link.sublabel})
+                  </span>
+                )}
+              </button>
+            );
+          })}
+          {navLinks.slice(4).map(link => {
+            const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
+            return (
+              <button
+                key={link.path}
+                onClick={() => navigate(link.path)}
+                className={`hidden lg:flex px-2 lg:px-2.5 py-1.5 text-xs font-medium rounded-ios-lg transition-colors items-center gap-1 ${
                   isActive
                     ? 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-navy dark:text-blue-400 font-semibold'
                     : 'text-ios-lightMuted dark:text-ios-darkMuted hover:text-ios-lightText dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5'
@@ -217,13 +238,13 @@ export const Navbar: React.FC = () => {
           {role === 'admin' && (
             <button
               onClick={() => navigate('/admin')}
-              className={`px-2.5 py-1.5 text-xs font-semibold rounded-ios-lg transition-colors flex items-center gap-1 ${
+              className={`hidden sm:flex px-2 lg:px-2.5 py-1.5 text-xs font-semibold rounded-ios-lg transition-colors items-center gap-1 ${
                 currentPath === '/admin'
                   ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
                   : 'text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30'
               }`}
             >
-              <Shield className="w-3.5 h-3.5" /> Admin Portal
+              <Shield className="w-3.5 h-3.5" /> <span className="hidden lg:inline">Admin Portal</span><span className="lg:hidden">Admin</span>
             </button>
           )}
         </nav>
@@ -312,21 +333,49 @@ export const Navbar: React.FC = () => {
             </Button>
           )}
 
-          {/* Desktop Only Hamburger Menu & Tools Docker */}
-          <div className="relative hidden lg:block" ref={menuRef}>
+          {/* Hamburger Menu & Tools Docker (Mobile, Tablet, Desktop) */}
+          <div className="relative flex items-center" ref={menuRef}>
             <button
               onClick={() => setDesktopMenuOpen(!desktopMenuOpen)}
-              className="p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center"
-              aria-label="Toggle desktop menu docker"
-              title="Quick Actions & System Docker"
+              className="p-2 rounded-ios-lg text-ios-lightMuted hover:text-ios-lightText dark:text-ios-darkMuted dark:hover:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center cursor-pointer"
+              aria-label="Toggle navigation menu docker"
+              title="Quick Actions & Categories"
             >
               {desktopMenuOpen ? <X className="w-5 h-5 text-ios-navy dark:text-blue-400" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            {/* Desktop Docker Dropdown Popover */}
+            {/* Docker Dropdown Popover */}
             {desktopMenuOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-ios-darkSurface rounded-2xl shadow-ios-lg border border-ios-lightBorder dark:border-ios-darkBorder py-2.5 px-3 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-2 pb-2 mb-2 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80 flex items-center justify-between">
+              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white dark:bg-ios-darkSurface rounded-2xl shadow-ios-lg border border-ios-lightBorder dark:border-ios-darkBorder py-2.5 px-3 z-50 animate-in fade-in zoom-in-95 duration-150 max-h-[85vh] overflow-y-auto">
+                {/* Mobile/Tablet Category Links (visible below lg) */}
+                <div className="lg:hidden pb-2 mb-2 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted px-2 pb-1.5">
+                    Directory Categories
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    {navLinks.map(link => {
+                      const isActive = currentPath === link.path || (link.path !== '/' && currentPath.startsWith(link.path));
+                      return (
+                        <button
+                          key={link.path}
+                          onClick={() => {
+                            navigate(link.path);
+                            setDesktopMenuOpen(false);
+                          }}
+                          className={`text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                            isActive
+                              ? 'bg-ios-lightSecondary dark:bg-ios-darkSecondary text-ios-navy dark:text-blue-400 font-semibold'
+                              : 'text-ios-lightText dark:text-ios-darkText hover:bg-black/5 dark:hover:bg-white/5'
+                          }`}
+                        >
+                          {link.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="px-2 pb-1.5 mb-1.5 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80 flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-ios-lightMuted dark:text-ios-darkMuted">
                     Quick Actions & Tools
                   </span>
