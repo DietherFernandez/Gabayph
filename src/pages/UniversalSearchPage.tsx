@@ -60,7 +60,7 @@ export const UniversalSearchPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 max-w-4xl mx-auto px-4 sm:px-6">
       {/* Editorial Search Header */}
       <div className="px-1 pt-1">
         <h1 className="text-xl sm:text-2xl font-bold text-ios-lightText dark:text-ios-darkText tracking-tight mb-3">

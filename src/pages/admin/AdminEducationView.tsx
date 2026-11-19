@@ -149,30 +149,29 @@ export const AdminEducationView: React.FC<AdminEducationViewProps> = ({
       {/* 2. Cohesive Cardless Inset Table Container */}
       <div className="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-[rgba(60,60,67,0.12)] dark:border-[rgba(84,84,88,0.35)] overflow-hidden">
         {/* Integrated Management Toolbar (Compact & Subtle Search + Filter) */}
-        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)] space-y-2">
-          {/* Search Pill Input */}
-          <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.08)] dark:bg-[rgba(118,118,128,0.18)] h-9 px-3 rounded-[10px]">
-            <Search className="w-4 h-4 text-[#8E8E93] shrink-0 stroke-[2.2]" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search scholarship, TVET course, agency..."
-              className="w-full bg-transparent text-[13px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="text-[11px] font-medium text-[#8E8E93] hover:text-black dark:hover:text-white px-1 cursor-pointer"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-
-          {/* Compact InlineFilterBar */}
+        <div className="p-3 sm:p-3.5 bg-black/[0.015] dark:bg-white/[0.02] border-b border-[rgba(60,60,67,0.1)] dark:border-[rgba(84,84,88,0.3)]">
           <InlineFilterBar
+            searchSlot={
+              <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.08)] dark:bg-[rgba(118,118,128,0.18)] h-9 px-3 rounded-[10px]">
+                <Search className="w-4 h-4 text-[#8E8E93] shrink-0 stroke-[2.2]" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder="Search scholarship, TVET course, agency..."
+                  className="w-full bg-transparent text-[13px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="text-[11px] font-medium text-[#8E8E93] hover:text-black dark:hover:text-white px-1 cursor-pointer shrink-0"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            }
             groups={filterGroups}
             selectedValues={{ level: selectedLevel, type: selectedType }}
             onSelect={(groupId, val) => {

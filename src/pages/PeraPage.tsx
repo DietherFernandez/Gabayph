@@ -75,28 +75,29 @@ export const PeraPage: React.FC = () => {
           Financial Assistance, Subsidies & Social Protection Grants
         </p>
 
-        {/* 2. iOS Search Field */}
-        <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] h-11 px-3.5 rounded-[10px] mb-2.5">
-          <Search className="w-[18px] h-[18px] text-[#8E8E93] shrink-0 stroke-[2.2]" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search cash grants, assistance, agencies (e.g. DSWD AICS, 4Ps)..."
-            className="w-full bg-transparent text-[16px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="text-[13px] text-[#8E8E93] hover:text-black dark:hover:text-white px-1"
-            >
-              Clear
-            </button>
-          )}
-        </div>
-
-        {/* 3. InlineFilterBar */}
+        {/* 2. iOS Search Field & InlineFilterBar */}
         <InlineFilterBar
+          searchSlot={
+            <div className="w-full flex items-center gap-2.5 bg-[rgba(118,118,128,0.12)] dark:bg-[rgba(118,118,128,0.24)] h-11 px-3.5 rounded-[10px]">
+              <Search className="w-[18px] h-[18px] text-[#8E8E93] shrink-0 stroke-[2.2]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search cash grants, assistance, agencies (e.g. DSWD AICS, 4Ps)..."
+                className="w-full bg-transparent text-[16px] text-black dark:text-white placeholder-[#8E8E93] focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="text-[13px] text-[#8E8E93] hover:text-black dark:hover:text-white px-1 shrink-0 cursor-pointer"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          }
           groups={filterGroups}
           selectedValues={filterValues}
           onSelect={handleSelectFilter}

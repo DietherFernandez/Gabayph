@@ -13,6 +13,7 @@ export interface FilterGroup {
 }
 
 interface InlineFilterBarProps {
+  searchSlot?: React.ReactNode;
   groups: FilterGroup[];
   selectedValues: Record<string, string>;
   onSelect: (groupId: string, value: string) => void;
@@ -23,6 +24,7 @@ interface InlineFilterBarProps {
 }
 
 export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
+  searchSlot,
   groups,
   selectedValues,
   onSelect,
@@ -41,9 +43,25 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
 
   return (
     <div className={`w-full ${className}`}>
-      {/* 1. Main Filter Toggles Row (Compact & Subtle) */}
-      <div className="flex items-center justify-between min-h-[28px] gap-2 pt-0.5">
-        <div className="flex items-center gap-1.5 flex-wrap">
+      {/* 1. Main Filter Toggles & Search Row */}
+      <div
+        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${
+          searchSlot ? '' : 'min-h-[28px] pt-0.5'
+        }`}
+      >
+        {/* Search Slot: full width on mobile phone (<640px), constrained on tablet and desktop */}
+        {searchSlot && (
+          <div className="w-full sm:w-72 md:w-80 lg:w-96 shrink-0">
+            {searchSlot}
+          </div>
+        )}
+
+        <div
+          className={`flex items-center gap-2 min-h-[28px] ${
+            searchSlot ? 'w-full sm:w-auto flex-1 min-w-0 sm:justify-end' : 'justify-between w-full'
+          }`}
+        >
+          <div className="flex items-center gap-1.5 flex-wrap">
           {groups.map(group => {
             const currentValue = selectedValues[group.id];
             const isSelected = Boolean(currentValue && currentValue !== 'all' && currentValue !== 'lahat');
@@ -88,11 +106,12 @@ export const InlineFilterBar: React.FC<InlineFilterBarProps> = ({
               onReset();
               setOpenGroupId(null);
             }}
-            className="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 shrink-0 ml-auto transition-opacity cursor-pointer select-none"
+            className="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline px-1 py-0.5 shrink-0 ml-auto sm:ml-2 whitespace-nowrap transition-opacity cursor-pointer select-none"
           >
             {resetLabel || 'I-reset'}
           </button>
         )}
+        </div>
       </div>
 
       {/* 2. Accordion Option Pills Panel (Compact & Subtle) */}

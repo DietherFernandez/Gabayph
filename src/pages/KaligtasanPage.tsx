@@ -32,7 +32,7 @@ export const KaligtasanPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 max-w-4xl mx-auto px-4 sm:px-6">
       {/* Editorial Header (Cardless & Official) */}
       <div className="pt-2 pb-1 border-b border-ios-lightBorder/80 dark:border-ios-darkBorder/80">
         <div className="flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-1">
